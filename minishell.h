@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 #include "./libft/libft.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 typedef enum TOKEN_TYPE
 {
@@ -9,8 +11,10 @@ typedef enum TOKEN_TYPE
 
 typedef struct node
 {
-	void *content;
-	TOKEN token;
+	int input_file;
+	char *commend;
+	char **arguments;
+	int output_file;
 } m_node;
 
 #endif
