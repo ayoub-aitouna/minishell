@@ -101,6 +101,7 @@ t_list	*parse(char *line)
 	list = NULL;
 	parse_cur_commend(line, &list);
 	printf_list(list);
+	return (list);
 }
 
 void	tty(void)
