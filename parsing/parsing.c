@@ -76,6 +76,42 @@ char	**parse_arguments(char *line, char *cmd, int *i)
 	return (ft_split(arguments, ' '));
 }
 
+char *get_path(void)
+{
+	char	**env;
+	int		i;
+
+	i = 0;
+	env = get_env(NULL);
+	while (env[i])
+	{
+		if(ft_strnstr(env[i], "PATH=", 5))
+			return (env[i] + 5);
+		i++;
+	}
+	return (NULL);
+}
+
+char *get_fullpath(char *s)
+{
+	
+	int		i;
+	char	**paths;
+	
+	i = 0;
+	if(!access(s, X_OK))
+		return s;
+	paths = ft_split(get_path(), ':');
+	while (paths[i])
+	{
+		char *cmd = ft_strjoin(paths[i], ft_strjoin("/", s));
+		if(!access(cmd, X_OK))
+			return (cmd);
+		i++;
+	}
+	return "NON";
+}
+
 void	parse_cur_commend(char *line, t_list **list)
 {
 	int		i;
@@ -94,9 +130,9 @@ void	parse_cur_commend(char *line, t_list **list)
 			if (!node->commend)
 				node->commend = get_str(&line[i], &i);
 			node->arguments = parse_arguments(line, node->commend, &i);
-			
 		}
 	}
+	node->commend = get_fullpath(node->commend);
 	ft_lstadd_back(list, ft_lstnew(node));
 	if (line[i] && line[i] == '|')
 		parse_cur_commend(&line[++i], list);

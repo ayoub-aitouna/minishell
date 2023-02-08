@@ -63,9 +63,7 @@ char	*strip_nl(char *line)
 
 	i = 0;
 	while (line[i] != 0 && line[i] != '\n')
-	{
 		i++;
-	}
 	if (line[i] == '\n')
 		line[i] = 0;
 	return (line);

@@ -1,6 +1,12 @@
 #include "main.h"
 #include "minishell.h"
-
+char **get_env(char **p)
+{
+	static char **env;
+	if(p != NULL)
+		env = p;
+	return (env);
+}
 void printf_arg(char **str)
 {
 	int i = 0;
@@ -46,7 +52,8 @@ void printf_list(t_list *list)
 	}
 }
 
-int main(void)
+int main(int ac, char **av, char **env)
 {
+	get_env(env);
 	tty();
 }

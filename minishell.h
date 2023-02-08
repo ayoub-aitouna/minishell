@@ -23,4 +23,5 @@ char	*strip_nl(char *line);
 m_node	*new_m_node();
 void	printf_list(t_list *list);
 int		qoute(int i, int mode);
+char	**get_env(char **p);
 #endif
