@@ -23,7 +23,6 @@ clean : clean_libft
 fclean : clean clean_libft
 	rm -rf $(NAME) $(libft) $(CHECKER)
 
-
 re : fclean $(NAME)
 
 files = $(shell git diff --name-only HEAD)

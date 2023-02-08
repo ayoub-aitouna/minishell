@@ -149,9 +149,11 @@ void	tty(void)
 		else 
 			parse(strip_nl(line), &list);
 		if(qoute(0, -1) != 1)
+		{
 			printf_list(list);
+			ft_lstclear(&list, free);
+		}
 		if (line == NULL)
 			break ;
-	}
-	
+	}	
 }
