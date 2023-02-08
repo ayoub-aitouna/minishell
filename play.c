@@ -1,10 +1,23 @@
 #include"minishell.h"
 #include<stdio.h>
 
+int Score(int set, int getter_setter)
+{
+	static int a = 0;
+	if(getter_setter == -1)
+		return (a);
+	a = set;
+	return (a);
+}
+
 int main()
 {
-    char buff[60];
-    write(0, "112333", 6);
-    // read(0, buff, 6);
-    // printf("%s", buff);    
+	int i = 0;
+	while (i < 10)
+	{
+		if(i > 1 && i % 2 == 0)
+			Score(i, 0);
+		printf("the score is %d \n", Score(0, -1));
+		i++;
+	}
 }

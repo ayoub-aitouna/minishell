@@ -10,35 +10,41 @@ int	spaces_count(char *s)
 	return (i);
 }
 
+size_t calculate_len(char *s)
+{
+	int		single_qute_flag;
+	int		double_qute_flag;
+	size_t	i;
+
+	single_qute_flag = 0;
+	i = 0;
+	while (s[i] != 0 && ((s[i] != '|' && s[i] != '>' && s[i] != '<'
+				&& s[i] != ' ') || single_qute_flag))
+	{
+		if (s[i] == '\'' && single_qute_flag == 0)
+			single_qute_flag = 1;
+		else if (s[i] == '\'')
+			single_qute_flag = 0;
+		i++;
+	}
+	qoute(single_qute_flag, 0);
+	return (i);
+}
+
+
 char	*get_str(char *s, int *index)
 {
 	int		len;
 	int		i;
-	int		j;
-	int		k;
-	int		flag;
 	char	*new_str;
 
-	len = 0;
 	i = 0;
-	k = 0;
-	flag = 0;
 	i += spaces_count(s);
-	j = i;
-	while (s[i] != 0 && ((s[i] != '|' && s[i] != '>' && s[i] != '<'
-				&& s[i] != ' ') || flag))
-	{
-		if (s[i] == '\'' && flag == 0)
-			flag = 1;
-		else if (s[i] == '\'')
-			flag = 0;
-		i++;
-		len++;
-	}
+	len = calculate_len(&s[i]);
 	new_str = malloc(len + 1);
-	ft_strlcpy(new_str, &s[j], len + 1);
-	i += spaces_count(&s[i]);
-	*index = *index + i;
+	ft_strlcpy(new_str, &s[i], len + 1);
+	i += spaces_count(&s[i + len]);
+	*index = *index + i + len;
 	return (new_str);
 }
 

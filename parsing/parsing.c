@@ -1,5 +1,14 @@
 #include "../minishell.h"
 
+int qoute(int i, int mode)
+{
+	static int qoute_flag;
+
+	if (mode == 0)
+		qoute_flag = i;
+	return (qoute_flag);
+}
+
 int	here_doc(char *limiter)
 {
 	char	*line;
@@ -85,6 +94,7 @@ void	parse_cur_commend(char *line, t_list **list)
 			if (!node->commend)
 				node->commend = get_str(&line[i], &i);
 			node->arguments = parse_arguments(line, node->commend, &i);
+			
 		}
 	}
 	ft_lstadd_back(list, ft_lstnew(node));
@@ -92,30 +102,56 @@ void	parse_cur_commend(char *line, t_list **list)
 		parse_cur_commend(&line[++i], list);
 }
 
-t_list	*parse(char *line)
+void	parse(char *line, t_list **list)
 {
-	int		i;
-	t_list	*list;
+	parse_cur_commend(line, list);
 
+}
+
+size_t string_list_len(char **list)
+{
+	int i;
+	
 	i = 0;
-	list = NULL;
-	parse_cur_commend(line, &list);
-	printf_list(list);
-	return (list);
+	while (list[i])
+		i++;
+	return (i);
+}
+
+void single_qoute(m_node *node, char *line)
+{
+	int len = string_list_len(node->arguments) - 1;
+	node->arguments[len] = ft_strjoin(node->arguments[len], line);
+	if (ft_strchr(line, '\''))
+		qoute(0, 0);
 }
 
 void	tty(void)
 {
 	char	*line;
 	char	cur_dir[64];
-
+	t_list	*list;
+	
+	list = NULL;
 	while (1)
 	{
 		getcwd(cur_dir, 64);
-		ft_printf("minishell:\e[1;34m%s\e[0m>", cur_dir);
-		line = strip_nl(get_next_line(0));
-		parse(line);
+		
+		if(qoute(0, -1) == 1)
+			ft_printf("qoute>");
+		else if(qoute(0, -1) == 2)
+			ft_printf("dqoute>");
+		else
+			ft_printf("minishell:\e[1;34m%s\e[0m>", cur_dir);
+		line = get_next_line(0);
+		if(qoute(0, -1) == 1)
+			single_qoute((m_node *)(ft_lstlast(list)->content), line);
+		else 
+			parse(strip_nl(line), &list);
+		if(qoute(0, -1) != 1)
+			printf_list(list);
 		if (line == NULL)
 			break ;
 	}
+	
 }

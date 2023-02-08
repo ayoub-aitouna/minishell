@@ -15,12 +15,12 @@ typedef struct node
 
 int		here_doc(char *limiter);
 void	parse_cur_commend(char *line, t_list **list);
-t_list	*parse(char *line);
+void	parse(char *line, t_list **list);
 void	tty(void);
 char	*get_str(char *s, int *index);
 size_t	size(char **ptr);
 char	*strip_nl(char *line);
 m_node	*new_m_node();
 void	printf_list(t_list *list);
-
+int		qoute(int i, int mode);
 #endif
