@@ -45,6 +45,7 @@ char	*get_str(char *s, int *index)
 	expanded = 0;
 	i += spaces_count(s);
 	len = calculate_len(&s[i], &expanded);
+	ft_printf("allocating %d \n", expanded + len + 1);
 	new_str = malloc(len + expanded + 1);
 	if (expanded != 0)
 		copy_expanded(new_str, &s[i], len);
