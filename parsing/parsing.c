@@ -1,8 +1,8 @@
 #include "../minishell.h"
 
-int qoute(int i, int mode)
+int	qoute(int i, int mode)
 {
-	static int qoute_flag;
+	static int	qoute_flag;
 
 	if (mode == 0)
 		qoute_flag = i;
@@ -76,7 +76,7 @@ char	**parse_arguments(char *line, char *cmd, int *i)
 	return (ft_split(arguments, ' '));
 }
 
-char *get_path(void)
+char	*get_path(void)
 {
 	char	**env;
 	int		i;
@@ -85,37 +85,38 @@ char *get_path(void)
 	env = get_env(NULL);
 	while (env[i])
 	{
-		if(ft_strnstr(env[i], "PATH=", 5))
+		if (ft_strnstr(env[i], "PATH=", 5))
 			return (env[i] + 5);
 		i++;
 	}
 	return (NULL);
 }
 
-char *get_fullpath(char *s)
+char	*get_fullpath(char *s)
 {
-	
 	int		i;
 	char	**paths;
-	
+	char	*cmd;
+
 	i = 0;
-	if(!access(s, X_OK))
-		return s;
+	if (!access(s, X_OK))
+		return (s);
 	paths = ft_split(get_path(), ':');
 	while (paths[i])
 	{
-		char *cmd = ft_strjoin(paths[i], ft_strjoin("/", s));
-		if(!access(cmd, X_OK))
+		cmd = ft_strjoin(paths[i], ft_strjoin("/", s));
+		if (!access(cmd, X_OK))
 			return (cmd);
 		i++;
 	}
-	return "NON";
+	return (NULL);
 }
 
 void	parse_cur_commend(char *line, t_list **list)
 {
 	int		i;
 	m_node	*node;
+	char	*full_path;
 
 	i = 0;
 	node = new_m_node();
@@ -132,7 +133,10 @@ void	parse_cur_commend(char *line, t_list **list)
 			node->arguments = parse_arguments(line, node->commend, &i);
 		}
 	}
-	node->commend = get_fullpath(node->commend);
+	full_path = get_fullpath(node->commend);
+	if (full_path  == NULL)
+		ft_printf("%s: command not found", node->commend);
+	node->commend = full_path;
 	ft_lstadd_back(list, ft_lstnew(node));
 	if (line[i] && line[i] == '|')
 		parse_cur_commend(&line[++i], list);
@@ -141,24 +145,26 @@ void	parse_cur_commend(char *line, t_list **list)
 void	parse(char *line, t_list **list)
 {
 	parse_cur_commend(line, list);
-
 }
 
-size_t string_list_len(char **list)
+size_t	string_list_len(char **list)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (list[i])
 		i++;
 	return (i);
 }
 
-void single_qoute(m_node *node, char *line)
+void	append_qoute(m_node *node, char *line)
 {
-	int len = string_list_len(node->arguments) - 1;
+	int	len;
+
+	len = string_list_len(node->arguments) - 1;
 	node->arguments[len] = ft_strjoin(node->arguments[len], line);
-	if (ft_strchr(line, '\''))
+	if ((ft_strchr(line, '\'') && qoute(0, -1) == 1) || (ft_strchr(line, '"')
+				&& qoute(0, -1) == 2))
 		qoute(0, 0);
 }
 
@@ -167,29 +173,33 @@ void	tty(void)
 	char	*line;
 	char	cur_dir[64];
 	t_list	*list;
-	
+	char	*promt;
+
+	getcwd(cur_dir, 64);
+	char *default_promt = ft_strjoin("minishell:\e[1;34m",
+										ft_strjoin(cur_dir,
+												"\e[0m>"));
 	list = NULL;
 	while (1)
 	{
 		getcwd(cur_dir, 64);
-		
-		if(qoute(0, -1) == 1)
-			ft_printf("qoute>");
-		else if(qoute(0, -1) == 2)
-			ft_printf("dqoute>");
+		if (qoute(0, -1) == 1)
+			promt = "qoute>";
+		else if (qoute(0, -1) == 2)
+			promt = "dqoute>";
 		else
-			ft_printf("minishell:\e[1;34m%s\e[0m>", cur_dir);
-		line = get_next_line(0);
-		if(qoute(0, -1) == 1)
-			single_qoute((m_node *)(ft_lstlast(list)->content), line);
-		else 
+			promt = default_promt;
+		line = readline(promt);
+		if (qoute(0, -1) == 1 || qoute(0, -1) == 2)
+			append_qoute((m_node *)(ft_lstlast(list)->content), line);
+		else
 			parse(strip_nl(line), &list);
-		if(qoute(0, -1) != 1)
+		if (qoute(0, -1) == 0)
 		{
 			printf_list(list);
 			ft_lstclear(&list, free);
 		}
 		if (line == NULL)
 			break ;
-	}	
+	}
 }

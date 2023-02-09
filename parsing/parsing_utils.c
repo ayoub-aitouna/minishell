@@ -10,27 +10,28 @@ int	spaces_count(char *s)
 	return (i);
 }
 
-size_t calculate_len(char *s)
+size_t	calculate_len(char *s)
 {
-	int		single_qute_flag;
-	int		double_qute_flag;
+	int		qute_flag;
 	size_t	i;
 
-	single_qute_flag = 0;
+	qute_flag = 0;
 	i = 0;
 	while (s[i] != 0 && ((s[i] != '|' && s[i] != '>' && s[i] != '<'
-				&& s[i] != ' ') || single_qute_flag))
+				&& s[i] != ' ') || qute_flag))
 	{
-		if (s[i] == '\'' && single_qute_flag == 0)
-			single_qute_flag = 1;
-		else if (s[i] == '\'')
-			single_qute_flag = 0;
+		if (s[i] == '"' && qute_flag == 0)
+			qute_flag = 2;
+		else if (s[i] == '\'' && qute_flag == 0)
+			qute_flag = 1;
+		else if ((s[i] == '\'' && qute_flag == 1) || (s[i] == '"'
+					&& qute_flag == 2))
+			qute_flag = 0;
 		i++;
 	}
-	qoute(single_qute_flag, 0);
+	qoute(qute_flag, 0);
 	return (i);
 }
-
 
 char	*get_str(char *s, int *index)
 {

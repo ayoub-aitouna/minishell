@@ -13,11 +13,5 @@ int Score(int set, int getter_setter)
 int main()
 {
 	int i = 0;
-	while (i < 10)
-	{
-		if(i > 1 && i % 2 == 0)
-			Score(i, 0);
-		printf("the score is %d \n", Score(0, -1));
-		i++;
-	}
+	readline();
 }

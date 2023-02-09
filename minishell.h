@@ -2,8 +2,11 @@
 # define MINISHELL_H
 # include "./libft/libft.h"
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
-
 
 typedef struct node
 {
@@ -13,7 +16,7 @@ typedef struct node
 	int output_file;
 } m_node;
 
-int		here_doc(char *limiter);
+int	here_doc(char *limiter);
 void	parse_cur_commend(char *line, t_list **list);
 void	parse(char *line, t_list **list);
 void	tty(void);
@@ -22,6 +25,6 @@ size_t	size(char **ptr);
 char	*strip_nl(char *line);
 m_node	*new_m_node();
 void	printf_list(t_list *list);
-int		qoute(int i, int mode);
+int	qoute(int i, int mode);
 char	**get_env(char **p);
 #endif

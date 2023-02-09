@@ -9,7 +9,7 @@ libft = libft/libft.a
 all: $(NAME)
 
 $(NAME) : $(obj) $(libft)
-	gcc $(obj) $(libft) -fsanitize=address -g -o $(NAME)
+	gcc $(obj) $(libft) -lreadline -fsanitize=address -g -o $(NAME)
 
 $(libft):
 	make bonus --directory=libft
