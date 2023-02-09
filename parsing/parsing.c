@@ -64,16 +64,14 @@ int	open_output_file(char *line, int *i)
 
 char	**parse_arguments(char *line, char *cmd, int *i)
 {
-	char	*arguments;
+	char	**arguments;
 
-	arguments = cmd;
+	arguments = NULL;
+	arguments = append(arguments, cmd);
 	while (line[*i] && ((line[*i] != '|' && line[*i] != '<'
 				&& line[*i] != '>')))
-	{
-		arguments = ft_strjoin(arguments, ft_strjoin(" ", get_str(&line[*i],
-						i)));
-	}
-	return (ft_split(arguments, ' '));
+		arguments = append(arguments, get_str(&line[*i], i));
+	return (arguments);
 }
 
 char	*get_path(void)
@@ -112,7 +110,7 @@ char	*get_fullpath(char *s)
 	return (NULL);
 }
 
-void	parse_cur_commend(char *line, t_list **list)
+void	parse_cur_command(char *line, t_list **list)
 {
 	int		i;
 	m_node	*node;
@@ -128,23 +126,23 @@ void	parse_cur_commend(char *line, t_list **list)
 			node->output_file = open_output_file(line, &i);
 		else
 		{
-			if (!node->commend)
-				node->commend = get_str(&line[i], &i);
-			node->arguments = parse_arguments(line, node->commend, &i);
+			if (!node->command)
+				node->command = get_str(&line[i], &i);
+			node->arguments = parse_arguments(line, node->command, &i);
 		}
 	}
-	full_path = get_fullpath(node->commend);
-	if (full_path  == NULL)
-		ft_printf("%s: command not found", node->commend);
-	node->commend = full_path;
+	full_path = get_fullpath(node->command);
+	if (full_path == NULL)
+		ft_printf("%s: command not found", node->command);
+	node->command = full_path;
 	ft_lstadd_back(list, ft_lstnew(node));
 	if (line[i] && line[i] == '|')
-		parse_cur_commend(&line[++i], list);
+		parse_cur_command(&line[++i], list);
 }
 
 void	parse(char *line, t_list **list)
 {
-	parse_cur_commend(line, list);
+	parse_cur_command(line, list);
 }
 
 size_t	string_list_len(char **list)

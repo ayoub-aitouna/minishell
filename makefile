@@ -1,4 +1,5 @@
-src = main.c parsing/parsing.c parsing/parsing_utils.c
+src = main.c parsing/parsing.c parsing/parsing_utils.c \
+		parsing/expand_functions.c parsing/m_node.c parsing/strings_functions.c
 
 obj = ${src:.c=.o}
 
