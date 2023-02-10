@@ -17,6 +17,8 @@ char	*strip_nl(char *line)
 	int	i;
 
 	i = 0;
+	if(line == NULL)
+		return (NULL);
 	while (line[i] != 0 && line[i] != '\n')
 		i++;
 	if (line[i] == '\n')
@@ -45,7 +47,6 @@ char	*get_str(char *s, int *index)
 	expanded = 0;
 	i += spaces_count(s);
 	len = calculate_len(&s[i], &expanded);
-	ft_printf("allocating %d \n", expanded + len + 1);
 	new_str = malloc(len + expanded + 1);
 	if (expanded != 0)
 		copy_expanded(new_str, &s[i], len);
@@ -53,5 +54,6 @@ char	*get_str(char *s, int *index)
 		ft_strlcpy(new_str, &s[i], len + 1);
 	i += spaces_count(&s[i + len]);
 	*index = *index + i + len;
+	ft_printf("get_str<%s>", new_str);
 	return (new_str);
 }
