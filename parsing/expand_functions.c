@@ -49,6 +49,8 @@ size_t	calculate_len(char *s, int *expanded)
 			qute_flag = 0;
 		i++;
 	}
+	if(qute_flag == 1 || qute_flag == 2)
+		i -= 2;
 	qoute(qute_flag, 0);
 	return (i);
 }
@@ -58,13 +60,15 @@ void	copy_expanded(char *dst, char *src, int len)
 	int		i;
 	int		j;
 	int		k;
+	int		flag;
 	char	*env_variable;
 	char	*name;
 
 	i = 0;
 	j = 0;
-	while (src[i])
+	while (i < len)
 	{
+		
 		if (src[i] == '$')
 		{
 			name = get_env_name(&src[i + 1]);

@@ -133,7 +133,7 @@ void	parse_cur_command(char *line, t_list **list)
 	}
 	full_path = get_fullpath(node->command);
 	if (full_path == NULL)
-		ft_printf("%s: command not found", node->command);
+		ft_printf("%s: command not found \n", node->command);
 	node->command = full_path;
 	ft_lstadd_back(list, ft_lstnew(node));
 	if (line[i] && line[i] == '|')
@@ -142,6 +142,8 @@ void	parse_cur_command(char *line, t_list **list)
 
 void	parse(char *line, t_list **list)
 {
+	if(line == NULL)
+		return ;
 	parse_cur_command(line, list);
 }
 
@@ -164,6 +166,24 @@ void	append_qoute(m_node *node, char *line)
 	if ((ft_strchr(line, '\'') && qoute(0, -1) == 1) || (ft_strchr(line, '"')
 				&& qoute(0, -1) == 2))
 		qoute(0, 0);
+}
+
+
+void exec(void *content)
+{
+	m_node * node  = (m_node *)content;
+	int id;
+
+	if((id = fork()) == 0)
+	{
+
+		if(node->input_file != -1)
+			dup2(node->input_file, 0);
+		if(node->output_file != -1)
+			dup2(node->output_file, 1);
+		execve(node->command, node->arguments, get_env(NULL));
+	}
+	waitpid(id, NULL, 0);
 }
 
 void	tty(void)
@@ -195,6 +215,8 @@ void	tty(void)
 		if (qoute(0, -1) == 0)
 		{
 			printf_list(list);
+			// ft_printf("\nexec \n\n");
+			// ft_lstiter(list, exec);
 			ft_lstclear(&list, free);
 		}
 		if (line == NULL)
