@@ -3,6 +3,7 @@
     "files.associations": {
         "*.h": "c",
         "*.c": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "type_traits": "c"
     }
 }

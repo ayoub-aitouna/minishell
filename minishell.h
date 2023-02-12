@@ -21,6 +21,8 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 typedef struct node
@@ -40,15 +42,22 @@ size_t	size(char **ptr);
 char	*strip_nl(char *line);
 m_node	*new_m_node();
 void	printf_list(t_list *list);
-int	qoute(int i, int mode);
 char	**get_env(char **p);
 m_node	*new_m_node(void);
 char	*strip_nl(char *line);
 char	*get_str(char *s, int *index);
 int	spaces_count(char *s);
-char	*get_env_name(char *s);
-size_t	calculate_len(char *s, int *expanded);
-void	copy_expanded(char *dst, char *src, int len);
+char	*get_env_name(char *s, int *index);
 size_t	size(char **ptr);
 char	**append(char **Strings, char *String);
+
+size_t	string_list_len(char **list);
+
+void	exec(void *content);
+int	open_input_file(char *line, int *i);
+int	open_output_file(char *line, int *i);
+char	*check_syntax(char *line, char **msg);
+void	toggle_quteflag(char c, int *qute_flag);
+void	toggle_quteflag_n_increment(char c, int *qute_flag, int *index);
+char	*ft_str_append(char *s, char c);
 #endif

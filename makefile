@@ -1,5 +1,7 @@
 src = main.c parsing/parsing.c parsing/parsing_utils.c \
-		parsing/expand_functions.c parsing/m_node.c parsing/strings_functions.c
+		parsing/expand_functions.c parsing/m_node.c parsing/strings_functions.c\
+		parsing/files.c parsing/here_doc.c parsing/syntax.c \
+		exec/main_exec.c 
 
 obj = ${src:.c=.o}
 
@@ -10,7 +12,7 @@ libft = libft/libft.a
 all: $(NAME)
 
 $(NAME) : $(obj) $(libft)
-	gcc $(obj) $(libft) -lreadline -fsanitize=address -g -o $(NAME)
+	gcc $(obj) $(libft) -lreadline -fsanitize=address -g3 -o $(NAME)
 
 $(libft):
 	make bonus --directory=libft

@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/09 16:58:39 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:37:57 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ size_t	size(char **ptr)
 
 char	**append(char **Strings, char *String)
 {
-	int i;
-	int len;
-	char **new_Strings;
+	int		i;
+	int		len;
+	char	**new_Strings;
 
 	i = 0;
 	if (Strings == NULL)
@@ -43,4 +43,14 @@ char	**append(char **Strings, char *String)
 	new_Strings[i] = NULL;
 	free(Strings);
 	return (new_Strings);
+}
+
+size_t	string_list_len(char **list)
+{
+	int	i;
+
+	i = 0;
+	while (list[i])
+		i++;
+	return (i);
 }

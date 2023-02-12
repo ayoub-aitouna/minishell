@@ -1,66 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/12 16:14:13 by aaitouna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
-
-int	qoute(int i, int mode)
-{
-	static int	qoute_flag;
-
-	if (mode == 0)
-		qoute_flag = i;
-	return (qoute_flag);
-}
-
-int	here_doc(char *limiter)
-{
-	char	*line;
-	int		fd;
-
-	fd = open(".temp_file", O_CREAT | O_RDWR, 0664);
-	while (1)
-	{
-		ft_printf("here_doc> ");
-		line = strip_nl(get_next_line(0));
-		if (ft_strlen(limiter) == ft_strlen(line) && !ft_strncmp(line, limiter,
-				ft_strlen(line)))
-			break ;
-		write(fd, line, ft_strlen(line));
-	}
-	close(fd);
-	return (open(".temp_file", O_RDONLY));
-}
-
-int	open_input_file(char *line, int *i)
-{
-	int	input_file;
-
-	if (line[(*i) + 1] == '<')
-		return (here_doc(get_str(&line[(*i) += 2], i)));
-	else if ((input_file = open(get_str(&line[++(*i)], i), O_RDONLY)) == -1)
-	{
-		// input file doesn't open
-	}
-	return (input_file);
-}
-
-int	open_output_file(char *line, int *i)
-{
-	int	opne_flag;
-	int	output_file;
-
-	opne_flag = 0;
-	if (line[(*i) + 1] == '>')
-	{
-		opne_flag = O_CREAT | O_RDWR | O_APPEND;
-		(*i)++;
-	}
-	else
-		opne_flag = O_CREAT | O_RDWR | O_TRUNC;
-	if ((output_file = open(get_str(&line[++(*i)], i), opne_flag, 0664)) ==
-		-1)
-	{
-		// input file doesn't open
-	}
-	return (output_file);
-}
 
 char	**parse_arguments(char *line, char *cmd, int *i)
 {
@@ -142,53 +92,32 @@ void	parse_cur_command(char *line, t_list **list)
 
 void	parse(char *line, t_list **list)
 {
-	if(line == NULL)
+	if (line == NULL)
 		return ;
 	parse_cur_command(line, list);
 }
 
-size_t	string_list_len(char **list)
+int	is_complete(char *line)
 {
 	int	i;
+	int	is_complete;
 
 	i = 0;
-	while (list[i])
-		i++;
-	return (i);
-}
-
-void	append_qoute(m_node *node, char *line)
-{
-	int	len;
-
-	len = string_list_len(node->arguments) - 1;
-	node->arguments[len] = ft_strjoin(node->arguments[len], line);
-	if ((ft_strchr(line, '\'') && qoute(0, -1) == 1) || (ft_strchr(line, '"')
-				&& qoute(0, -1) == 2))
-		qoute(0, 0);
-}
-
-
-void exec(void *content)
-{
-	m_node * node  = (m_node *)content;
-	int id;
-
-	if((id = fork()) == 0)
+	is_complete = 1;
+	while (line[i])
 	{
-
-		if(node->input_file != -1)
-			dup2(node->input_file, 0);
-		if(node->output_file != -1)
-			dup2(node->output_file, 1);
-		execve(node->command, node->arguments, get_env(NULL));
+		if (line[i] == '|' || line[i] == '\\')
+			is_complete = 0;
+		else if (line[i] != ' ' && line[i] != '\n')
+			is_complete = 1;
+		i++;
 	}
-	waitpid(id, NULL, 0);
+	return (is_complete);
 }
-
 void	tty(void)
 {
 	char	*line;
+	char	*msg;
 	char	cur_dir[64];
 	t_list	*list;
 	char	*promt;
@@ -198,27 +127,23 @@ void	tty(void)
 										ft_strjoin(cur_dir,
 												"\e[0m>"));
 	list = NULL;
+	line = NULL;
 	while (1)
 	{
-		getcwd(cur_dir, 64);
-		if (qoute(0, -1) == 1)
-			promt = "qoute>";
-		else if (qoute(0, -1) == 2)
-			promt = "dqoute>";
-		else
-			promt = default_promt;
-		line = readline(promt);
-		if (qoute(0, -1) == 1 || qoute(0, -1) == 2)
-			append_qoute((m_node *)(ft_lstlast(list)->content), line);
-		else
-			parse(strip_nl(line), &list);
-		if (qoute(0, -1) == 0)
+		line = readline(default_promt);
+		if (line == NULL)
 		{
-			printf_list(list);
-			// ft_printf("\nexec \n\n");
-			// ft_lstiter(list, exec);
-			ft_lstclear(&list, free);
+			ft_printf("-bash: syntax error near %s\n", msg);
+			continue ;
 		}
+		while (!is_complete(line))
+			line = ft_strjoin(line, readline(">"));
+		line = check_syntax(strip_nl(line), &msg);
+		parse(line, &list);
+		// if(((m_node *)ft_lstlast(list)->content)->command )
+		printf_list(list);
+		ft_lstiter(list, exec);
+		ft_lstclear(&list, free);
 		if (line == NULL)
 			break ;
 	}
