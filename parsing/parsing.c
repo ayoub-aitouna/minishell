@@ -106,7 +106,7 @@ int	is_complete(char *line)
 	is_complete = 1;
 	while (line[i])
 	{
-		if (line[i] == '|' || line[i] == '\\')
+		if (line[i] == '|' || (line[i] == '\\' && (line[i + 1] == 0)))
 			is_complete = 0;
 		else if (line[i] != ' ' && line[i] != '\n')
 			is_complete = 1;
@@ -131,14 +131,13 @@ void	tty(void)
 	while (1)
 	{
 		line = readline(default_promt);
-		if (line == NULL)
+		if (check_syntax(line, &msg) == NULL)
 		{
 			ft_printf("-bash: syntax error near %s\n", msg);
 			continue ;
 		}
 		while (!is_complete(line))
 			line = ft_strjoin(line, readline(">"));
-		line = check_syntax(strip_nl(line), &msg);
 		parse(line, &list);
 		// if(((m_node *)ft_lstlast(list)->content)->command )
 		printf_list(list);
