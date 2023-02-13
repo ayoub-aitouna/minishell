@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 15:27:42 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:23:41 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,27 @@ void	parse(char *line, t_list **list)
 		{
 			if (!node->command)
 				node->command = get_str(&line[i], &i);
-			node->arguments = parse_arguments(line, node->command, &i);
+			node->arguments = parse_arguments(line, ft_strdup(node->command),
+					&i);
 		}
 	}
-	update_command(node);
+	node->command = update_command(node->command);
 	ft_lstadd_back(list, ft_lstnew(node));
 	if (line[i] && line[i] == '|')
 		parse(&line[++i], list);
+}
+
+char	*get_promt_text()
+{
+	char	cur_dir[64];
+	char	*dir;
+	char	*default_promt;
+
+	getcwd(cur_dir, 64);
+	dir = ft_strjoin(cur_dir, "$ " RESET);
+	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE, dir);
+	free(dir);
+	return (default_promt);
 }
 
 int	is_complete(char *line)
@@ -73,31 +87,20 @@ int	is_complete(char *line)
 void	tty(void)
 {
 	char	*line;
-	char	*msg;
-	char	cur_dir[64];
 	t_list	*list;
-	char	*promt;
-	char	*default_promt;
-	char	*dir;
 	char	*temp;
+	char	*default_promt;
 
-	getcwd(cur_dir, 64);
-	dir = ft_strjoin(cur_dir, "$ " RESET);
-	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE, dir);
-	free(dir);
 	list = NULL;
 	line = NULL;
 	while (1)
 	{
+		default_promt = get_promt_text();
 		line = readline(default_promt);
-		if (check_syntax(line, &msg) == NULL)
-		{
-			ft_printf(RED "-bash: syntax error near  unexpected "
-							"token %s\n" RESET,
-						msg);
-			add_history(line);
+		free(default_promt);
+		handle_syntax(line);
+		if (handle_syntax(line))
 			continue ;
-		}
 		while (!is_complete(line))
 		{
 			temp = ft_strjoin(line, readline(">"));
@@ -106,7 +109,6 @@ void	tty(void)
 		}
 		add_history(line);
 		parse(line, &list);
-		// printf_list(list);
 		ft_lstiter(list, exec);
 		ft_lstclear(&list, clear_node);
 		if (line != NULL)

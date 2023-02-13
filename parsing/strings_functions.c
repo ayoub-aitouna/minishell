@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 15:32:27 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:19:52 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**append(char **Strings, char *String)
 	new_Strings = malloc((len + 2) * sizeof(char *));
 	while (i < len)
 	{
-		new_Strings[i] = Strings[i];
+		new_Strings[i] = ft_strdup(Strings[i]);
 		i++;
 	}
 	new_Strings[i++] = String;

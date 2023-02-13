@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:34:44 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/09 16:35:08 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:50:25 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 m_node	*new_m_node(void)
 {
-	m_node *new_node;
+	m_node	*new_node;
 
 	new_node = malloc(sizeof(m_node));
 	if (!new_node)

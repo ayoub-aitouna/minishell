@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:21:01 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 15:26:31 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:06:01 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ char	*get_fullpath(char *s)
 	return (cmd);
 }
 
-void	update_command(m_node *node)
+char *update_command(char *command)
 {
 	char *command_path;
-	command_path = get_fullpath(node->command);
+	command_path = get_fullpath(command);
 	if (command_path == NULL)
-		ft_printf(RED "%s: command not found \n" RESET, node->command);
-	node->command = command_path;
+		ft_printf(RED "%s: command not found \n" RESET, command);
+	return (command_path);
 }

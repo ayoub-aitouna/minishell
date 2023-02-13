@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:30:17 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 15:31:45 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:50:05 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	here_doc(char *limiter)
 		if (ft_strlen(limiter) == ft_strlen(line) && !ft_strncmp(line, limiter,
 				ft_strlen(line)))
 			break ;
-		// 	write(fd, line, ft_strlen(line));
+		write(fd, line, ft_strlen(line));
 	}
 	close(fd);
 	return (open(".temp_file", O_RDONLY));

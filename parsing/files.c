@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:34:35 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/12 14:37:26 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:49:02 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,47 @@
 
 int	open_input_file(char *line, int *i)
 {
-	int	input_file;
+	int		input_file;
+	char	*name;
 
 	if (line[(*i) + 1] == '<')
-		return (here_doc(get_str(&line[(*i) += 2], i)));
-	else if ((input_file = open(get_str(&line[++(*i)], i), O_RDONLY)) == -1)
 	{
-		// input file doesn't open
+		get_str(&line[(*i) += 2], i);
+		return (here_doc(name));
+	}
+	else
+	{
+		name = get_str(&line[++(*i)], i);
+		input_file = open(name, O_RDONLY);
+		if (input_file == -1)
+		{
+		}
+		if (name != NULL)
+			free(name);
 	}
 	return (input_file);
 }
 
 int	open_output_file(char *line, int *i)
 {
-	int	opne_flag;
-	int	output_file;
+	int		opne_flag;
+	int		output_file;
+	char	*name;
 
 	opne_flag = 0;
 	if (line[(*i) + 1] == '>')
 	{
-		opne_flag = O_CREAT | O_RDWR | O_APPEND;
 		(*i)++;
+		opne_flag = O_CREAT | O_RDWR | O_APPEND;
 	}
 	else
 		opne_flag = O_CREAT | O_RDWR | O_TRUNC;
-	if ((output_file = open(get_str(&line[++(*i)], i), opne_flag, 0664)) ==
-		-1)
+	name = get_str(&line[++(*i)], i);
+	output_file = open(name, opne_flag, 0664);
+	if (output_file == -1)
 	{
-		// input file doesn't open
 	}
+	if (name != NULL)
+		free(name);
 	return (output_file);
 }
