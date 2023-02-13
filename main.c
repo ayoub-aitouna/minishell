@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2023/02/13 02:05:59 by aaitouna          #+#    #+#             */
 /*   Updated: 2023/02/13 02:05:59 by aaitouna         ###   ########.fr       */
 /*                                                                            */
@@ -67,8 +70,8 @@ void	printf_list(t_list *list)
 
 int	main(int ac, char **av, char **env)
 {
+	print_name();
 	get_env(env);
 	signal(SIGINT, handle_sigint);
 	tty();
-
 }

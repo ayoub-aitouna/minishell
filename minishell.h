@@ -66,4 +66,5 @@ void	clear_node(void *content);
 void	handle_sigint(int sig);
 char	*get_path(void);
 char	*get_fullpath(char *s);
+void	print_name(void);
 #endif
