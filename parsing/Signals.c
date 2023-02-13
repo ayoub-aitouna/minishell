@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   Signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/12 14:30:17 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 15:31:45 by aaitouna         ###   ########.fr       */
+/*   Created: 2023/02/13 15:21:33 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/13 15:35:00 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	here_doc(char *limiter)
+void	handle_sigint(int sig)
 {
-	char	*line;
-	int		fd;
-
-	printf("limiter %s \n", limiter);
-	fd = open(".temp_file", O_CREAT | O_RDWR, 0664);
-	while (1)
-	{
-		line = readline("here_doc> ");
-		if (line == NULL)
-			break ;
-		if (ft_strlen(limiter) == ft_strlen(line) && !ft_strncmp(line, limiter,
-				ft_strlen(line)))
-			break ;
-		// 	write(fd, line, ft_strlen(line));
-	}
-	close(fd);
-	return (open(".temp_file", O_RDONLY));
+	write(0, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }

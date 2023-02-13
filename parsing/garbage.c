@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/12 14:30:17 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 15:31:45 by aaitouna         ###   ########.fr       */
+/*   Created: 2023/02/13 15:23:28 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/13 15:23:39 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	here_doc(char *limiter)
+void	clear_node(void *content)
 {
-	char	*line;
-	int		fd;
+	m_node	*node;
 
-	printf("limiter %s \n", limiter);
-	fd = open(".temp_file", O_CREAT | O_RDWR, 0664);
-	while (1)
-	{
-		line = readline("here_doc> ");
-		if (line == NULL)
-			break ;
-		if (ft_strlen(limiter) == ft_strlen(line) && !ft_strncmp(line, limiter,
-				ft_strlen(line)))
-			break ;
-		// 	write(fd, line, ft_strlen(line));
-	}
-	close(fd);
-	return (open(".temp_file", O_RDONLY));
+	node = content;
+	close(node->input_file);
+	close(node->output_file);
+	if (node->arguments != NULL)
+		free_list(node->arguments);
+	if (node->command != NULL)
+		free(node->command);
+}
+
+void	free_list(char **list)
+{
+	int i;
+
+	if (list == NULL)
+		return ;
+	i = 0;
+	while (list[i])
+		free(list[i++]);
+	free(list);
 }

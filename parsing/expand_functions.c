@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:11 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/12 18:05:49 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:31:37 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*get_env_name(char *s, int *len)
 	name = NULL;
 	while (s[i] && s[i] != ' ' && s[i] != '$' && s[i] != '"')
 	{
-		printf("copying <%c> \n", s[i]);
 		if (s[i] != '\n' && s[i] != '\\')
 			name = ft_str_append(name, s[i]);
 		i++;
@@ -29,8 +28,6 @@ char	*get_env_name(char *s, int *len)
 	*len = i;
 	return (name);
 }
-
-
 
 void	toggle_quteflag(char c, int *qute_flag)
 {

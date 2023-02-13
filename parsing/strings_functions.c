@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/12 14:37:57 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:32:27 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ char	**append(char **Strings, char *String)
 	}
 	new_Strings[i++] = String;
 	new_Strings[i] = NULL;
-	free(Strings);
+	if (Strings != NULL)
+		free_list(Strings);
 	return (new_Strings);
 }
 

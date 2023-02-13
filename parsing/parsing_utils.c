@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:14 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/12 18:06:53 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:29:47 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	spaces_count(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i] && s[i] == ' ')
+	while (s[i] && (s[i] == ' ' || s[i] == '\n' || s[i] == '\t'))
 		i++;
 	return (i);
 }
@@ -52,7 +52,8 @@ char	*ft_str_append(char *s, char c)
 	}
 	new_str[i++] = c;
 	new_str[i] = 0;
-	// free(s);
+	if (s != NULL)
+		free(s);
 	return (new_str);
 }
 
@@ -108,13 +109,12 @@ char	*copy_string(char *s, int *index)
 				&& s[*index] != '<' && s[*index] != ' ') || qute_flag))
 	{
 		toggle_quteflag_n_increment(s[*index], &qute_flag, index);
-		if (qute_flag == 2 && s[*index] == '$')
+		if (qute_flag != 1 && s[*index] == '$')
 			new_str = copy_variable_value(new_str, s, index);
 		if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
 		{
 			if (((s[*index] == '\n' || s[*index] == '\\')))
 			{
-				ft_printf("is \\ and flag =%d\n", qute_flag);
 				if (qute_flag == 1)
 					new_str = ft_str_append(new_str, s[*index]);
 			}

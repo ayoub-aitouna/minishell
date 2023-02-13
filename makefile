@@ -1,8 +1,8 @@
 src = main.c parsing/parsing.c parsing/parsing_utils.c \
 		parsing/expand_functions.c parsing/m_node.c parsing/strings_functions.c\
 		parsing/files.c parsing/here_doc.c parsing/syntax.c \
+		parsing/garbage.c  parsing/paths.c  parsing/Signals.c \
 		exec/main_exec.c 
-
 obj = ${src:.c=.o}
 
 NAME =  minishell
