@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-char	*strip_nl(char *line)
+char *strip_nl(char *line)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (line == NULL)
@@ -26,9 +26,9 @@ char	*strip_nl(char *line)
 	return (line);
 }
 
-int	spaces_count(char *s)
+int spaces_count(char *s)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (s[i] && (s[i] == ' ' || s[i] == '\n' || s[i] == '\t'))
@@ -36,11 +36,11 @@ int	spaces_count(char *s)
 	return (i);
 }
 
-char	*ft_str_append(char *s, char c)
+char *ft_str_append(char *s, char c)
 {
-	int		i;
-	int		len;
-	char	*new_str;
+	int i;
+	int len;
+	char *new_str;
 
 	i = 0;
 	len = ft_strlen(s);
@@ -57,7 +57,7 @@ char	*ft_str_append(char *s, char c)
 	return (new_str);
 }
 
-void	toggle_quteflag_n_increment(char c, int *qute_flag, int *index)
+void toggle_quteflag_n_increment(char c, int *qute_flag, int *index)
 {
 	if (c == '"' && *qute_flag == 0)
 	{
@@ -76,12 +76,12 @@ void	toggle_quteflag_n_increment(char c, int *qute_flag, int *index)
 	}
 }
 
-char	*copy_variable_value(char *dst, char *src, int *index)
+char *copy_variable_value(char *dst, char *src, int *index)
 {
-	char	*value;
-	char	*name;
-	int		j;
-	int		name_len;
+	char *value;
+	char *name;
+	int j;
+	int name_len;
 
 	name_len = 0;
 	j = 0;
@@ -94,24 +94,27 @@ char	*copy_variable_value(char *dst, char *src, int *index)
 		return (dst);
 	while (value[j])
 		dst = ft_str_append(dst, value[j++]);
-	(*index) += name_len + 1;
+	(*index) += name_len - 1;
 	return (dst);
 }
 
-char	*copy_string(char *s, int *index)
+char *copy_string(char *s, int *index)
 {
-	int		qute_flag;
-	char	*new_str;
+	int qute_flag;
+	char *new_str;
 
 	qute_flag = 0;
 	new_str = NULL;
-	while (s[*index] != 0 && ((s[*index] != '|' && s[*index] != '>'
-				&& s[*index] != '<' && s[*index] != ' ') || qute_flag))
+	while (s[*index] != 0 && ((s[*index] != '|' && s[*index] != '>' && s[*index] != '<' && s[*index] != ' ') || qute_flag))
 	{
 		toggle_quteflag_n_increment(s[*index], &qute_flag, index);
 		if (qute_flag != 1 && s[*index] == '$')
+		{
 			new_str = copy_variable_value(new_str, s, index);
-		if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
+			if ((s[*index] == '"' && qute_flag == 2))
+				qute_flag = 0;
+		}
+		else if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
 		{
 			if (((s[*index] == '\n' || s[*index] == '\\')))
 			{
@@ -126,7 +129,7 @@ char	*copy_string(char *s, int *index)
 	return (new_str);
 }
 
-char	*get_str(char *s, int *index)
+char *get_str(char *s, int *index)
 {
 	int len;
 	int i;

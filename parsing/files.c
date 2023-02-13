@@ -19,7 +19,7 @@ int	open_input_file(char *line, int *i)
 
 	if (line[(*i) + 1] == '<')
 	{
-		get_str(&line[(*i) += 2], i);
+		name = get_str(&line[(*i) += 2], i);
 		return (here_doc(name));
 	}
 	else

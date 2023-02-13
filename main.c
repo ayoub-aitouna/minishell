@@ -72,6 +72,6 @@ int	main(int ac, char **av, char **env)
 {
 	print_name();
 	get_env(env);
-	signal(SIGINT, handle_sigint);
+	// signal(SIGINT, handle_sigint);
 	tty();
 }
