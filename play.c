@@ -12,29 +12,11 @@
 
 #include "./minishell.h"
 
-void	go_to_home(void)
+int main(int ac, char **av)
 {
-	char	cur_dir[64];
 
-	getcwd(cur_dir, 64);
-}
-
-void	change_directory(char *derictory)
-{
-	if (ft_strncmp("", derictory, 1) == 0)
-		return (go_to_home());
-	chdir(derictory);
-}
-
-int	main(void)
-{
-	chdir("/home/ayoub/1337");
+	change_directory(av[1]);
 	char cur_dir[64];
-
 	getcwd(cur_dir, 64);
-	printf("cur dir <%s>", cur_dir);
-
-	chdir("");
-	getcwd(cur_dir, 64);
-	printf("cur dir <%s>", cur_dir);
+	printf("cur dir <%s>\n", cur_dir);
 }

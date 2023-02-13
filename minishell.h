@@ -26,7 +26,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
+# include "./exec/builtin/built.h"
 typedef struct node
 {
 	int input_file;
@@ -69,4 +69,5 @@ char	*get_fullpath(char *s);
 void	print_name(void);
 int	handle_syntax(char *line);
 char	*handle_uncomplete(char *line);
+int is_builtin(char *s);
 #endif

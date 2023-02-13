@@ -28,6 +28,13 @@ char	*get_path(void)
 	return (NULL);
 }
 
+int is_builtin(char *s)
+{
+	if (ft_strncmp(s, "exit", 4) == 0 || ft_strncmp(s, "cd", 2) == 0)
+		return (1);
+	return (0);
+}
+
 char	*get_fullpath(char *s)
 {
 	int		i;
@@ -37,7 +44,7 @@ char	*get_fullpath(char *s)
 	char	*paths_list;
 
 	i = 0;
-	if (!access(s, X_OK) || ft_strncmp(s, "exit", 4) == 0)
+	if (!access(s, X_OK) || is_builtin(s) == 1)
 		return (s);
 	paths_list = get_path();
 	paths = ft_split(paths_list, ':');

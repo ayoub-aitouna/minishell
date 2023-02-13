@@ -109,6 +109,7 @@ void	tty(void)
 		}
 		add_history(line);
 		parse(line, &list);
+		printf_list(list);
 		ft_lstiter(list, exec);
 		ft_lstclear(&list, clear_node);
 		if (line != NULL)

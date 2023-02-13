@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"built.h"
+#include "built.h"
 
-void cd(char *path)
+void change_directory(char *derictory)
 {
-
+	if (ft_strncmp("~", derictory, 1) == 0 || derictory == NULL)
+		derictory = getenv("HOME");
+	chdir(derictory);
 }
