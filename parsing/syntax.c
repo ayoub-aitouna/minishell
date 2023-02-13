@@ -37,9 +37,20 @@ char *check_syntax(char *line, char **msg)
 			pipe_flag = 0;
 		if (pipe_flag == 2)
 			return (set_error_msg(msg, " unexpected token `|'"));
-		if(line[i] == '>' || line[i] == '<')
-			if(get_str(&line[i + 1], &i) == NULL)
+		if (line[i] == '>')
+		{
+			if (line[i + 1] == '>')
+				i++;
+			if (get_str(&line[i + 1], &i) == NULL)
 				return (set_error_msg(msg, " unexpected token `newline'"));
+		}
+		if (line[i] == '<')
+		{
+			if (line[i + 1] == '<')
+				i++;
+			if (get_str(&line[i + 1], &i) == NULL)
+				return (set_error_msg(msg, " unexpected token `newline'"));
+		}
 		i++;
 	}
 	if (qute_flag != 0)

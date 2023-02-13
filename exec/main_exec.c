@@ -12,12 +12,14 @@
 
 #include "../minishell.h"
 
-void	exec(void *content)
+void exec(void *content)
 {
-	m_node	*node;
-	int		id;
+	m_node *node;
+	int id;
 
 	node = (m_node *)content;
+	if (ft_strncmp(node->command, "exit", 4) == 0)
+		exit(0);
 	if ((id = fork()) == 0)
 	{
 		if (node->input_file != -1)
