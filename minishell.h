@@ -8,14 +8,15 @@
 	+#+        */
 /*                                                +#+#+#+#+#+  
 	+#+           */
-/*   Created: 2023/02/13 15:28:48 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 15:28:48 by aaitouna         ###   ########.fr       */
+/*   Created: 2023/02/14 13:29:25 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/14 13:29:25 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "./colors.h"
+# include "./exec/builtin/built.h"
 # include "./libft/libft.h"
 # include <fcntl.h>
 # include <readline/history.h>
@@ -26,7 +27,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include "./exec/builtin/built.h"
 typedef struct node
 {
 	int input_file;
@@ -53,7 +53,7 @@ char	*get_env_name(char *s, int *index);
 size_t	size(char **ptr);
 char	**append(char **Strings, char *String);
 size_t	string_list_len(char **list);
-void	exec(void *content);
+void	exec(t_list *list);
 int	open_input_file(char *line, int *i);
 int	open_output_file(char *line, int *i);
 char	*check_syntax(char *line, char **msg);
@@ -69,5 +69,9 @@ char	*get_fullpath(char *s);
 void	print_name(void);
 int	handle_syntax(char *line);
 char	*handle_uncomplete(char *line);
-int is_builtin(char *s);
+int	is_builtin(char *s);
+void	handle_sigquit(int sig);
+int	is_equal(char *s, char *s2);
+void	echo(char **arguments);
+void	print_working_directory(void);
 #endif

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   play.c                                             :+:      :+:    :+:   */
+/*   equals.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 21:07:41 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/14 17:00:52 by aaitouna         ###   ########.fr       */
+/*   Created: 2023/02/14 16:17:18 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/14 16:18:35 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
-int	main(int ac, char **av)
+int	is_equal(char *s, char *s2)
 {
-
+	return (ft_strlen(s) == ft_strlen(s2) && !ft_strncmp(s, s2, ft_strlen(s)));
 }

@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 17:23:41 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:13:43 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,16 @@ char	*get_promt_text()
 	return (default_promt);
 }
 
+int	is_nl(char *line, int i)
+{
+	int	n_only;
+
+	n_only = 0;
+	if (i > 0)
+		n_only = (line[i - 1] == '\\');
+	return (line[i] == '\\' && line[i + 1] == 0 && !n_only);
+}
+
 int	is_complete(char *line)
 {
 	int	i;
@@ -75,13 +85,32 @@ int	is_complete(char *line)
 	is_complete = 1;
 	while (line[i])
 	{
-		if (line[i] == '|' || (line[i] == '\\' && line[i + 1] == 0))
+		if (line[i] == '|' || is_nl(line, i))
 			is_complete = 0;
 		else if (line[i] != ' ' && line[i] != '\n')
 			is_complete = 1;
 		i++;
 	}
 	return (is_complete);
+}
+
+char	*clean_line(char *line)
+{
+	// int		i;
+	// int		qute_flag;
+	// char	*new_str;
+	// i = 0;
+	// qute_flag = 0;
+	// new_str = NULL;
+	// while (line[i] != 0)
+	// {
+	// 	toggle_quteflag_n_increment(line[i], &qute_flag, &i);
+	// 	if (qute_flag != 0 && !is_nl(line, i))
+	// 	{
+	// 	}
+	// 	i++;
+	// }
+	return (line);
 }
 
 void	tty(void)
@@ -97,6 +126,8 @@ void	tty(void)
 	{
 		default_promt = get_promt_text();
 		line = readline(default_promt);
+		if (!line)
+			break ;
 		free(default_promt);
 		handle_syntax(line);
 		if (handle_syntax(line))
@@ -107,10 +138,11 @@ void	tty(void)
 			free(line);
 			line = temp;
 		}
+		line = clean_line(line);
 		add_history(line);
 		parse(line, &list);
-		printf_list(list);
-		ft_lstiter(list, exec);
+		exec(list);
+		// ft_lstiter(list, exec);
 		ft_lstclear(&list, clear_node);
 		if (line != NULL)
 			free(line);

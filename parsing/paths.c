@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:21:01 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 17:06:01 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:02:09 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ char	*get_path(void)
 	return (NULL);
 }
 
-int is_builtin(char *s)
+int	is_builtin(char *s)
 {
-	if (ft_strncmp(s, "exit", 4) == 0 || ft_strncmp(s, "cd", 2) == 0)
+	if (is_equal(s, "exit") || is_equal(s, "cd") || is_equal(s, "echo")
+		|| is_equal(s, "pwd") || is_equal(s, "export") || is_equal(s, "unset")
+		|| is_equal(s, "env"))
 		return (1);
 	return (0);
 }
@@ -65,7 +67,7 @@ char	*get_fullpath(char *s)
 	return (cmd);
 }
 
-char *update_command(char *command)
+char	*update_command(char *command)
 {
 	char *command_path;
 	command_path = get_fullpath(command);
