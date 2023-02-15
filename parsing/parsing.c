@@ -145,7 +145,8 @@ void	tty(void)
 		line = clean_line(line);
 		add_history(line);
 		parse(line, &list);
-		exec(list);
+		printf_list(list);
+		// exec(list);
 		// ft_lstiter(list, exec);
 		ft_lstclear(&list, clear_node);
 		if (line != NULL)
