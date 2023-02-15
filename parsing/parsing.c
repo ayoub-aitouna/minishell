@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/14 17:13:43 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/15 02:37:02 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,16 @@ void	parse(char *line, t_list **list)
 
 char	*get_promt_text()
 {
-	char	cur_dir[64];
+	char	*working_directory;
 	char	*dir;
 	char	*default_promt;
 
-	getcwd(cur_dir, 64);
-	dir = ft_strjoin(cur_dir, "$ " RESET);
-	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE, dir);
+	working_directory = getcwd(NULL, 0);
+	dir = ft_strjoin(working_directory, "$ " RESET);
+	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE,
+								dir);
 	free(dir);
+	free(working_directory);
 	return (default_promt);
 }
 
@@ -120,15 +122,17 @@ void	tty(void)
 	char	*temp;
 	char	*default_promt;
 
+	default_promt = NULL;
 	list = NULL;
 	line = NULL;
 	while (1)
 	{
 		default_promt = get_promt_text();
 		line = readline(default_promt);
+		ft_printf("freeing %p\n", default_promt);
+		free(default_promt);
 		if (!line)
 			break ;
-		free(default_promt);
 		handle_syntax(line);
 		if (handle_syntax(line))
 			continue ;

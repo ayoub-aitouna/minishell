@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:23:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 17:19:56 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/15 02:13:06 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	clear_node(void *content)
 		free_list(node->arguments);
 	if (node->command != NULL)
 		free(node->command);
+	free(content);
 }
 
 void	free_list(char **list)
