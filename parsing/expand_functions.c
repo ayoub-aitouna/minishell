@@ -19,7 +19,7 @@ char	*get_env_name(char *s, int *len)
 
 	i = 0;
 	name = NULL;
-	while (s[i] && s[i] != ' ' && s[i] != '$' && s[i] != '"')
+	while (s[i] && ft_isalnum(s[i]))
 	{
 		if (s[i] != '\n' && s[i] != '\\')
 			name = ft_str_append(name, s[i]);

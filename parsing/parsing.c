@@ -121,7 +121,7 @@ void	tty(void)
 	t_list	*list;
 	char	*temp;
 	char	*default_promt;
-
+	
 	default_promt = NULL;
 	list = NULL;
 	line = NULL;
@@ -129,7 +129,6 @@ void	tty(void)
 	{
 		default_promt = get_promt_text();
 		line = readline(default_promt);
-		ft_printf("freeing %p\n", default_promt);
 		free(default_promt);
 		if (!line)
 			break ;
@@ -147,7 +146,6 @@ void	tty(void)
 		parse(line, &list);
 		printf_list(list);
 		// exec(list);
-		// ft_lstiter(list, exec);
 		ft_lstclear(&list, clear_node);
 		if (line != NULL)
 			free(line);
