@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/15 02:37:02 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:16:25 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**parse_arguments(char *line, char *cmd, int *i)
 	arguments = append(arguments, cmd);
 	while (line[*i] && ((line[*i] != '|' && line[*i] != '<'
 				&& line[*i] != '>')))
-		arguments = append(arguments, get_str(&line[*i], i));
+		arguments = append(arguments, get_str(&line[*i], i, 1));
 	return (arguments);
 }
 
@@ -42,7 +42,7 @@ void	parse(char *line, t_list **list)
 		else
 		{
 			if (!node->command)
-				node->command = get_str(&line[i], &i);
+				node->command = get_str(&line[i], &i, 1);
 			node->arguments = parse_arguments(line, ft_strdup(node->command),
 					&i);
 		}
@@ -68,50 +68,16 @@ char	*get_promt_text()
 	return (default_promt);
 }
 
-int	is_nl(char *line, int i)
+char	*get_full_line(char *line)
 {
-	int	n_only;
+	char	*temp;
 
-	n_only = 0;
-	if (i > 0)
-		n_only = (line[i - 1] == '\\');
-	return (line[i] == '\\' && line[i + 1] == 0 && !n_only);
-}
-
-int	is_complete(char *line)
-{
-	int	i;
-	int	is_complete;
-
-	i = 0;
-	is_complete = 1;
-	while (line[i])
+	while (!is_complete(line))
 	{
-		if (line[i] == '|' || is_nl(line, i))
-			is_complete = 0;
-		else if (line[i] != ' ' && line[i] != '\n')
-			is_complete = 1;
-		i++;
+		temp = ft_strjoin(line, readline(">"));
+		free(line);
+		line = temp;
 	}
-	return (is_complete);
-}
-
-char	*clean_line(char *line)
-{
-	// int		i;
-	// int		qute_flag;
-	// char	*new_str;
-	// i = 0;
-	// qute_flag = 0;
-	// new_str = NULL;
-	// while (line[i] != 0)
-	// {
-	// 	toggle_quteflag_n_increment(line[i], &qute_flag, &i);
-	// 	if (qute_flag != 0 && !is_nl(line, i))
-	// 	{
-	// 	}
-	// 	i++;
-	// }
 	return (line);
 }
 
@@ -119,10 +85,8 @@ void	tty(void)
 {
 	char	*line;
 	t_list	*list;
-	char	*temp;
 	char	*default_promt;
-	
-	default_promt = NULL;
+
 	list = NULL;
 	line = NULL;
 	while (1)
@@ -132,24 +96,13 @@ void	tty(void)
 		free(default_promt);
 		if (!line)
 			break ;
-		handle_syntax(line);
 		if (handle_syntax(line))
 			continue ;
-		while (!is_complete(line))
-		{
-			temp = ft_strjoin(line, readline(">"));
-			free(line);
-			line = temp;
-		}
-		line = clean_line(line);
+		line = get_full_line(line);
 		add_history(line);
 		parse(line, &list);
 		printf_list(list);
-		// exec(list);
 		ft_lstclear(&list, clear_node);
-		if (line != NULL)
-			free(line);
-		else
-			break ;
+		free(line);
 	}
 }

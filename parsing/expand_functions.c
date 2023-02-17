@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:11 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 17:13:12 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:38:54 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,47 @@ char	*get_env_name(char *s, int *len)
 	}
 	*len = i;
 	return (name);
+}
+
+void	toggle_quteflag_n_increment(char c, int *qute_flag, int *index)
+{
+	if (c == '"' && *qute_flag == 0)
+	{
+		*qute_flag = 2;
+		(*index)++;
+	}
+	else if (c == '\'' && *qute_flag == 0)
+	{
+		*qute_flag = 1;
+		(*index)++;
+	}
+	else if ((c == '\'' && *qute_flag == 1) || (c == '"' && *qute_flag == 2))
+	{
+		*qute_flag = 0;
+		(*index)++;
+	}
+}
+
+char	*copy_variable_value(char *dst, char *src, int *index)
+{
+	char	*value;
+	char	*name;
+	int		j;
+	int		name_len;
+
+	name_len = 0;
+	j = 0;
+	(*index)++;
+	name = get_env_name(&src[*index], &name_len);
+	(*index) += name_len - 1;
+	if (name == NULL)
+		return (dst);
+	value = getenv(name);
+	if (value == NULL)
+		return (dst);
+	while (value[j])
+		dst = ft_str_append(dst, value[j++]);
+	return (dst);
 }
 
 void	toggle_quteflag(char c, int *qute_flag)

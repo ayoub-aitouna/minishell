@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:21:01 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/14 17:02:09 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/17 04:33:45 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,12 @@ char	*get_fullpath(char *s)
 	while (paths[i])
 	{
 		cmd_dir = ft_strjoin("/", s);
-		cmd = ft_strjoin(paths[i], cmd_dir);
+		cmd = ft_strjoin(paths[i++], cmd_dir);
 		free(cmd_dir);
 		if (!access(cmd, X_OK))
 			break ;
 		free(cmd);
 		cmd = NULL;
-		i++;
 	}
 	i = 0;
 	free_list(paths);

@@ -35,19 +35,16 @@ typedef struct node
 	int output_file;
 } m_node;
 
-int	here_doc(char *limiter);
+int	here_doc(int flag, char *limiter);
 void	parse_cur_command(char *line, t_list **list);
 void	parse(char *line, t_list **list);
 void	tty(void);
-char	*get_str(char *s, int *index);
 size_t	size(char **ptr);
-char	*strip_nl(char *line);
 m_node	*new_m_node(void);
 void	printf_list(t_list *list);
 char	**get_env(char **p);
 m_node	*new_m_node(void);
-char	*strip_nl(char *line);
-char	*get_str(char *s, int *index);
+char	*get_str(char *s, int *index, int expande);
 int	spaces_count(char *s);
 char	*get_env_name(char *s, int *index);
 size_t	size(char **ptr);
@@ -68,10 +65,11 @@ char	*get_path(void);
 char	*get_fullpath(char *s);
 void	print_name(void);
 int	handle_syntax(char *line);
-char	*handle_uncomplete(char *line);
 int	is_builtin(char *s);
 void	handle_sigquit(int sig);
 int	is_equal(char *s, char *s2);
 void	echo(char **arguments);
 void	print_working_directory(void);
+int	is_complete(char *line);
+char	*copy_variable_value(char *dst, char *src, int *index);
 #endif

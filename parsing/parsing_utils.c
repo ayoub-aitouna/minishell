@@ -6,25 +6,11 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:14 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/14 12:26:23 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:38:50 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*strip_nl(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (line == NULL)
-		return (NULL);
-	while (line[i] != 0 && line[i] != '\n')
-		i++;
-	if (line[i] == '\n')
-		line[i] = 0;
-	return (line);
-}
 
 int	spaces_count(char *s)
 {
@@ -57,48 +43,23 @@ char	*ft_str_append(char *s, char c)
 	return (new_str);
 }
 
-void	toggle_quteflag_n_increment(char c, int *qute_flag, int *index)
+char	*concate_str(char c, char *str, int flag)
 {
-	if (c == '"' && *qute_flag == 0)
+	char	*res;
+
+	if (((c == '\n' || c == '\\')))
 	{
-		*qute_flag = 2;
-		(*index)++;
+		if (flag == 1)
+			res = ft_str_append(str, c);
 	}
-	else if (c == '\'' && *qute_flag == 0)
-	{
-		*qute_flag = 1;
-		(*index)++;
-	}
-	else if ((c == '\'' && *qute_flag == 1) || (c == '"' && *qute_flag == 2))
-	{
-		*qute_flag = 0;
-		(*index)++;
-	}
+	else
+		res = ft_str_append(str, c);
+	if (!str)
+		free(str);
+	return (res);
 }
 
-char	*copy_variable_value(char *dst, char *src, int *index)
-{
-	char	*value;
-	char	*name;
-	int		j;
-	int		name_len;
-
-	name_len = 0;
-	j = 0;
-	(*index)++;
-	name = get_env_name(&src[*index], &name_len);
-	(*index) += name_len - 1;
-	if (name == NULL)
-		return (dst);
-	value = getenv(name);
-	if (value == NULL)
-		return (dst);
-	while (value[j])
-		dst = ft_str_append(dst, value[j++]);
-	return (dst);
-}
-
-char	*copy_string(char *s, int *index)
+char	*copy_string(char *s, int *index, int expande)
 {
 	int		qute_flag;
 	char	*new_str;
@@ -109,38 +70,30 @@ char	*copy_string(char *s, int *index)
 				&& s[*index] != '<' && s[*index] != ' ') || qute_flag))
 	{
 		toggle_quteflag_n_increment(s[*index], &qute_flag, index);
-		if (qute_flag != 1 && s[*index] == '$')
+		if (qute_flag != 1 && s[*index] == '$' && expande)
 		{
-			new_str = copy_variable_value(new_str, s, index);
+			new_str = ft_strtrim(copy_variable_value(new_str, s, index), " ");
 			if ((s[*index] == '"' && qute_flag == 2))
 				qute_flag = 0;
 		}
 		else if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
-		{
-			if (((s[*index] == '\n' || s[*index] == '\\')))
-			{
-				if (qute_flag == 1)
-					new_str = ft_str_append(new_str, s[*index]);
-			}
-			else
-				new_str = ft_str_append(new_str, s[*index]);
-		}
+			new_str = concate_str(s[*index], new_str, qute_flag);
 		(*index)++;
 	}
 	return (new_str);
 }
 
-char	*get_str(char *s, int *index)
+char	*get_str(char *s, int *index, int expande)
 {
-	int len;
-	int i;
-	int expanded;
-	char *new_str;
+	int		len;
+	int		i;
+	int		expanded;
+	char	*new_str;
 
 	i = 0;
 	expanded = 0;
 	i += spaces_count(s);
-	new_str = copy_string(s, &i);
+	new_str = copy_string(s, &i, expande);
 	i += spaces_count(&s[i]);
 	*index = *index + i;
 	return (new_str);

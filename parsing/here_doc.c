@@ -6,13 +6,33 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:30:17 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 16:50:05 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:01:07 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	here_doc(char *limiter)
+char	*parse_input(char *line, int qute_flag)
+{
+	char	*new_str;
+	int		i;
+
+	i = 0;
+	new_str = NULL;
+	while (line[i] != 0)
+	{
+		if (qute_flag == 0 && line[i] == '$')
+		{
+			new_str = copy_variable_value(new_str, line, &i);
+			i++;
+		}
+		new_str = ft_str_append(new_str, line[i]);
+		i++;
+	}
+	return (new_str);
+}
+
+int	here_doc(int flag, char *limiter)
 {
 	char	*line;
 	int		fd;
@@ -22,13 +42,13 @@ int	here_doc(char *limiter)
 	while (1)
 	{
 		line = readline("here_doc> ");
-		if (line == NULL)
+		if (line == NULL || is_equal(limiter, line))
 			break ;
-		if (ft_strlen(limiter) == ft_strlen(line) && !ft_strncmp(line, limiter,
-				ft_strlen(line)))
-			break ;
+		line = parse_input(line, flag);
+		printf("\n%s\n", line);
 		write(fd, line, ft_strlen(line));
 	}
 	close(fd);
+	free(limiter);
 	return (open(".temp_file", O_RDONLY));
 }

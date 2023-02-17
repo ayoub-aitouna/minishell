@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:09 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/15 02:13:57 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:37:44 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@ void	run_built_in(m_node *node)
 	}
 	if (is_equal(node->command, "pwd"))
 		print_working_directory();
-	if (is_equal(node->command, "export"))
-	{
-	}
-	if (is_equal(node->command, "unset"))
-	{
-	}
-	if (is_equal(node->command, "env"))
-	{
-	}
 	// exit(0);
 }
+
+// if (is_equal(node->command, "export"))
+// {
+// }
+// if (is_equal(node->command, "unset"))
+// {
+// }
+// if (is_equal(node->command, "env"))
+// {
+// }
 
 void	exec(t_list *list)
 {

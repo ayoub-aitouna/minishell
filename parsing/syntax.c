@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 16:59:47 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:28:18 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,31 @@ char	*set_error_msg(char **holder, char *msg)
 {
 	*holder = msg;
 	return (NULL);
+}
+
+int	check_redirections_syntax(char *line, char **msg)
+{
+	int	i;
+
+	i = 0;
+	if (line[i] == '>')
+	{
+		if (line[i + 1] == '>')
+			i++;
+		if (get_str(&line[i + 1], &i, 1) == NULL)
+			return (1);
+	}
+	if (line[i] == '<')
+	{
+		if (line[i + 1] == '<')
+		{
+			if (get_str(&line[i + 2], &i, 0) == NULL)
+				return (1);
+		}
+		else if (get_str(&line[i + 1], &i, 1) == NULL)
+			return (1);
+	}
+	return (0);
 }
 
 char	*check_syntax(char *line, char **msg)
@@ -39,21 +64,8 @@ char	*check_syntax(char *line, char **msg)
 			pipe_flag = 0;
 		if (pipe_flag == 2)
 			return (set_error_msg(msg, "`|'"));
-		if (line[i] == '>')
-		{
-			if (line[i + 1] == '>')
-				i++;
-			if (get_str(&line[i + 1], &i) == NULL)
-				return (set_error_msg(msg, "`newline'"));
-		}
-		if (line[i] == '<')
-		{
-			if (line[i + 1] == '<')
-				i++;
-			if (get_str(&line[i + 1], &i) == NULL)
-				return (set_error_msg(msg, "`newline'"));
-		}
-		i++;
+		if (check_redirections_syntax(&line[i++], msg))
+			return (set_error_msg(msg, "`newline'"));
 	}
 	if (qute_flag != 0)
 		return (set_error_msg(msg, "`\"'"));
@@ -76,9 +88,30 @@ int	handle_syntax(char *line)
 	return (0);
 }
 
-
-char	*handle_uncomplete(char *line)
+int	is_nl(char *line, int i)
 {
+	int	n_only;
 
-	return (line);
+	n_only = 0;
+	if (i > 0)
+		n_only = (line[i - 1] == '\\');
+	return (line[i] == '\\' && line[i + 1] == 0 && !n_only);
+}
+
+int	is_complete(char *line)
+{
+	int	i;
+	int	is_complete;
+
+	i = 0;
+	is_complete = 1;
+	while (line[i])
+	{
+		if (line[i] == '|' || is_nl(line, i))
+			is_complete = 0;
+		else if (line[i] != ' ' && line[i] != '\n')
+			is_complete = 1;
+		i++;
+	}
+	return (is_complete);
 }
