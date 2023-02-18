@@ -6,30 +6,38 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/17 16:16:25 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/18 19:43:24 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char **parse_arguments(char *line, char *cmd, int *i)
+char	*get_cmd(char *s, m_node *node, int *index);
+char	**parse_arguments(char *line, m_node *node, int *i)
 {
-	char **arguments;
+	char	**arguments;
+	char	*val;
 
 	arguments = NULL;
-	arguments = append(arguments, cmd);
-	while (line[*i] && ((line[*i] != '|' && line[*i] != '<' && line[*i] != '>')))
-		arguments = append(arguments, get_str(&line[*i], i, 1));
+	arguments = append(arguments, node->command);
+	while (line[*i] && ((line[*i] != '|' && line[*i] != '<'
+				&& line[*i] != '>')))
+	{
+		printf("& line[*i] <%c> \n", line[*i]);
+		val = get_cmd(&line[*i], node, i);
+		if (!val)
+			arguments = append(arguments, val);
+	}
 	return (arguments);
 }
 
-void splite_env_val(char *line, m_node *node, int *index)
+void	splite_env_val(char *line, m_node *node, int *index)
 {
-	int j;
-	int k;
-	char *env_value = NULL;
-	char **splited_env_val;
+	int		j;
+	int		k;
+	char	*env_value;
+	char	**splited_env_val;
 
+	env_value = NULL;
 	j = 0;
 	k = 0;
 	env_value = copy_variable_value(env_value, line, &k);
@@ -41,7 +49,8 @@ void splite_env_val(char *line, m_node *node, int *index)
 		{
 			if (!node->command)
 				node->command = ft_strdup(splited_env_val[j]);
-			node->arguments = append(node->arguments, ft_strdup(splited_env_val[j]));
+			node->arguments = append(node->arguments,
+										ft_strdup(splited_env_val[j]));
 			free(splited_env_val[j]);
 			j++;
 		}
@@ -50,7 +59,41 @@ void splite_env_val(char *line, m_node *node, int *index)
 	}
 }
 
-void get_cmd_n_args(char *line, m_node *node, int *i)
+char	*get_cmd(char *s, m_node *node, int *index)
+{
+	int		qute_flag;
+	char	*new_str;
+
+	qute_flag = 0;
+	new_str = NULL;
+	while (s[*index] != 0 && (is_token_sep(s[*index]) || qute_flag))
+	{
+		printf("c %c \n", s[*index]);
+		if (s[*index] == '"' || s[*index] == '\'')
+			toggle_quteflag(s[*index], &qute_flag);
+		else
+		{
+			if (qute_flag != 1 && s[*index] == '$')
+			{
+				if (qute_flag == 0)
+					splite_env_val(s, node, index);
+				else
+				{
+					new_str = copy_variable_value(new_str, s, index);
+					if ((s[*index] == '"' && qute_flag == 2))
+						qute_flag = 0;
+				}
+			}
+			else if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
+				new_str = concate_str(s[*index], new_str, qute_flag);
+		}
+		(*index)++;
+	}
+	(*index) += spaces_count(&s[*index]);
+	return (new_str);
+}
+
+void	get_cmd_n_args(char *line, m_node *node, int *i)
 {
 	(*i) += spaces_count(&line[*i]);
 	if (line[*i] == '$')
@@ -58,20 +101,20 @@ void get_cmd_n_args(char *line, m_node *node, int *i)
 	else
 	{
 		if (!node->command)
-			node->command = get_str(&line[*i], i, 1);
-		node->arguments = parse_arguments(line, ft_strdup(node->command),
-										  i);
+			node->command = get_cmd(&line[*i], node, i);
+		node->arguments = parse_arguments(line, node, i);
 	}
 }
 
-void parse(char *line, t_list **list)
+void	parse(char *line, t_list **list)
 {
-	int i;
-	int k = 0;
-	m_node *node;
+	int		i;
+	int		k;
+	m_node	*node;
 
+	k = 0;
 	if (line == NULL)
-		return;
+		return ;
 	node = new_m_node();
 	i = 0;
 	while (line[i] && line[i] != '|')
@@ -89,24 +132,24 @@ void parse(char *line, t_list **list)
 		parse(&line[++i], list);
 }
 
-char *get_promt_text()
+char	*get_promt_text()
 {
-	char *working_directory;
-	char *dir;
-	char *default_promt;
+	char	*working_directory;
+	char	*dir;
+	char	*default_promt;
 
 	working_directory = getcwd(NULL, 0);
 	dir = ft_strjoin(working_directory, "$ " RESET);
 	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE,
-							   dir);
+								dir);
 	free(dir);
 	free(working_directory);
 	return (default_promt);
 }
 
-char *get_full_line(char *line)
+char	*get_full_line(char *line)
 {
-	char *temp;
+	char	*temp;
 
 	while (!is_complete(line))
 	{
@@ -117,10 +160,13 @@ char *get_full_line(char *line)
 	return (line);
 }
 
-char *wrap(char *s, char c)
+char	*wrap(char *s, char c)
 {
-	int i = 0;
-	char *new_str = NULL;
+	int		i;
+	char	*new_str;
+
+	i = 0;
+	new_str = NULL;
 	new_str = ft_str_append(new_str, c);
 	while (s[i])
 		new_str = ft_str_append(new_str, s[i++]);
@@ -129,29 +175,37 @@ char *wrap(char *s, char c)
 	return (new_str);
 }
 
-char *replace_env_values(char *line)
+char	*replace_env_values(char *line)
 {
-	int i = 0;
-	int k = 0;
-	int flag = 0;
-	char *new_line = NULL;
-	char *env_value = NULL;
-	char **splited_env_val;
+	int		i;
+	int		k;
+	int		flag;
+	char	*new_line;
+	char	*env_value;
+	char	**splited_env_val;
+	int		j;
+	char	*wraped;
+
+	i = 0;
+	k = 0;
+	flag = 0;
+	new_line = NULL;
+	env_value = NULL;
 	while (line[i])
 	{
 		toggle_quteflag(line[i], &flag);
 		if (!flag && line[i] == '$')
 		{
-			int j = 0;
+			j = 0;
 			env_value = copy_variable_value(env_value, line, &k);
 			if (env_value != NULL)
 			{
 				splited_env_val = ft_split(env_value, ' ');
-
 				while (splited_env_val[j])
 				{
-					char *wraped = wrap(splited_env_val[j], '"');
-					new_line = mini_strjoin(new_line, wrap(splited_env_val[j++], '"'));
+					wraped = wrap(splited_env_val[j], '"');
+					new_line = mini_strjoin(new_line, wrap(splited_env_val[j++],
+								'"'));
 				}
 				i += k;
 			}
@@ -162,11 +216,11 @@ char *replace_env_values(char *line)
 	return (new_line);
 }
 
-void tty(void)
+void	tty(void)
 {
-	char *line;
-	t_list *list;
-	char *default_promt;
+	char	*line;
+	t_list	*list;
+	char	*default_promt;
 
 	list = NULL;
 	line = NULL;
@@ -176,9 +230,9 @@ void tty(void)
 		line = readline(default_promt);
 		free(default_promt);
 		if (!line)
-			break;
+			break ;
 		if (handle_syntax(line))
-			continue;
+			continue ;
 		line = get_full_line(line);
 		add_history(line);
 		parse(line, &list);
