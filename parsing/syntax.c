@@ -27,8 +27,8 @@ int	check_redirections_syntax(char *line, char **msg)
 	{
 		if (line[i + 1] == '>')
 			i++;
-		if (get_str(&line[i + 1], &i, 1) == NULL)
-			return (1);
+		// if (get_str(&line[i + 1], &i, 1) == NULL)
+		// 	return (1);
 	}
 	if (line[i] == '<')
 	{

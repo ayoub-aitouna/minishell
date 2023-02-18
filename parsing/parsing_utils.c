@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-int	spaces_count(char *s)
+int spaces_count(char *s)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (s[i] && (s[i] == ' ' || s[i] == '\n' || s[i] == '\t'))
@@ -22,11 +22,11 @@ int	spaces_count(char *s)
 	return (i);
 }
 
-char	*ft_str_append(char *s, char c)
+char *ft_str_append(char *s, char c)
 {
-	int		i;
-	int		len;
-	char	*new_str;
+	int i;
+	int len;
+	char *new_str;
 
 	i = 0;
 	len = ft_strlen(s);
@@ -43,9 +43,9 @@ char	*ft_str_append(char *s, char c)
 	return (new_str);
 }
 
-char	*concate_str(char c, char *str, int flag)
+char *concate_str(char c, char *str, int flag)
 {
-	char	*res;
+	char *res;
 
 	if (((c == '\n' || c == '\\')))
 	{
@@ -59,36 +59,39 @@ char	*concate_str(char c, char *str, int flag)
 	return (res);
 }
 
-char	*copy_string(char *s, int *index, int expande)
+char *copy_string(char *s, int *index, int expande)
 {
-	int		qute_flag;
-	char	*new_str;
+	int qute_flag;
+	char *new_str;
 
 	qute_flag = 0;
 	new_str = NULL;
-	while (s[*index] != 0 && ((s[*index] != '|' && s[*index] != '>'
-				&& s[*index] != '<' && s[*index] != ' ') || qute_flag))
+	while (s[*index] != 0 && (is_token_sep(s[*index]) || qute_flag))
 	{
-		toggle_quteflag_n_increment(s[*index], &qute_flag, index);
-		if (qute_flag != 1 && s[*index] == '$' && expande)
+		if (s[*index] == '"' || s[*index] == '\'')
+			toggle_quteflag(s[*index], &qute_flag);
+		else
 		{
-			new_str = ft_strtrim(copy_variable_value(new_str, s, index), " ");
-			if ((s[*index] == '"' && qute_flag == 2))
-				qute_flag = 0;
+			if (qute_flag != 1 && s[*index] == '$' && expande)
+			{
+				new_str = copy_variable_value(new_str, s, index);
+				if ((s[*index] == '"' && qute_flag == 2))
+					qute_flag = 0;
+			}
+			else if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
+				new_str = concate_str(s[*index], new_str, qute_flag);
 		}
-		else if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
-			new_str = concate_str(s[*index], new_str, qute_flag);
 		(*index)++;
 	}
 	return (new_str);
 }
 
-char	*get_str(char *s, int *index, int expande)
+char *get_str(char *s, int *index, int expande)
 {
-	int		len;
-	int		i;
-	int		expanded;
-	char	*new_str;
+	int len;
+	int i;
+	int expanded;
+	char *new_str;
 
 	i = 0;
 	expanded = 0;
