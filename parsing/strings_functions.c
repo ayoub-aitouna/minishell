@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/13 17:19:52 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/19 21:16:05 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char *mini_strjoin(char const *s1, char const *s2)
 	return (ns);
 }
 
-int is_token_sep(char c)
+int is_token_sep(char *c)
 {
 	return (c != '|' && c != '>' && c != '<' && c != ' ');
 }
