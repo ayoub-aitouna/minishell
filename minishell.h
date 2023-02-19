@@ -74,5 +74,8 @@ int is_complete(char *line);
 char *copy_variable_value(char *dst, char *src, int *index);
 char *mini_strjoin(char const *s1, char const *s2);
 int is_token_sep(char c);
-char *concate_str(char c, char *str, int flag);
+char *concate_str(char *s, char *str, int flag, int *index);
+void splite_env_val(char *line, m_node *node, int *index);
+void add_arg_t_node(m_node *node, char *str);
+void parse_arguments(char *s, m_node *node, int *index);
 #endif

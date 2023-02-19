@@ -12,15 +12,15 @@
 
 #include "../minishell.h"
 
-char	*set_error_msg(char **holder, char *msg)
+char *set_error_msg(char **holder, char *msg)
 {
 	*holder = msg;
 	return (NULL);
 }
 
-int	check_redirections_syntax(char *line, char **msg)
+int check_redirections_syntax(char *line, char **msg)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (line[i] == '>')
@@ -43,9 +43,9 @@ int	check_redirections_syntax(char *line, char **msg)
 	return (0);
 }
 
-char	*check_syntax(char *line, char **msg)
+char *check_syntax(char *line, char **msg)
 {
-	int	pipe_flag;
+	int pipe_flag;
 
 	int i, qute_flag;
 	i = 0;
@@ -57,7 +57,8 @@ char	*check_syntax(char *line, char **msg)
 		return (set_error_msg(msg, "`|'"));
 	while (line[i])
 	{
-		toggle_quteflag(line[i], &qute_flag);
+		if (i == 0 || (i > 0 && line[i - 1] != '\\'))
+			toggle_quteflag(line[i], &qute_flag);
 		if (line[i] == '|')
 			pipe_flag++;
 		else if (line[i] != ' ' && line[i] != '\n')
@@ -72,25 +73,25 @@ char	*check_syntax(char *line, char **msg)
 	return (line);
 }
 
-int	handle_syntax(char *line)
+int handle_syntax(char *line)
 {
-	char	*msg;
+	char *msg;
 
 	msg = NULL;
 	if (check_syntax(line, &msg) == NULL)
 	{
 		ft_printf(RED "-bash: syntax error near  unexpected "
-						"token %s\n" RESET,
-					msg);
+					  "token %s\n" RESET,
+				  msg);
 		add_history(line);
 		return (1);
 	}
 	return (0);
 }
 
-int	is_nl(char *line, int i)
+int is_nl(char *line, int i)
 {
-	int	n_only;
+	int n_only;
 
 	n_only = 0;
 	if (i > 0)
@@ -98,10 +99,10 @@ int	is_nl(char *line, int i)
 	return (line[i] == '\\' && line[i + 1] == 0 && !n_only);
 }
 
-int	is_complete(char *line)
+int is_complete(char *line)
 {
-	int	i;
-	int	is_complete;
+	int i;
+	int is_complete;
 
 	i = 0;
 	is_complete = 1;

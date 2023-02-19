@@ -29,7 +29,9 @@ int is_between_qute(char *line)
 	return (flag);
 }
 
-char *copy_file_name(char *s, int *index, int expande)
+
+
+char *copy_file_name(char *s, int *index)
 {
 	int qute_flag;
 	char *new_str;
@@ -37,69 +39,78 @@ char *copy_file_name(char *s, int *index, int expande)
 	char **new_str_spltd;
 	qute_flag = 0;
 	new_str = NULL;
-	while (s[*index] != 0 && (is_token_sep(s[*index]) || qute_flag))
+	int i = 0;
+	while (s[i] != 0 && (is_token_sep(s[i]) || qute_flag))
 	{
-		if (s[*index] == '"' || s[*index] == '\'')
-			toggle_quteflag(s[*index], &qute_flag);
+		if (s[i] == '"' || s[i] == '\'')
+			toggle_quteflag(s[i], &qute_flag);
 		else
 		{
-			if (qute_flag != 1 && s[*index] == '$' && expande)
+			if (qute_flag != 1 && s[i] == '$')
 			{
-				env_value = copy_variable_value(env_value, s, index);
+				env_value = copy_variable_value(env_value, s, &i);
 				if (qute_flag == 0)
 				{
 					new_str_spltd = ft_split(env_value, ' ');
 					if (size(new_str_spltd) > 1)
 					{
 						free_list(new_str_spltd);
+						if (new_str != NULL)
+							free(new_str);
+						(*index) += i + 1;
 						return (NULL);
 					}
 					free_list(new_str_spltd);
 				}
 				new_str = mini_strjoin(new_str, env_value);
-				if ((s[*index] == '"' && qute_flag == 2))
+				if ((s[i] == '"' && qute_flag == 2))
 					qute_flag = 0;
 			}
-			else if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
-				new_str = concate_str(s[*index], new_str, qute_flag);
+			else if (((s[i] != '"' && s[i] != '\'') || qute_flag))
+				new_str = concate_str(s[i], new_str, qute_flag);
 		}
-		(*index)++;
+		i++;
 	}
+	(*index) += i;
 	return (new_str);
 }
 
 char *get_file_name(char *line, int *index)
 {
-	int i = 0;
+	int		i;
+	char	*file_name;
+
+	i = 0;
 	i += spaces_count(line);
-	char *name = copy_file_name(&line[i], &i, 1);
-	printf("file name %s\n", line);
+	file_name = copy_file_name(&line[i], &i);
 	i += spaces_count(line);
 	*index = *index + i;
-	return name;
+	return file_name;
 }
 
 int open_input_file(char *line, int *i)
 {
 	int input_file;
-	char *fine_name;
+	char *file_name;
 	int qute_flag;
 
 	if (line[(*i) + 1] == '<')
 	{
 		qute_flag = is_between_qute(&line[(*i) + 2]);
-		printf(">> : <%d> \n", qute_flag);
 		return (here_doc(qute_flag, get_str(&line[(*i) + 2], i, 0)));
 	}
 	else
 	{
-		fine_name = get_file_name(&line[++(*i)], i);
-		input_file = open(fine_name, O_RDONLY);
+		file_name = get_file_name(&line[++(*i)], i);
+		if (file_name == NULL)
+			printf(RED "ambiguous redirect \n"RESET);
+		else
+			input_file = open(file_name, O_RDONLY);
 		if (input_file == -1)
 		{
 		}
-		if (fine_name != NULL)
-			free(fine_name);
+		if (file_name != NULL)
+			free(file_name);
 	}
 	return (input_file);
 }
@@ -108,7 +119,7 @@ int open_output_file(char *line, int *i)
 {
 	int opne_flag;
 	int output_file;
-	char *name;
+	char *file_name;
 
 	opne_flag = 0;
 	if (line[(*i) + 1] == '>')
@@ -118,12 +129,16 @@ int open_output_file(char *line, int *i)
 	}
 	else
 		opne_flag = O_CREAT | O_RDWR | O_TRUNC;
-	name = get_file_name(&line[++(*i)], i);
-	output_file = open(name, opne_flag, 0664);
+	file_name = get_file_name(&line[++(*i)], i);
+	if (file_name == NULL)
+		printf(RED "ambiguous redirect\n" RESET);
+	else
+		output_file = open(file_name, O_RDONLY);
+	output_file = open(file_name, opne_flag, 0664);
 	if (output_file == -1)
 	{
 	}
-	if (name != NULL)
-		free(name);
+	if (file_name != NULL)
+		free(file_name);
 	return (output_file);
 }
