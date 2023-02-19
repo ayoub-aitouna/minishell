@@ -6,21 +6,22 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:34:35 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/17 18:36:16 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/19 07:01:24 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int is_between_qute(char *line)
+int	is_between_qute(char *line)
 {
-	int i;
+	int	i;
+	int	qute_flag;
+	int	flag;
 
-	int qute_flag, flag;
 	qute_flag = 0;
 	flag = 0;
 	i = 0;
-	while (line[i] != 0 && ((line[i] != '|' && line[i] != '>' && line[i] != '<' && line[i] != ' ') || qute_flag))
+	while (line[i] != 0 && (is_token_sep(line[i]) || qute_flag))
 	{
 		flag = qute_flag;
 		toggle_quteflag(line[i], &qute_flag);
@@ -29,17 +30,18 @@ int is_between_qute(char *line)
 	return (flag);
 }
 
-
-
-char *copy_file_name(char *s, int *index)
+char	*copy_file_name(char *s, int *index)
 {
-	int qute_flag;
-	char *new_str;
-	char *env_value = NULL;
-	char **new_str_spltd;
+	int		qute_flag;
+	char	*new_str;
+	char	*env_value;
+	char	**new_str_spltd;
+	int		i;
+
+	env_value = NULL;
 	qute_flag = 0;
 	new_str = NULL;
-	int i = 0;
+	i = 0;
 	while (s[i] != 0 && (is_token_sep(s[i]) || qute_flag))
 	{
 		if (s[i] == '"' || s[i] == '\'')
@@ -67,7 +69,7 @@ char *copy_file_name(char *s, int *index)
 					qute_flag = 0;
 			}
 			else if (((s[i] != '"' && s[i] != '\'') || qute_flag))
-				new_str = concate_str(s[i], new_str, qute_flag);
+				new_str = concate_str(&s[i], new_str, qute_flag, &i);
 		}
 		i++;
 	}
@@ -75,7 +77,7 @@ char *copy_file_name(char *s, int *index)
 	return (new_str);
 }
 
-char *get_file_name(char *line, int *index)
+char	*get_file_name(char *line, int *index)
 {
 	int		i;
 	char	*file_name;
@@ -85,14 +87,14 @@ char *get_file_name(char *line, int *index)
 	file_name = copy_file_name(&line[i], &i);
 	i += spaces_count(line);
 	*index = *index + i;
-	return file_name;
+	return (file_name);
 }
 
-int open_input_file(char *line, int *i)
+int	open_input_file(char *line, int *i)
 {
-	int input_file;
-	char *file_name;
-	int qute_flag;
+	int		input_file;
+	char	*file_name;
+	int		qute_flag;
 
 	if (line[(*i) + 1] == '<')
 	{
@@ -103,7 +105,7 @@ int open_input_file(char *line, int *i)
 	{
 		file_name = get_file_name(&line[++(*i)], i);
 		if (file_name == NULL)
-			printf(RED "ambiguous redirect \n"RESET);
+			printf(RED "ambiguous redirect \n" RESET);
 		else
 			input_file = open(file_name, O_RDONLY);
 		if (input_file == -1)
@@ -115,11 +117,11 @@ int open_input_file(char *line, int *i)
 	return (input_file);
 }
 
-int open_output_file(char *line, int *i)
+int	open_output_file(char *line, int *i)
 {
-	int opne_flag;
-	int output_file;
-	char *file_name;
+	int		opne_flag;
+	int		output_file;
+	char	*file_name;
 
 	opne_flag = 0;
 	if (line[(*i) + 1] == '>')

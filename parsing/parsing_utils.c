@@ -6,15 +6,15 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:14 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/18 19:30:13 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/19 07:42:46 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int spaces_count(char *s)
+int	spaces_count(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] && (s[i] == ' ' || s[i] == '\n' || s[i] == '\t'))
@@ -22,11 +22,11 @@ int spaces_count(char *s)
 	return (i);
 }
 
-char *ft_str_append(char *s, char c)
+char	*ft_str_append(char *s, char c)
 {
-	int i;
-	int len;
-	char *new_str;
+	int		i;
+	int		len;
+	char	*new_str;
 
 	i = 0;
 	len = ft_strlen(s);
@@ -43,15 +43,18 @@ char *ft_str_append(char *s, char c)
 	return (new_str);
 }
 
-char *concate_str(char *s, char *str, int flag, int *index)
+char	*concate_str(char *s, char *str, int flag, int *index)
 {
-	if (s[0] == '\\')
+	if (ft_strchr("\"\\\'", s[0]))
 	{
+		printf("flag %d char %c \n", flag, s[0]);
 		if (flag == 1)
 			str = ft_str_append(str, s[0]);
-		else if (flag == 2)
+		else if (flag == 2 && ft_strchr("\"\\\'", s[1]))
+			str = ft_str_append(str, s[1]);
+		else if (flag == 2 && !ft_strchr("\"\\\'", s[1]))
 			str = ft_str_append(str, s[0]);
-		else if (s[1] && ft_strchr("\"\\\'", s[1]))
+		else if (flag == 0 && ft_strchr("\"\\\'", s[1]))
 			str = ft_str_append(str, s[1]);
 		if (s[1] && ft_strchr("\"\\\'", s[1]) && flag != 1)
 			(*index)++;
@@ -68,16 +71,17 @@ char *concate_str(char *s, char *str, int flag, int *index)
 	return (str);
 }
 
-char *copy_string(char *s, int *index, int expande)
+char	*copy_string(char *s, int *index, int expande)
 {
-	int qute_flag;
-	char *new_str;
+	int		qute_flag;
+	char	*new_str;
 
 	qute_flag = 0;
 	new_str = NULL;
 	while (s[*index] != 0 && (is_token_sep(s[*index]) || qute_flag))
 	{
-		if (s[*index] == '"' || s[*index] == '\'')
+		if ((s[*index] == '"' || s[*index] == '\'') && (*index > 0 && s[*index
+				- 1] != '\\'))
 			toggle_quteflag(s[*index], &qute_flag);
 		else
 		{
@@ -87,7 +91,7 @@ char *copy_string(char *s, int *index, int expande)
 				if ((s[*index] == '"' && qute_flag == 2))
 					qute_flag = 0;
 			}
-			else if (((s[*index] != '"' && s[*index] != '\'') || qute_flag))
+			else
 				new_str = concate_str(&s[*index], new_str, qute_flag, index);
 		}
 		(*index)++;
@@ -95,16 +99,17 @@ char *copy_string(char *s, int *index, int expande)
 	return (new_str);
 }
 
-void copy_string_t_args(char *s, m_node *node, int *index)
+void	copy_string_t_args(char *s, m_node *node, int *index)
 {
-	int qute_flag;
-	char *new_str;
+	int		qute_flag;
+	char	*new_str;
 
 	qute_flag = 0;
 	new_str = NULL;
 	while (s[*index] != 0 && (is_token_sep(s[*index]) || qute_flag))
 	{
-		if (s[*index] == '"' || s[*index] == '\'')
+		if ((s[*index] == '"' || s[*index] == '\'') && (*index == 0
+				|| (*index > 0 && s[*index - 1] != '\\')))
 			toggle_quteflag(s[*index], &qute_flag);
 		else
 		{
@@ -124,7 +129,7 @@ void copy_string_t_args(char *s, m_node *node, int *index)
 	add_arg_t_node(node, new_str);
 }
 
-void add_arg_t_node(m_node *node, char *str)
+void	add_arg_t_node(m_node *node, char *str)
 {
 	if (str)
 	{
@@ -135,12 +140,12 @@ void add_arg_t_node(m_node *node, char *str)
 	}
 }
 
-char *get_str(char *s, int *index, int expande)
+char	*get_str(char *s, int *index, int expande)
 {
-	int len;
-	int i;
-	int expanded;
-	char *new_str;
+	int		len;
+	int		i;
+	int		expanded;
+	char	*new_str;
 
 	i = 0;
 	expanded = 0;
@@ -151,7 +156,7 @@ char *get_str(char *s, int *index, int expande)
 	return (new_str);
 }
 
-void parse_arguments(char *s, m_node *node, int *index)
+void	parse_arguments(char *s, m_node *node, int *index)
 {
 	int len;
 	int i;
