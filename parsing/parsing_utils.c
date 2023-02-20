@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:14 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/19 19:11:22 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/20 04:44:58 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	spaces_count(char *s)
 		i++;
 	return (i);
 }
-
 
 int	is_qute(char *s, int i)
 {

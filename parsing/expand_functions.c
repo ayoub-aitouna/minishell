@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:11 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/19 19:10:12 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/20 05:50:18 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_env_name(char *s, int *len)
 
 	i = 0;
 	name = NULL;
-	while (s[i] && ft_isalnum(s[i]))
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 	{
 		if (s[i] != '\n' && s[i] != '\\')
 			name = ft_str_append(name, s[i]);
@@ -29,23 +29,27 @@ char	*get_env_name(char *s, int *len)
 	return (name);
 }
 
-void	toggle_quteflag_n_increment(char c, int *qute_flag, int *index)
+int	toggle_flag(char c, int *qute_flag, int *index)
 {
 	if (c == '"' && *qute_flag == 0)
 	{
 		*qute_flag = 2;
 		(*index)++;
+		return (1);
 	}
 	else if (c == '\'' && *qute_flag == 0)
 	{
 		*qute_flag = 1;
 		(*index)++;
+		return (1);
 	}
 	else if ((c == '\'' && *qute_flag == 1) || (c == '"' && *qute_flag == 2))
 	{
 		*qute_flag = 0;
 		(*index)++;
+		return (1);
 	}
+	return (0);
 }
 
 char	*copy_variable_value(char *dst, char *src, int *index)

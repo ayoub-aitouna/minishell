@@ -6,18 +6,19 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/19 21:14:58 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/20 06:51:01 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	splite_env_val(char *line, m_node *node, int *index)
+char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 {
 	int		j;
 	int		k;
 	char	*env_value;
 	char	**splited_env_val;
+	int		max;
 
 	env_value = NULL;
 	j = 0;
@@ -27,17 +28,23 @@ void	splite_env_val(char *line, m_node *node, int *index)
 	{
 		(*index)++;
 		splited_env_val = ft_split(env_value, ' ');
-		while (splited_env_val[j])
+		max = size(splited_env_val);
+		while (j < max - 1)
 		{
-			add_arg_t_node(node, ft_strdup(splited_env_val[j]));
+			add_arg_t_node(node, mini_strjoin(new_str,
+						ft_strdup(splited_env_val[j])));
+			free(new_str);
+			new_str = NULL;
 			free(splited_env_val[j]);
 			j++;
 		}
+		new_str = mini_strjoin(new_str,
+								ft_strdup(splited_env_val[j]));
 		free(splited_env_val);
 	}
-	(*index) += k;
+	(*index) += k - 1;
+	return (new_str);
 }
-
 
 void	parse(char *line, t_list **list)
 {
@@ -61,11 +68,11 @@ void	parse(char *line, t_list **list)
 	}
 	node->command = update_command(node->command);
 	ft_lstadd_back(list, ft_lstnew(node));
-	if (line[i] &&  line[i] == '|')
+	if (line[i] && line[i] == '|')
 		parse(&line[++i], list);
 }
 
-char	*get_promt_text()
+char	*get_promt_text(void)
 {
 	char	*working_directory;
 	char	*dir;
