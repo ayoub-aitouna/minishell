@@ -82,7 +82,13 @@ char *mini_strjoin(char const *s1, char const *s2)
 	return (ns);
 }
 
-int is_token_sep(char *c)
+int is_token_sep(char *c, int i)
 {
-	return (c != '|' && c != '>' && c != '<' && c != ' ');
+	// return (c != '|' && c != '>' && c != '<' && c != ' ');
+	return (!is_n_escaped(c, '|', i) && !is_n_escaped(c, '|', i) && !is_n_escaped(c, '|', i) && c[i] != ' ');
+}
+
+int is_n_escaped(char *s, char c, int i)
+{
+	return (s[i] == c && (i == 0 || (i > 0 && s[i - 1] != '\\')));
 }

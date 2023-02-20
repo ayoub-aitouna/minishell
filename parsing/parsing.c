@@ -38,10 +38,6 @@ void	splite_env_val(char *line, m_node *node, int *index)
 	(*index) += k;
 }
 
-int	is_n_escaped(char *s, char c, int i)
-{
-	return (s[i] == c && (i == 0 || (i > 0 && s[i - 1] != '\\')));
-}
 
 void	parse(char *line, t_list **list)
 {
@@ -117,6 +113,7 @@ void	tty(void)
 		// line = get_full_line(line);
 		add_history(line);
 		parse(line, &list);
+		// exec(list);
 		printf_list(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
