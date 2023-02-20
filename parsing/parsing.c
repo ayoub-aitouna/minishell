@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/20 06:51:01 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/20 19:39:53 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,15 @@
 char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 {
 	int		j;
-	int		k;
 	char	*env_value;
 	char	**splited_env_val;
 	int		max;
 
 	env_value = NULL;
 	j = 0;
-	k = 0;
-	env_value = copy_variable_value(env_value, line, &k);
+	env_value = copy_variable_value(env_value, line, index);
 	if (env_value != NULL)
 	{
-		(*index)++;
 		splited_env_val = ft_split(env_value, ' ');
 		max = size(splited_env_val);
 		while (j < max - 1)
@@ -38,11 +35,9 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 			free(splited_env_val[j]);
 			j++;
 		}
-		new_str = mini_strjoin(new_str,
-								ft_strdup(splited_env_val[j]));
+		new_str = mini_strjoin(new_str, ft_strdup(splited_env_val[j]));
 		free(splited_env_val);
 	}
-	(*index) += k - 1;
 	return (new_str);
 }
 
@@ -80,8 +75,7 @@ char	*get_promt_text(void)
 
 	working_directory = getcwd(NULL, 0);
 	dir = ft_strjoin(working_directory, "$ " RESET);
-	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE,
-								dir);
+	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE, dir);
 	free(dir);
 	free(working_directory);
 	return (default_promt);
