@@ -15,6 +15,7 @@
 
 #include "minishell.h"
 
+
 char	**get_env(char **p)
 {
 	static char **env;
@@ -70,6 +71,8 @@ void	printf_list(t_list *list)
 
 int	main(int ac, char **av, char **env)
 {
+	(void)ac;
+	(void)av;
 	print_name();
 	get_env(env);
 	// signal(SIGINT, handle_sigint);

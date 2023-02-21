@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:09 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/17 17:37:44 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/21 09:49:20 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,9 @@ void	exec(t_list *list)
 	m_node	*node;
 	int		pid;
 	int		index;
-	int		l_index;
 	int		fd[2];
 
 	index = 0;
-	l_index = ft_lstsize(list) - 1;
 	pipe(fd);
 	while (list)
 	{

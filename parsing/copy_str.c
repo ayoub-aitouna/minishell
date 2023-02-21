@@ -6,17 +6,17 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 19:10:46 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/20 07:08:17 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/21 08:36:39 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *ft_str_append(char *s, char c)
+char	*ft_str_append(char *s, char c)
 {
-	int i;
-	int len;
-	char *new_str;
+	int		i;
+	int		len;
+	char	*new_str;
 
 	i = 0;
 	len = ft_strlen(s);
@@ -33,7 +33,7 @@ char *ft_str_append(char *s, char c)
 	return (new_str);
 }
 
-char *concate_str(char *s, char *str, int flag, int *index)
+char	*concate_str(char *s, char *str, int flag, int *index)
 {
 	if (s[0] == '\\')
 	{
@@ -58,52 +58,56 @@ char *concate_str(char *s, char *str, int flag, int *index)
 	return (str);
 }
 
-void copy_string_t_args(char *s, m_node *node, int *index)
+char	*on_error_clear(char **new_str_spltd, char *env_value, char *new_str,
+		int *index)
 {
-	int qute_flag;
-	char *new_str;
-
-	qute_flag = 0;
-	new_str = NULL;
-	while (s[*index] != 0 && (is_token_sep(s, *index) || qute_flag))
-	{
-		if (toggle_flag(s[*index], &qute_flag, index))
-			continue;
-		if (qute_flag == 0 && is_n_escaped(s, '$', *index))
-			new_str = splite_env_val(s, new_str, node, index);
-		else if (qute_flag == 2 && is_n_escaped(s, '$', *index))
-		{
-			new_str = copy_variable_value(new_str, s, index);
-			if ((s[*index] == '"' && qute_flag == 2))
-				qute_flag = 0;
-		}
-		else
-			new_str = concate_str(&s[*index], new_str, qute_flag, index);
-		(*index)++;
-	}
-	add_arg_t_node(node, new_str);
+	free_list(new_str_spltd);
+	free(env_value);
+	if (new_str != NULL)
+		free(new_str);
+	(*index)++;
+	return (NULL);
 }
 
-char *copy_string(char *s, int *index, int expande)
+char	*copy_string_t_args(char *s, m_node *node, int *index, int mode)
 {
-	int qute_flag;
-	char *new_str;
+	int		qute_flag;
+	char	*new_str;
+	char	**new_str_spltd;
+	char	*env_value;
 
 	qute_flag = 0;
 	new_str = NULL;
+	env_value = NULL;
 	while (s[*index] != 0 && (is_token_sep(s, *index) || qute_flag))
 	{
 		if (toggle_flag(s[*index], &qute_flag, index))
-			continue;
-		if (qute_flag != 1 && s[*index] == '$' && expande)
+			continue ;
+		if (is_n_escaped(s, '$', *index) && qute_flag != 1 && mode != 2)
 		{
-			new_str = copy_variable_value(new_str, s, index);
-			if ((s[*index] == '"' && qute_flag == 2))
-				qute_flag = 0;
+			if (qute_flag == 0 && mode == 0)
+				new_str = splite_env_val(s, new_str, node, index);
+			else
+			{
+				env_value = copy_variable_value(env_value, s, index);
+				if (env_value != NULL)
+				{
+					new_str_spltd = ft_split(env_value, ' ');
+					if (size(new_str_spltd) > 1 && qute_flag == 0)
+						return (on_error_clear(new_str_spltd, env_value,
+								new_str, index));
+					new_str = mini_strjoin(new_str, env_value);
+				}
+				if (qute_flag == 2 && (s[*index] == '"' && qute_flag == 2))
+					qute_flag = 0;
+			}
 		}
 		else
 			new_str = concate_str(&s[*index], new_str, qute_flag, index);
 		(*index)++;
 	}
-	return (new_str);
+	if (mode != 0)
+		return (new_str);
+	add_arg_t_node(node, new_str);
+	return (NULL);
 }

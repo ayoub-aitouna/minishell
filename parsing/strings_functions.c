@@ -6,15 +6,15 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/19 21:16:05 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/21 09:45:57 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-size_t size(char **ptr)
+size_t	size(char **ptr)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (ptr[i])
@@ -22,11 +22,11 @@ size_t size(char **ptr)
 	return (i);
 }
 
-char **append(char **Strings, char *String)
+char	**append(char **Strings, char *String)
 {
-	int i;
-	int len;
-	char **new_Strings;
+	int		i;
+	int		len;
+	char	**new_Strings;
 
 	i = 0;
 	if (Strings == NULL)
@@ -46,9 +46,9 @@ char **append(char **Strings, char *String)
 	return (new_Strings);
 }
 
-size_t string_list_len(char **list)
+size_t	string_list_len(char **list)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (list[i])
@@ -56,13 +56,13 @@ size_t string_list_len(char **list)
 	return (i);
 }
 
-char *mini_strjoin(char const *s1, char const *s2)
+char	*mini_strjoin(char const *s1, char const *s2)
 {
-	size_t len1;
-	size_t len2;
-	char *ns;
-	int j;
-	int i;
+	size_t	len1;
+	size_t	len2;
+	char	*ns;
+	int		j;
+	int		i;
 
 	if (s1 == NULL)
 		return ((char *)s2);
@@ -82,12 +82,22 @@ char *mini_strjoin(char const *s1, char const *s2)
 	return (ns);
 }
 
-int is_token_sep(char *c, int i)
+int	is_token_sep(char *c, int i)
 {
-	return (!is_n_escaped(c, '|', i) && !is_n_escaped(c, '>', i) && !is_n_escaped(c, '<', i) && c[i] != ' ');
+	return (!is_n_escaped(c, '|', i) && !is_n_escaped(c, '>', i)
+		&& !is_n_escaped(c, '<', i) && c[i] != ' ');
 }
 
-int is_n_escaped(char *s, char c, int i)
+int	is_n_escaped(char *s, char c, int i)
 {
-	return (s[i] == c && (i == 0 || (i > 0 && s[i - 1] != '\\')));
+	int b_s_count;
+
+	b_s_count = 0;
+
+	if (s[i] != c)
+		return (0);
+	--i;
+	while (i >= 0 && s[i--] == '\\')
+		b_s_count++;
+	return (b_s_count % 2 == 0);
 }

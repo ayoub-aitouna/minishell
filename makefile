@@ -9,6 +9,8 @@ obj = ${src:.c=.o}
 
 NAME =  minishell
 
+CFLAGS = -Wall -Werror -Wextra
+
 libft = libft/libft.a
 
 all: $(NAME)
