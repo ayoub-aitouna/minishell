@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/21 09:47:38 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/21 10:12:49 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void	tty(void)
 		free(default_promt);
 		if (!line)
 			break ;
-		// if (handle_syntax(line))
-		// 	continue ;
+		if (handle_syntax(line))
+			continue ;
 		// line = get_full_line(line);
 		add_history(line);
 		parse(line, &list);

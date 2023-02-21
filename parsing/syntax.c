@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/21 09:48:24 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/21 10:19:58 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ int	check_redirections_syntax(char *line, char **msg)
 
 	(void)msg;
 	i = 0;
-	if (line[i] == '>')
+	if (is_n_escaped(line, '>', i))
 	{
-		if (line[i + 1] == '>')
+		if (is_n_escaped(line, '>', i + 1))
 			i++;
-		if (line[i + i] == '\n' || line[i + 1] == 0)
+		if (line[i + i] == '\n' || line[i + 1] == 0 || is_token_sep(&line[i
+				+ 1], i + 1))
 			return (1);
 	}
 	if (line[i] == '<')
@@ -51,9 +52,9 @@ char	*check_syntax(char *line, char **msg)
 		return (set_error_msg(msg, "`|'"));
 	while (line[i])
 	{
-		if (i == 0 || (i > 0 && line[i - 1] != '\\'))
+		if (is_n_escaped(line, '"', i) || is_n_escaped(line, '\'', i))
 			toggle_quteflag(line[i], &qute_flag);
-		if (line[i] == '|')
+		if (is_n_escaped(line, '|', i))
 			pipe_flag++;
 		else if (line[i] != ' ' && line[i] != '\n')
 			pipe_flag = 0;

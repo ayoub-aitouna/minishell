@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/21 09:45:57 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/21 10:19:21 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,9 @@ int	is_token_sep(char *c, int i)
 
 int	is_n_escaped(char *s, char c, int i)
 {
-	int b_s_count;
+	int	b_s_count;
 
 	b_s_count = 0;
-
 	if (s[i] != c)
 		return (0);
 	--i;
