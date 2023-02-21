@@ -96,28 +96,30 @@ int open_input_file(char *line, int *i)
 {
 	int input_file;
 	char *file_name;
-	int qute_flag;
+	int open_flag;
+
 	if (line[(*i) + 1] == '<')
 	{
-		qute_flag = is_between_qute(&line[(*i) + 2]);
-		return (here_doc(qute_flag, get_str(&line[(*i) + 2], i, 0)));
+		(*i) += 2;
+		return (here_doc(is_between_qute(&line[*i]), get_str(&line[*i], i, 0)));
+	}
+	else if (line[(*i) + 1] == '>')
+	{
+		++(*i);
+		open_flag = O_CREAT | O_RDWR | O_TRUNC;
 	}
 	else
+		open_flag = O_RDONLY;
+	file_name = get_file_name(&line[++(*i)], i);
+	if (file_name == NULL)
 	{
-		file_name = get_file_name(&line[++(*i)], i);
-		if (file_name == NULL)
-		{
-			input_file = -2;
-			printf(RED "ambiguous redirect \n" RESET);
-		}
-		else
-			input_file = open(file_name, O_RDONLY);
-		if (input_file == -1)
-		{
-		}
-		if (file_name != NULL)
-			free(file_name);
+		input_file = -2;
+		printf(RED "ambiguous redirect \n" RESET);
 	}
+	else
+		input_file = open(file_name, open_flag, 0664);
+	if (file_name != NULL)
+		free(file_name);
 	return (input_file);
 }
 

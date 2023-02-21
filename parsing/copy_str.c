@@ -12,11 +12,11 @@
 
 #include "../minishell.h"
 
-char	*ft_str_append(char *s, char c)
+char *ft_str_append(char *s, char c)
 {
-	int		i;
-	int		len;
-	char	*new_str;
+	int i;
+	int len;
+	char *new_str;
 
 	i = 0;
 	len = ft_strlen(s);
@@ -33,7 +33,7 @@ char	*ft_str_append(char *s, char c)
 	return (new_str);
 }
 
-char	*concate_str(char *s, char *str, int flag, int *index)
+char *concate_str(char *s, char *str, int flag, int *index)
 {
 	if (s[0] == '\\')
 	{
@@ -58,17 +58,17 @@ char	*concate_str(char *s, char *str, int flag, int *index)
 	return (str);
 }
 
-void	copy_string_t_args(char *s, m_node *node, int *index)
+void copy_string_t_args(char *s, m_node *node, int *index)
 {
-	int		qute_flag;
-	char	*new_str;
+	int qute_flag;
+	char *new_str;
 
 	qute_flag = 0;
 	new_str = NULL;
 	while (s[*index] != 0 && (is_token_sep(s, *index) || qute_flag))
 	{
-		if (is_qute(s, *index) && toggle_flag(s[*index], &qute_flag, index))
-			continue ;
+		if (toggle_flag(s[*index], &qute_flag, index))
+			continue;
 		if (qute_flag == 0 && is_n_escaped(s, '$', *index))
 			new_str = splite_env_val(s, new_str, node, index);
 		else if (qute_flag == 2 && is_n_escaped(s, '$', *index))
@@ -84,21 +84,17 @@ void	copy_string_t_args(char *s, m_node *node, int *index)
 	add_arg_t_node(node, new_str);
 }
 
-char	*copy_string(char *s, int *index, int expande)
+char *copy_string(char *s, int *index, int expande)
 {
-	int		qute_flag;
-	char	*new_str;
+	int qute_flag;
+	char *new_str;
 
 	qute_flag = 0;
 	new_str = NULL;
 	while (s[*index] != 0 && (is_token_sep(s, *index) || qute_flag))
 	{
-		if (is_qute(s, *index) && qute_flag != 0)
-		{
-			toggle_quteflag(s[*index], &qute_flag);
-			(*index)++;
-			continue ;
-		}
+		if (toggle_flag(s[*index], &qute_flag, index))
+			continue;
 		if (qute_flag != 1 && s[*index] == '$' && expande)
 		{
 			new_str = copy_variable_value(new_str, s, index);

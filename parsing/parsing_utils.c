@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-int	spaces_count(char *s)
+int spaces_count(char *s)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (s[i] && (s[i] == ' ' || s[i] == '\n' || s[i] == '\t'))
@@ -22,13 +22,13 @@ int	spaces_count(char *s)
 	return (i);
 }
 
-int	is_qute(char *s, int i)
+int is_qute(char *s, int i)
 {
-	return ((s[i] == '"' || s[i] == '\'') && (i == 0 || i > 0 && s[i
-			- 1] != '\\'));
+	return ((s[i] == '"' || s[i] == '\'') 
+		&& (i == 0 || (i > 0 && s[i - 1] != '\\')));
 }
 
-void	add_arg_t_node(m_node *node, char *str)
+void add_arg_t_node(m_node *node, char *str)
 {
 	if (str)
 	{
@@ -38,12 +38,12 @@ void	add_arg_t_node(m_node *node, char *str)
 	}
 }
 
-char	*get_str(char *s, int *index, int expande)
+char *get_str(char *s, int *index, int expande)
 {
-	int		len;
-	int		i;
-	int		expanded;
-	char	*new_str;
+	int len;
+	int i;
+	int expanded;
+	char *new_str;
 
 	i = 0;
 	expanded = 0;
@@ -54,7 +54,7 @@ char	*get_str(char *s, int *index, int expande)
 	return (new_str);
 }
 
-void	parse_arguments(char *s, m_node *node, int *index)
+void parse_arguments(char *s, m_node *node, int *index)
 {
 	int len;
 	int i;

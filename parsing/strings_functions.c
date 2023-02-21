@@ -84,8 +84,7 @@ char *mini_strjoin(char const *s1, char const *s2)
 
 int is_token_sep(char *c, int i)
 {
-	// return (c != '|' && c != '>' && c != '<' && c != ' ');
-	return (!is_n_escaped(c, '|', i) && !is_n_escaped(c, '|', i) && !is_n_escaped(c, '|', i) && c[i] != ' ');
+	return (!is_n_escaped(c, '|', i) && !is_n_escaped(c, '>', i) && !is_n_escaped(c, '<', i) && c[i] != ' ');
 }
 
 int is_n_escaped(char *s, char c, int i)
