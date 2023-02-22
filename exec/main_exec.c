@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:09 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/21 09:49:20 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/22 09:37:44 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,68 @@ void	run_built_in(m_node *node)
 // {
 // }
 
+void	manage_input_output(m_node *node, int index, int len, int fd[])
+{
+	//1th child
+	if (index == 0)
+	{
+		if (node->input_file != -1)
+			dup2(node->input_file, 0);
+		if (node->output_file != -1)
+			dup2(node->output_file, 1);
+		else
+			dup2(fd[1], 1);
+	}
+	else if (index != len)
+	{
+		if (node->input_file != -1)
+			dup2(node->input_file, 0);
+		else
+			dup2(fd[0], 0);
+		if (node->output_file != -1)
+			dup2(node->output_file, 1);
+		else
+			dup2(fd[1], 1);
+	}
+	else
+	{
+		if (node->input_file != -1)
+			dup2(node->input_file, 0);
+		else
+			dup2(fd[0], 0);
+		if (node->output_file != -1)
+			dup2(node->output_file, 1);
+	}
+}
+
 void	exec(t_list *list)
 {
 	m_node	*node;
 	int		pid;
 	int		index;
+	int		len;
 	int		fd[2];
 
 	index = 0;
+	len = ft_lstsize(list);
 	pipe(fd);
 	while (list)
 	{
 		node = (m_node *)list->content;
-		if ((pid = fork()) != 0)
+		if ((pid = fork()) == 0)
+		{
+			manage_input_output(node, index, len, fd);
+			if (is_builtin(node->command))
+				run_built_in(node);
+			else
+				execve(node->command, node->arguments, get_env(NULL));
+			exit(0);
+		}
+		else
 		{
 			index++;
 			waitpid(pid, NULL, 0);
 			list = list->next;
-			continue ;
 		}
-		if (is_builtin(node->command))
-			run_built_in(node);
-		else
-			execve(node->command, node->arguments, get_env(NULL));
 	}
 }

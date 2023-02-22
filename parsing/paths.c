@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:21:01 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/17 04:33:45 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/22 09:30:57 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,13 @@ char	*get_fullpath(char *s)
 
 char	*update_command(char *command)
 {
-	char *command_path;
+	char	*command_path;
+	char	*name;
+
+	name = ft_strdup(command);
 	command_path = get_fullpath(command);
 	if (command_path == NULL)
-		ft_printf(RED "%s: command not found \n" RESET, command);
+		ft_printf(RED "%s: command not found \n" RESET, name);
+	free(name);
 	return (command_path);
 }

@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:21:33 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/21 09:48:52 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/22 05:35:02 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_sigint(int sig)
 {
 	(void)sig;
 	write(0, "\n", 1);
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }
