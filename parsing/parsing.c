@@ -139,8 +139,8 @@ void	tty(void)
 		}
 		add_history(line);
 		parse(line, &list);
+		// printf_list(list);
 		exec(list);
-		printf_list(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
 	}

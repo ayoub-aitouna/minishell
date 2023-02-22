@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-void	run_built_in(m_node *node)
+void run_built_in(m_node *node)
 {
-	char	*dir;
+	char *dir;
 
 	if (is_equal(node->command, "exit"))
 		return (exit(0));
@@ -46,20 +46,21 @@ void	run_built_in(m_node *node)
 // {
 // }
 
-void	manage_input_output(m_node *node, int index, int len, int fd[])
+void manage_input_output(m_node *node, int index, int len, int fd[])
 {
-	//1th child
 	if (index == 0)
 	{
+		close(fd[0]);
 		if (node->input_file != -1)
 			dup2(node->input_file, 0);
 		if (node->output_file != -1)
 			dup2(node->output_file, 1);
-		else
+		else if (len != 1)
 			dup2(fd[1], 1);
 	}
-	else if (index != len)
+	else if (index < len - 1)
 	{
+		// milde children
 		if (node->input_file != -1)
 			dup2(node->input_file, 0);
 		else
@@ -71,6 +72,7 @@ void	manage_input_output(m_node *node, int index, int len, int fd[])
 	}
 	else
 	{
+		close(fd[1]);
 		if (node->input_file != -1)
 			dup2(node->input_file, 0);
 		else
@@ -80,21 +82,50 @@ void	manage_input_output(m_node *node, int index, int len, int fd[])
 	}
 }
 
-void	exec(t_list *list)
+int procces_list(int **list, int new_pid, int size)
 {
-	m_node	*node;
-	int		pid;
-	int		index;
-	int		len;
-	int		fd[2];
+	int i;
+	int *new_list;
+	int *tab = *list;
+	i = 0;
+	new_list = malloc(sizeof(int) * (size + 1));
+	if (!new_list)
+		return 0;
+
+	while (i < size + 1)
+	{
+		if (i == 0)
+			new_list[i] = new_pid;
+		else
+			new_list[i] = tab[i - 1];
+		i++;
+	}
+	if (*list != NULL)
+		free(*list);
+	*list = new_list;
+	return (size + 1);
+}
+
+void exec(t_list *list)
+{
+	m_node *node;
+	int pid;
+	int index;
+	int len;
+	int proccess_len;
+	int *procces;
+	int fd[2];
 
 	index = 0;
+	proccess_len = 0;
+	procces = NULL;
 	len = ft_lstsize(list);
 	pipe(fd);
 	while (list)
 	{
 		node = (m_node *)list->content;
-		if ((pid = fork()) == 0)
+		pid = fork();
+		if (pid == 0)
 		{
 			manage_input_output(node, index, len, fd);
 			if (is_builtin(node->command))
@@ -105,9 +136,14 @@ void	exec(t_list *list)
 		}
 		else
 		{
+			proccess_len = procces_list(&procces, pid, proccess_len);
 			index++;
-			waitpid(pid, NULL, 0);
 			list = list->next;
 		}
 	}
+	close(fd[0]);
+	close(fd[1]);
+	int i = 0;
+	while (i < proccess_len)
+		waitpid(procces[i++], NULL, 0);
 }

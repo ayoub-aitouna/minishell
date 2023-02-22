@@ -1,0 +1,12 @@
+Utils
+colors.h
+exec
+libft
+main.c
+main.o
+makefile
+minishell
+minishell.h
+notes
+parsing
+ss
