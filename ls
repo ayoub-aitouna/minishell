@@ -1,8 +1,10 @@
-!
 Utils
 colors.h
+dsdfsdfsd
 exec
+file
 libft
+ls
 main.c
 main.o
 makefile
@@ -10,3 +12,4 @@ minishell
 minishell.h
 notes
 parsing
+ss

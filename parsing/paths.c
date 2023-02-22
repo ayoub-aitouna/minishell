@@ -63,6 +63,7 @@ char	*get_fullpath(char *s)
 	}
 	i = 0;
 	free_list(paths);
+	free(s);
 	return (cmd);
 }
 

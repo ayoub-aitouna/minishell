@@ -12,10 +12,10 @@
 
 #include "../minishell.h"
 
-char	*parse_input(char *line, int qute_flag)
+char *parse_input(char *line, int qute_flag)
 {
-	char	*new_str;
-	int		i;
+	char *new_str;
+	int i;
 
 	i = 0;
 	new_str = NULL;
@@ -32,10 +32,11 @@ char	*parse_input(char *line, int qute_flag)
 	return (new_str);
 }
 
-int	here_doc(int flag, char *limiter)
+int here_doc(int flag, char *limiter)
 {
-	char	*line;
-	int		fd;
+	char *line;
+	char *parsed_input;
+	int fd;
 
 	printf("limiter %s \n", limiter);
 	fd = open(".temp_file", O_CREAT | O_RDWR, 0664);
@@ -43,11 +44,15 @@ int	here_doc(int flag, char *limiter)
 	{
 		line = readline("here_doc> ");
 		if (line == NULL || is_equal(limiter, line))
-			break ;
-		line = parse_input(line, flag);
-		printf("\n%s\n", line);
-		write(fd, line, ft_strlen(line));
+			break;
+		parsed_input = parse_input(line, flag);
+		printf("\n%s\n", parsed_input);
+		write(fd, parsed_input, ft_strlen(parsed_input));
+		free(line);
+		free(parsed_input);
 	}
+	if (line != NULL)
+		free(line);
 	close(fd);
 	free(limiter);
 	return (open(".temp_file", O_RDONLY));

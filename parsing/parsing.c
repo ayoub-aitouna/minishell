@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
+char *splite_env_val(char *line, char *new_str, m_node *node, int *index)
 {
-	int		j;
-	char	*env_value;
-	char	**splited_env_val;
-	int		max;
+	int j;
+	char *env_value;
+	char **splited_env_val;
+	int max;
 
 	env_value = NULL;
 	j = 0;
@@ -29,7 +29,7 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 		while (j < max - 1)
 		{
 			add_arg_t_node(node, mini_strjoin(new_str,
-						ft_strdup(splited_env_val[j])));
+											  ft_strdup(splited_env_val[j])));
 			free(new_str);
 			new_str = NULL;
 			free(splited_env_val[j]);
@@ -41,13 +41,13 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 	return (new_str);
 }
 
-void	parse(char *line, t_list **list)
+void parse(char *line, t_list **list)
 {
-	int		i;
-	m_node	*node;
+	int i;
+	m_node *node;
 
 	if (line == NULL)
-		return ;
+		return;
 	node = new_m_node();
 	i = 0;
 	while (line[i] && line[i] != '|')
@@ -65,23 +65,23 @@ void	parse(char *line, t_list **list)
 		parse(&line[++i], list);
 }
 
-char	*get_promt_text(void)
+char *get_promt_text(void)
 {
-	char	*working_directory;
-	char	*dir;
-	char	*default_promt;
+	char *working_directory;
+	char *dir;
+	char *default_promt;
 
 	working_directory = getcwd(NULL, 0);
-	dir = ft_strjoin(working_directory, "$ " RESET);
+	dir = ft_strjoin(working_directory, "> " RESET);
 	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE, dir);
 	free(dir);
 	free(working_directory);
 	return (default_promt);
 }
 
-char	*get_full_line(char *line)
+char *get_full_line(char *line)
 {
-	char	*temp;
+	char *temp;
 
 	while (!is_complete(line))
 	{
@@ -92,11 +92,11 @@ char	*get_full_line(char *line)
 	return (line);
 }
 
-void	tty(void)
+void tty(void)
 {
-	char	*line;
-	t_list	*list;
-	char	*default_promt;
+	char *line;
+	t_list *list;
+	char *default_promt;
 
 	list = NULL;
 	line = NULL;
@@ -106,9 +106,9 @@ void	tty(void)
 		line = readline(default_promt);
 		free(default_promt);
 		if (!line)
-			break ;
+			break;
 		if (handle_syntax(line))
-			continue ;
+			continue;
 		// line = get_full_line(line);
 		add_history(line);
 		parse(line, &list);
