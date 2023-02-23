@@ -10,13 +10,14 @@ obj = ${src:.c=.o}
 NAME =  minishell
 
 CFLAGS = -Wall -Werror -Wextra
-
+incldlib = -I/Users/aaitouna/homebrew/opt/readline/include
+libreadline = -lreadline -L/Users/aaitouna/homebrew/opt/readline/lib
 libft = libft/libft.a
 
 all: $(NAME)
 
 $(NAME) : $(obj) $(libft)
-	gcc $(obj) $(libft) -lreadline -o $(NAME)
+	gcc $(obj) $(libft) $(libreadline) $() -o $(NAME)
 
 $(libft):
 	make bonus --directory=libft

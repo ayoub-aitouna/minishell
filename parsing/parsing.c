@@ -102,7 +102,7 @@ char	*get_promt_text(void)
 	NAME = getenv("NAME");
 	dir = get_relative_path(HOME, working_directory);
 	default_promt = ft_strjoin(USER, "@");
-	default_promt = ft_strjoin(default_promt, NAME);
+	default_promt = ft_strjoin(default_promt, "minishell");
 	default_promt = ft_strjoin(BOLDMAGENTA, default_promt);
 	default_promt = ft_strjoin(default_promt, RESET);
 	default_promt = ft_strjoin(default_promt, BOLDBLUE);

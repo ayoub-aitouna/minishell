@@ -12,21 +12,21 @@
 
 #include "../minishell.h"
 
-char	*ft_getenv(char *name)
+char *ft_getenv(char *name)
 {
-	int		i;
-	char	**env;
-	char	*value;
-
+	int i;
+	char **env;
+	char *value;
 	i = 0;
 	if (!name)
 		return (NULL);
 	env = get_env(NULL);
 	while (env[i])
 	{
-		value = ft_strnstr(env[i], name, ft_strlen(name));
+		char *new_name = ft_strjoin(name, "=");
+		value = ft_strnstr(env[i], new_name, ft_strlen(new_name));
 		if (value != NULL)
-			return (value + ft_strlen(name) + 1);
+			return (value + ft_strlen(new_name));
 		i++;
 	}
 	return (NULL);

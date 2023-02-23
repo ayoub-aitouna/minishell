@@ -66,7 +66,7 @@ char *copy_variable_value(char *dst, char *src, int *index)
 	(*index) += name_len - 1;
 	if (name == NULL)
 		return (dst);
-	value = getenv(name);
+	value = ft_getenv(name);
 	free(name);
 	if (value == NULL)
 		return (dst);

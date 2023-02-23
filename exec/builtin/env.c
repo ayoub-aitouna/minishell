@@ -96,7 +96,6 @@ void	export(char *env_var)
 		i++;
 	while (env_var[i])
 		var_value = ft_str_append(var_value, env_var[i++]);
-	ft_printf("<%s> = <%s> <%s>", var_name, var_value, env_var);
 	if (var_name == NULL || var_value == NULL)
 		return ;
 	unset(var_name);
