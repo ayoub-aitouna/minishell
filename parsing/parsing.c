@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/22 09:22:25 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:11:07 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	parse(char *line, t_list **list)
 	while (line[i] && line[i] != '|')
 	{
 		if (is_n_escaped(line, '<', i))
-			node->input_file = open_input_file(line, &i);
+			node->input_file = open_input_file(line, &i, node->output_file);
 		else if (is_n_escaped(line, '>', i))
-			node->output_file = open_output_file(line, &i);
+			node->output_file = open_output_file(line, &i, node->input_file);
 		else
 			get_input_value(&line[i], node, &i, 0);
 	}
@@ -65,15 +65,48 @@ void	parse(char *line, t_list **list)
 		parse(&line[++i], list);
 }
 
+char	*get_relative_path(char *HOME, char *w_directory)
+{
+	int		i;
+	char	*relative_dir;
+	char	*temp;
+
+	relative_dir = NULL;
+	i = 0;
+	while (w_directory[i] && HOME[i] && w_directory[i] == HOME[i])
+		i++;
+	relative_dir = ft_str_append(relative_dir, ':');
+	relative_dir = ft_str_append(relative_dir, '~');
+	while (w_directory[i])
+		relative_dir = ft_str_append(relative_dir, w_directory[i++]);
+	temp = relative_dir;
+	relative_dir = ft_strjoin(relative_dir, RESET);
+	relative_dir = ft_str_append(relative_dir, '$');
+	relative_dir = ft_str_append(relative_dir, ' ');
+	free(temp);
+	return (relative_dir);
+}
+
 char	*get_promt_text(void)
 {
 	char	*working_directory;
 	char	*dir;
 	char	*default_promt;
+	char	*HOME;
+	char	*NAME;
+	char	*USER;
 
 	working_directory = getcwd(NULL, 0);
-	dir = ft_strjoin(working_directory, "> " RESET);
-	default_promt = ft_strjoin(BOLDGREEN "minishell:\e" RESET BOLDBLUE, dir);
+	HOME = getenv("HOME");
+	USER = getenv("USER");
+	NAME = getenv("NAME");
+	dir = get_relative_path(HOME, working_directory);
+	default_promt = ft_strjoin(USER, "@");
+	default_promt = ft_strjoin(default_promt, NAME);
+	default_promt = ft_strjoin(BOLDMAGENTA, default_promt);
+	default_promt = ft_strjoin(default_promt, RESET);
+	default_promt = ft_strjoin(default_promt, BOLDBLUE);
+	default_promt = ft_strjoin(default_promt, dir);
 	free(dir);
 	free(working_directory);
 	return (default_promt);

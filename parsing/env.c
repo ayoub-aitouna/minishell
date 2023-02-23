@@ -1,42 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 18:23:23 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/23 01:47:41 by aaitouna         ###   ########.fr       */
+/*   Created: 2023/02/23 09:41:59 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/23 09:42:23 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "built.h"
+#include "../minishell.h"
 
-void	echo(char **arguments)
+char	*ft_getenv(char *name)
 {
-	int	i;
-	int	nl_flag;
+	int		i;
+	char	**env;
+	char	*value;
 
 	i = 0;
-	nl_flag = 0;
-	if (arguments == NULL)
+	if (!name)
+		return (NULL);
+	env = get_env(NULL);
+	while (env[i])
 	{
-		printf("\n");
-		return ;
-	}
-	if (is_equal(arguments[0], "-n"))
-		nl_flag = 1;
-	i += nl_flag;
-	while (arguments[i])
-	{
-		printf("%s", arguments[i]);
+		value = ft_strnstr(env[i], name, ft_strlen(name));
+		if (value != NULL)
+			return (value + ft_strlen(name) + 1);
 		i++;
-		if (arguments[i] != NULL)
-			printf(" ");
-		else
-			break ;
 	}
-	if (!nl_flag)
-		printf("\n");
-	exit(0);
+	return (NULL);
 }

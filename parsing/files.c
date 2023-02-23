@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:34:35 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/21 08:11:56 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/23 04:56:54 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,45 +30,49 @@ int	is_between_qute(char *line)
 	return (flag);
 }
 
-int	open_input_file(char *line, int *i)
+int	open_input_file(char *line, int *i, int output)
 {
 	int		input_file;
 	char	*file_name;
 	int		open_flag;
 
+	input_file = NONE;
 	if (line[(*i) + 1] == '<')
 	{
 		(*i) += 2;
-		return (here_doc(is_between_qute(&line[*i]), get_input_value(&line[*i],NULL,
-					i, 2)));
+		return (here_doc(is_between_qute(&line[*i]), get_input_value(&line[*i],
+					NULL, i, 2)));
 	}
 	else if (line[(*i) + 1] == '>')
 	{
 		++(*i);
 		open_flag = O_CREAT | O_RDWR | O_TRUNC;
 	}
-	else
-		open_flag = O_RDONLY;
+	open_flag = O_RDONLY;
 	file_name = get_input_value(&line[++(*i)], NULL, i, 1);
 	if (file_name == NULL)
 	{
-		input_file = -2;
+		input_file = ERROR;
 		printf(RED "ambiguous redirect \n" RESET);
 	}
-	else
-		input_file = open(file_name, open_flag, 0664);
+	else if (output != ERROR && output != NO_FILE)
+	{
+		if ((input_file = open(file_name, open_flag, 0664)) == -1)
+			perror("-bash :");
+	}
 	if (file_name != NULL)
 		free(file_name);
 	return (input_file);
 }
 
-int	open_output_file(char *line, int *i)
+int	open_output_file(char *line, int *i, int input)
 {
 	int		opne_flag;
 	int		output_file;
 	char	*file_name;
 
 	opne_flag = 0;
+	output_file = NONE;
 	if (line[(*i) + 1] == '>')
 	{
 		(*i)++;
@@ -79,13 +83,13 @@ int	open_output_file(char *line, int *i)
 	file_name = get_input_value(&line[++(*i)], NULL, i, 1);
 	if (file_name == NULL)
 	{
-		output_file = -2;
+		output_file = ERROR;
 		printf(RED "ambiguous redirect\n" RESET);
 	}
-	else
-		output_file = open(file_name, opne_flag, 0664);
-	if (output_file == -1)
+	else if (input != ERROR && input != NO_FILE)
 	{
+		if ((output_file = open(file_name, opne_flag, 0664)) == -1)
+			perror("-bash :");
 	}
 	if (file_name != NULL)
 		free(file_name);

@@ -2,16 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2023/02/14 13:29:25 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/14 13:29:25 by aaitouna         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/23 09:43:14 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/23 09:43:14 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -36,8 +35,14 @@ typedef struct node
 	int output_file;
 } m_node;
 
+enum file_input
+{
+	NONE = -3,
+	NO_FILE = -1,
+	ERROR = -2,
+};
+
 int	here_doc(int flag, char *limiter);
-void	parse_cur_command(char *line, t_list **list);
 void	parse(char *line, t_list **list);
 void	tty(void);
 size_t	size(char **ptr);
@@ -45,15 +50,14 @@ m_node	*new_m_node(void);
 void	printf_list(t_list *list);
 char	**get_env(char **p);
 m_node	*new_m_node(void);
-char	*get_str(char *s, int *index, int expande);
 int	spaces_count(char *s);
 char	*get_env_name(char *s, int *index);
 size_t	size(char **ptr);
 char	**append(char **Strings, char *String);
 size_t	string_list_len(char **list);
 void	exec(t_list *list);
-int	open_input_file(char *line, int *i);
-int	open_output_file(char *line, int *i);
+int	open_input_file(char *line, int *i, int input);
+int	open_output_file(char *line, int *i, int output);
 void	toggle_quteflag(char c, int *qute_flag);
 int	toggle_flag(char c, int *qute_flag, int *index);
 char	*ft_str_append(char *s, char c);
@@ -79,8 +83,8 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index);
 void	add_arg_t_node(m_node *node, char *str);
 char	*get_input_value(char *s, m_node *node, int *index, int mode);
 char	*copy_string_t_args(char *s, m_node *node, int *index, int mode);
-char	*copy_string(char *s, int *index, int expande);
 int	is_qute(char *s, int i);
 int	is_n_escaped(char *s, char c, int i);
 int	is_between_qute(char *line);
+char	*ft_getenv(char *name);
 #endif

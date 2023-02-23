@@ -19,8 +19,17 @@
 char	**get_env(char **p)
 {
 	static char **env;
+	int i = 0;
 	if (p != NULL)
-		env = p;
+	{
+		env = malloc((size(p) + 1) * sizeof(char *));
+		while (p[i])
+		{
+			env[i] = ft_strdup(p[i]);
+			i++;
+		}
+		env[i] = NULL;
+	}
 	return (env);
 }
 

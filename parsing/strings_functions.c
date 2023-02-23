@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/21 10:19:21 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/23 07:04:00 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*mini_strjoin(char const *s1, char const *s2)
 int	is_token_sep(char *c, int i)
 {
 	return (!is_n_escaped(c, '|', i) && !is_n_escaped(c, '>', i)
-		&& !is_n_escaped(c, '<', i) && c[i] != ' ');
+		&& !is_n_escaped(c, '<', i) && !is_n_escaped(c, ' ', i));
 }
 
 int	is_n_escaped(char *s, char c, int i)
