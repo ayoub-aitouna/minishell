@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/23 12:11:07 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:52:54 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,11 @@ char	*get_promt_text(void)
 	char	*dir;
 	char	*default_promt;
 	char	*HOME;
-	char	*NAME;
 	char	*USER;
 
 	working_directory = getcwd(NULL, 0);
 	HOME = getenv("HOME");
 	USER = getenv("USER");
-	NAME = getenv("NAME");
 	dir = get_relative_path(HOME, working_directory);
 	default_promt = ft_strjoin(USER, "@");
 	default_promt = ft_strjoin(default_promt, "minishell");
