@@ -49,7 +49,7 @@ enum EXIT_STATUS
 
 int	here_doc(int flag, char *limiter);
 void	handle_here_doc(int fd, char *limiter, int flag);
-int	procces_list(int **list, int new_pid, int size);
+int	list_append(int **list, int new_pid, int size);
 void	parse(char *line, t_list **list);
 void	tty(void);
 size_t	size(char **ptr);
@@ -97,4 +97,5 @@ char	*ft_getenv(char *name);
 void	rl_replace_line(const char *, int);
 void	here_doc_signal(int sig);
 void	handle_sigint_n_chld(int sig);
+char	*random_string(int len);
 #endif

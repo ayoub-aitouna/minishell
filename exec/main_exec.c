@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:09 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/24 03:03:29 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/24 08:58:52 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,65 +58,84 @@ int	run_built_in_on_main(m_node *node, int len)
 	return (0);
 }
 
-void	manage_input_output(m_node *node, int index, int len, int fd[])
+void	manage_input_output(m_node *node, int out_fd, int in_fd, int index,
+		int len)
 {
+	if (len == 1)
+	{
+		if (node->input_file != NONE)
+			dup2(node->input_file, STDIN_FILENO);
+		if (node->output_file != NONE)
+			dup2(node->output_file, STDOUT_FILENO);
+		return ;
+	}
 	if (index == 0)
 	{
-		close(fd[0]);
 		if (node->input_file != NONE)
-			dup2(node->input_file, 0);
+			dup2(node->input_file, STDIN_FILENO);
 		if (node->output_file != NONE)
-			dup2(node->output_file, 1);
-		else if (len != 1)
-			dup2(fd[1], 1);
+			dup2(node->output_file, STDOUT_FILENO);
+		else
+			dup2(out_fd, STDOUT_FILENO);
 	}
-	else if (index < len - 1)
+	else if (index == len - 1)
 	{
-		// milde children
 		if (node->input_file != NONE)
-			dup2(node->input_file, 0);
-		else
-			dup2(fd[0], 0);
+			dup2(node->input_file, STDIN_FILENO);
 		if (node->output_file != NONE)
-			dup2(node->output_file, 1);
+			dup2(node->output_file, STDOUT_FILENO);
 		else
-			dup2(fd[1], 1);
+			dup2(in_fd, STDIN_FILENO);
 	}
 	else
 	{
-		close(fd[1]);
 		if (node->input_file != NONE)
-			dup2(node->input_file, 0);
+			dup2(node->input_file, STDIN_FILENO);
 		else
-			dup2(fd[0], 0);
+			dup2(in_fd, STDIN_FILENO);
 		if (node->output_file != NONE)
-			dup2(node->output_file, 1);
+			dup2(node->output_file, STDOUT_FILENO);
+		else
+			dup2(out_fd, STDOUT_FILENO);
 	}
 }
 
-int	procces_list(int **list, int new_pid, int size)
+int	proccess(m_node *node, int in_fd, int out_fd, int len, int index)
 {
-	int	i;
-	int	*new_list;
-	int	*tab;
-
-	tab = *list;
-	i = 0;
-	new_list = malloc(sizeof(int) * (size + 1));
-	if (!new_list)
-		return (0);
-	while (i < size + 1)
+	(void)len;
+	(void)index;
+	(void)in_fd;
+	(void)out_fd;
+	signal(SIGINT, exit);
+	if (node->input_file == ERROR || node->output_file == ERROR
+		|| node->output_file == NO_FILE || node->input_file == NO_FILE)
+		return (1);
+	manage_input_output(node, out_fd, in_fd, index, len);
+	if (is_builtin(node->command))
+		run_built_in(node);
+	else
 	{
-		if (i == 0)
-			new_list[i] = new_pid;
-		else
-			new_list[i] = tab[i - 1];
-		i++;
+		if (node->command == NULL)
+		{
+			ft_printf(RED "%s: command not found \n" RESET,
+						size(node->arguments) > 0 ? node->arguments[0] : NULL);
+			return (127);
+		}
+		execve(node->command, node->arguments, get_env(NULL));
 	}
-	if (*list != NULL)
-		free(*list);
-	*list = new_list;
-	return (size + 1);
+	return (1);
+}
+
+int	reset(int len, int **proccess, int pid)
+{
+	signal(SIGINT, handle_sigint_n_chld);
+	return (list_append(proccess, pid, len));
+}
+
+int	handle_fd(int *fd)
+{
+	close(fd[1]);
+	return (fd[0]);
 }
 
 void	exec(t_list *list)
@@ -129,14 +148,16 @@ void	exec(t_list *list)
 	int		*procces;
 	int		fd[2];
 	int		i;
+	int		i_fd;
 
 	index = 0;
+	i_fd = 1;
 	proccess_len = 0;
 	procces = NULL;
 	len = ft_lstsize(list);
-	pipe(fd);
 	while (index < len)
 	{
+		pipe(fd);
 		node = (m_node *)list->content;
 		if (run_built_in_on_main(node, len) || (is_equal(node->command, "cd")
 				&& len > 1))
@@ -147,36 +168,15 @@ void	exec(t_list *list)
 		}
 		pid = fork();
 		if (pid == 0)
-		{
-			signal(SIGINT, exit);
-			if (node->input_file == ERROR || node->output_file == ERROR
-				|| node->output_file == NO_FILE || node->input_file == NO_FILE)
-				exit(1);
-			manage_input_output(node, index, len, fd);
-			if (is_builtin(node->command))
-				run_built_in(node);
-			else
-			{
-				if (node->command == NULL)
-				{
-					ft_printf(RED "%s: command not found \n" RESET,
-								size(node->arguments) > 0 ? node->arguments[0] : NULL);
-					exit(127);
-				}
-				execve(node->command, node->arguments, get_env(NULL));
-			}
-			exit(1);
-		}
+			exit(proccess(node, i_fd, fd[1], len, index));
 		else
 		{
-			signal(SIGINT, handle_sigint_n_chld);
-			proccess_len = procces_list(&procces, pid, proccess_len);
+			i_fd = handle_fd(fd);
+			proccess_len = reset(proccess_len, &procces, pid);
 		}
 		index++;
 		list = list->next;
 	}
-	close(fd[0]);
-	close(fd[1]);
 	i = 0;
 	while (i < proccess_len)
 		waitpid(procces[i++], NULL, 0);

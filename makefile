@@ -3,13 +3,14 @@ src = main.c parsing/parsing.c parsing/parsing_utils.c parsing/copy_str.c \
 		parsing/files.c parsing/here_doc.c parsing/syntax.c  parsing/start.c\
 		parsing/garbage.c  parsing/paths.c  parsing/Signals.c \
 		exec/main_exec.c exec/builtin/change_directory.c exec/builtin/echo.c \
-		exec/builtin/pwd.c exec/builtin/env.c  Utils/equals.c parsing/env.c 
+		exec/builtin/pwd.c exec/builtin/env.c  Utils/equals.c  Utils/random.c \
+		Utils/int_utils.c parsing/env.c 
 
 obj = ${src:.c=.o}
 
 NAME =  minishell
 
-CFLAGS = -Wall -Werror -Wextra
+# CFLAGS = -Wall -Werror -Wextra
 incldlib = -I/Users/aaitouna/homebrew/opt/readline/include
 libreadline = -lreadline -L/Users/aaitouna/homebrew/opt/readline/lib
 libft = libft/libft.a
