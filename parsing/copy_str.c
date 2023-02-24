@@ -6,17 +6,17 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 19:10:46 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/22 15:06:16 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/24 10:05:39 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *ft_str_append(char *s, char c)
+char	*ft_str_append(char *s, char c)
 {
-	int i;
-	int len;
-	char *new_str;
+	int		i;
+	int		len;
+	char	*new_str;
 
 	i = 0;
 	len = ft_strlen(s);
@@ -33,7 +33,7 @@ char *ft_str_append(char *s, char c)
 	return (new_str);
 }
 
-char *concate_str(char *s, char *str, int flag, int *index)
+char	*concate_str(char *s, char *str, int flag, int *index)
 {
 	if (s[0] == '\\')
 	{
@@ -58,8 +58,8 @@ char *concate_str(char *s, char *str, int flag, int *index)
 	return (str);
 }
 
-char *on_error_clear(char **new_str_spltd, char *env_value, char *new_str,
-					 int *index)
+char	*on_error_clear(char **new_str_spltd, char *env_value, char *new_str,
+		int *index)
 {
 	free_list(new_str_spltd);
 	free(env_value);
@@ -69,44 +69,54 @@ char *on_error_clear(char **new_str_spltd, char *env_value, char *new_str,
 	return (NULL);
 }
 
-char *copy_string_t_args(char *s, m_node *node, int *index, int mode)
+char	*handle_expanding(int mode, char **new_str, int qute_flag, m_node *node,
+		int *index, char *s)
 {
-	int qute_flag;
-	char *new_str;
-	char **new_str_spltd;
-	char *env_value;
+	char	**new_str_spltd;
+	char	*env_value;
 
-	qute_flag = 0;
-	new_str = NULL;
 	env_value = NULL;
+	if (qute_flag == 0 && mode == 0)
+		*new_str = splite_env_val(s, *new_str, node, index);
+	else
+	{
+		env_value = copy_variable_value(env_value, s, index);
+		if (qute_flag == 2 && env_value == NULL)
+			env_value = ft_str_append(env_value, 0);
+		if (env_value != NULL)
+		{
+			new_str_spltd = ft_split(env_value, ' ');
+			if (size(new_str_spltd) > 1 && qute_flag == 0)
+				return (on_error_clear(new_str_spltd, env_value, *new_str,
+						index));
+			*new_str = mini_strjoin(*new_str, env_value);
+			if (!env_value)
+				free(env_value);
+			free_list(new_str_spltd);
+		}
+		if (qute_flag == 2 && (s[*index] == '"' && qute_flag == 2))
+			qute_flag = 0;
+	}
+	return (*new_str);
+}
+
+char	*copy_string_t_args(char *s, m_node *node, int *index, int mode)
+{
+	int		qute_flag;
+	char	*new_str;
+
+	new_str = NULL;
+	qute_flag = 0;
 	while (s[*index] != 0 && (is_token_sep(s, *index) || qute_flag))
 	{
 		if (toggle_flag(s[*index], &qute_flag, index))
-			continue;
+			continue ;
 		if (is_n_escaped(s, '$', *index) && qute_flag != 1 && mode != 2)
 		{
-			if (qute_flag == 0 && mode == 0)
-				new_str = splite_env_val(s, new_str, node, index);
-			else
-			{
-				env_value = NULL;
-				env_value = copy_variable_value(env_value, s, index);
-				if (qute_flag == 2 && env_value == NULL)
-					env_value = ft_str_append(env_value, 0);
-				if (env_value != NULL)
-				{
-					new_str_spltd = ft_split(env_value, ' ');
-					if (size(new_str_spltd) > 1 && qute_flag == 0)
-						return (on_error_clear(new_str_spltd, env_value,
-											   new_str, index));
-					new_str = mini_strjoin(new_str, env_value);
-					if (!env_value)
-						free(env_value);
-					free_list(new_str_spltd);
-				}
-				if (qute_flag == 2 && (s[*index] == '"' && qute_flag == 2))
-					qute_flag = 0;
-			}
+			new_str = handle_expanding(mode, &new_str, qute_flag, node, index,
+					s);
+			if (new_str == NULL)
+				return (NULL);
 		}
 		else
 			new_str = concate_str(&s[*index], new_str, qute_flag, index);
