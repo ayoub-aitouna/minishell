@@ -98,4 +98,5 @@ void	rl_replace_line(const char *, int);
 void	here_doc_signal(int sig);
 void	handle_sigint_n_chld(int sig);
 char	*random_string(int len);
+char *m_safe_strjoin(char *s1, char *s2, int free_mode);
 #endif

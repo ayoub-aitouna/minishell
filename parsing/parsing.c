@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
+char *splite_env_val(char *line, char *new_str, m_node *node, int *index)
 {
-	int		j;
-	char	*env_value;
-	char	**splited_env_val;
-	int		max;
+	int j;
+	char *env_value;
+	char **splited_env_val;
+	int max;
 
 	env_value = NULL;
 	j = 0;
@@ -29,7 +29,7 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 		while (j < max - 1)
 		{
 			add_arg_t_node(node, mini_strjoin(new_str,
-						ft_strdup(splited_env_val[j])));
+											  ft_strdup(splited_env_val[j])));
 			free(new_str);
 			new_str = NULL;
 			free(splited_env_val[j]);
@@ -41,13 +41,13 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 	return (new_str);
 }
 
-void	parse(char *line, t_list **list)
+void parse(char *line, t_list **list)
 {
-	int		i;
-	m_node	*node;
+	int i;
+	m_node *node;
 
 	if (line == NULL)
-		return ;
+		return;
 	node = new_m_node();
 	i = 0;
 	while (line[i] && line[i] != '|')
@@ -65,11 +65,11 @@ void	parse(char *line, t_list **list)
 		parse(&line[++i], list);
 }
 
-char	*get_relative_path(char *HOME, char *w_directory)
+char *get_relative_path(char *HOME, char *w_directory)
 {
-	int		i;
-	char	*relative_dir;
-	char	*temp;
+	int i;
+	char *relative_dir;
+	char *temp;
 
 	relative_dir = NULL;
 	i = 0;
@@ -79,40 +79,37 @@ char	*get_relative_path(char *HOME, char *w_directory)
 	relative_dir = ft_str_append(relative_dir, '~');
 	while (w_directory[i])
 		relative_dir = ft_str_append(relative_dir, w_directory[i++]);
-	temp = relative_dir;
-	relative_dir = ft_strjoin(relative_dir, RESET);
+	relative_dir = m_safe_strjoin(relative_dir, RESET, 1);
 	relative_dir = ft_str_append(relative_dir, '$');
 	relative_dir = ft_str_append(relative_dir, ' ');
-	free(temp);
 	return (relative_dir);
 }
 
-char	*get_promt_text(void)
+char *get_promt_text(void)
 {
-	char	*working_directory;
-	char	*dir;
-	char	*default_promt;
-	char	*HOME;
-	char	*USER;
+	char *working_directory;
+	char *dir;
+	char *default_promt;
+	char *HOME;
+	char *USER;
 
 	working_directory = getcwd(NULL, 0);
 	HOME = getenv("HOME");
 	USER = getenv("USER");
 	dir = get_relative_path(HOME, working_directory);
-	default_promt = ft_strjoin(USER, "@");
-	default_promt = ft_strjoin(default_promt, "minishell");
-	default_promt = ft_strjoin(BOLDMAGENTA, default_promt);
-	default_promt = ft_strjoin(default_promt, RESET);
-	default_promt = ft_strjoin(default_promt, BOLDBLUE);
-	default_promt = ft_strjoin(default_promt, dir);
-	free(dir);
+	default_promt = m_safe_strjoin(USER, "@", 0);
+	default_promt = m_safe_strjoin(default_promt, "minishell", 1);
+	default_promt = m_safe_strjoin(BOLDMAGENTA, default_promt, 2);
+	default_promt = m_safe_strjoin(default_promt, RESET, 1);
+	default_promt = m_safe_strjoin(default_promt, BOLDBLUE, 1);
+	default_promt = m_safe_strjoin(default_promt, dir, 3);
 	free(working_directory);
 	return (default_promt);
 }
 
-void	replace_b_slash(char *ptr)
+void replace_b_slash(char *ptr)
 {
-	int	i;
+	int i;
 
 	i = ft_strlen(ptr);
 	while (i >= 0 && ptr[i] != '\\' && ptr[i] != '|')
@@ -121,10 +118,10 @@ void	replace_b_slash(char *ptr)
 		ptr[i] = 0;
 }
 
-char	*get_full_line(char *line)
+char *get_full_line(char *line)
 {
-	char	*temp;
-	char	*new_line;
+	char *temp;
+	char *new_line;
 
 	while (!is_complete(line))
 	{
@@ -142,11 +139,11 @@ char	*get_full_line(char *line)
 	return (line);
 }
 
-void	tty(void)
+void tty(void)
 {
-	char	*line;
-	t_list	*list;
-	char	*default_promt;
+	char *line;
+	t_list *list;
+	char *default_promt;
 
 	list = NULL;
 	line = NULL;
@@ -158,19 +155,19 @@ void	tty(void)
 		if (!line)
 		{
 			printf("exit\n");
-			break ;
+			break;
 		}
 		if (handle_syntax(line))
-			continue ;
+			continue;
 		line = get_full_line(line);
 		if (!line)
 		{
 			printf("exit\n");
-			break ;
+			break;
 		}
 		add_history(line);
 		parse(line, &list);
-		printf_list(list);
+		// printf_list(list);
 		exec(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
