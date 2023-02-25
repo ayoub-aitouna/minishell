@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   status.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 16:03:18 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 10:04:46 by aaitouna         ###   ########.fr       */
+/*   Created: 2023/02/25 08:58:35 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/25 09:01:23 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strdup(const char *s)
+int	status(int a)
 {
-	char	*ptr;
-	size_t	n;
+	static int	status;
 
-	n = ft_strlen(s);
-	ptr = malloc(n + 2);
-	if (ptr == NULL)
-		return (NULL);
-	if (n == 0)
-	{
-		*ptr = 0;
-		return (ptr);
-	}
-	ft_strlcpy(ptr, s, n + 1);
-	return (ptr);
+	if (a == -1)
+		return (status);
+	status = a;
+}
+
+int	get_exit_status(void)
+{
+	return (status(-1));
+}
+
+void	set_exit_status(int status_val)
+{
+	status(status_val);
 }

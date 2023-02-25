@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:11 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/23 09:33:40 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 09:04:09 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	toggle_flag(char c, int *qute_flag, int *index)
 	return (0);
 }
 
-char *copy_variable_value(char *dst, char *src, int *index)
+char	*copy_variable_value(char *dst, char *src, int *index)
 {
 	char	*value;
 	char	*name;
@@ -62,14 +62,21 @@ char *copy_variable_value(char *dst, char *src, int *index)
 	name_len = 0;
 	j = 0;
 	(*index)++;
-	name = get_env_name(&src[*index], &name_len);
-	(*index) += name_len - 1;
-	if (name == NULL)
+	if (src[*index] == '?')
+		value = ft_itoa(get_exit_status());
+	else if (src[*index] == '$')
 		return (dst);
-	value = ft_getenv(name);
-	free(name);
-	if (value == NULL)
-		return (dst);
+	else
+	{
+		name = get_env_name(&src[*index], &name_len);
+		(*index) += name_len - 1;
+		if (name == NULL)
+			return (dst);
+		value = ft_getenv(name);
+		free(name);
+		if (value == NULL)
+			return (dst);
+	}
 	while (value[j])
 		dst = ft_str_append(dst, value[j++]);
 	return (dst);

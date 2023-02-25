@@ -98,4 +98,6 @@ void	rl_replace_line(const char *, int);
 void	here_doc_signal(int sig);
 void	handle_sigint_n_chld(int sig);
 char	*random_string(int len);
+int	get_exit_status(void);
+void	set_exit_status(int status_val);
 #endif

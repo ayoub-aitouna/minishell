@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:21:01 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/23 02:00:08 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 10:57:28 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,13 @@ char	*get_fullpath(char *s)
 	char	*paths_list;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	if (!access(s, X_OK) || is_builtin(s) == 1)
 		return (s);
 	paths_list = get_path();
+	if (paths_list == NULL)
+		return (NULL);
 	paths = ft_split(paths_list, ':');
 	free(paths_list);
 	while (paths[i])
@@ -61,7 +65,6 @@ char	*get_fullpath(char *s)
 		free(cmd);
 		cmd = NULL;
 	}
-	i = 0;
 	free_list(paths);
 	free(s);
 	return (cmd);
@@ -70,6 +73,7 @@ char	*get_fullpath(char *s)
 char	*update_command(char *command)
 {
 	char	*command_path;
+
 	command_path = get_fullpath(command);
 	return (command_path);
 }

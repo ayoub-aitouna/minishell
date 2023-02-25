@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/24 09:20:25 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 11:04:42 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,10 @@ void	tty(void)
 		}
 		add_history(line);
 		parse(line, &list);
-		printf_list(list);
+		// printf_list(list);
 		exec(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
+		// exit(0);
 	}
 }

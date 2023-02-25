@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:14 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/22 05:35:25 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 10:12:09 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	add_arg_t_node(m_node *node, char *str)
 
 char	*get_input_value(char *s, m_node *node, int *index, int mode)
 {
-	int i;
-	char *value;
+	int		i;
+	char	*value;
 
 	i = 0;
 	i += spaces_count(s);

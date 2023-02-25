@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:09 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/24 08:58:52 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 10:58:37 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,6 @@ void	manage_input_output(m_node *node, int out_fd, int in_fd, int index,
 
 int	proccess(m_node *node, int in_fd, int out_fd, int len, int index)
 {
-	(void)len;
-	(void)index;
-	(void)in_fd;
-	(void)out_fd;
 	signal(SIGINT, exit);
 	if (node->input_file == ERROR || node->output_file == ERROR
 		|| node->output_file == NO_FILE || node->input_file == NO_FILE)
@@ -149,6 +145,7 @@ void	exec(t_list *list)
 	int		fd[2];
 	int		i;
 	int		i_fd;
+	int		status;
 
 	index = 0;
 	i_fd = 1;
@@ -179,6 +176,9 @@ void	exec(t_list *list)
 	}
 	i = 0;
 	while (i < proccess_len)
-		waitpid(procces[i++], NULL, 0);
+	{
+		waitpid(procces[i++], &status, 0);
+		set_exit_status(WEXITSTATUS(status));
+	}
 	signal(SIGINT, handle_sigint);
 }

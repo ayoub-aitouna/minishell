@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/23 07:04:00 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 10:59:29 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	size(char **ptr)
 	size_t	i;
 
 	i = 0;
+	if (!ptr)
+		return (0);
 	while (ptr[i])
 		i++;
 	return (i);
