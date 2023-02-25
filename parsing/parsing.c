@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 11:04:42 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 12:19:17 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char *get_promt_text(void)
 	USER = getenv("USER");
 	dir = get_relative_path(HOME, working_directory);
 	default_promt = m_safe_strjoin(USER, "@", 0);
-	default_promt = m_safe_strjoin(default_promt, "minishell", 1);
+	default_promt = m_safe_strjoin(default_promt, "Mini-Shell", 1);
 	default_promt = m_safe_strjoin(BOLDMAGENTA, default_promt, 2);
 	default_promt = m_safe_strjoin(default_promt, RESET, 1);
 	default_promt = m_safe_strjoin(default_promt, BOLDBLUE, 1);

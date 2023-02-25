@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:23:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/15 02:13:06 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 11:31:16 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	clear_node(void *content)
 	m_node	*node;
 
 	node = content;
-	close(node->input_file);
-	close(node->output_file);
+	if (node->input_file > 2)
+		close(node->input_file);
+	if (node->output_file > 2)
+		close(node->output_file);
 	if (node->arguments != NULL)
 		free_list(node->arguments);
 	if (node->command != NULL)

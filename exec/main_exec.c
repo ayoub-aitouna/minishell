@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:09 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 10:58:37 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 11:24:28 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,5 +180,6 @@ void	exec(t_list *list)
 		waitpid(procces[i++], &status, 0);
 		set_exit_status(WEXITSTATUS(status));
 	}
+	free(procces);
 	signal(SIGINT, handle_sigint);
 }
