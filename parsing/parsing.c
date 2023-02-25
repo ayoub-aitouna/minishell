@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 12:19:17 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/25 16:12:07 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void parse(char *line, t_list **list)
 		else
 			get_input_value(&line[i], node, &i, 0);
 	}
-	node->command = update_command(node->command);
+	// node->command = update_command(node->command);
 	ft_lstadd_back(list, ft_lstnew(node));
 	if (line[i] && line[i] == '|')
 		parse(&line[++i], list);
@@ -167,7 +167,7 @@ void tty(void)
 		}
 		add_history(line);
 		parse(line, &list);
-		// printf_list(list);
+		printf_list(list);
 		exec(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
