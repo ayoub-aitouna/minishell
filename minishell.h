@@ -100,4 +100,5 @@ void	handle_sigint_n_chld(int sig);
 char	*random_string(int len);
 int	get_exit_status(void);
 void	set_exit_status(int status_val);
+char	*m_safe_strjoin(char *s1, char *s2, int free_mode);
 #endif
