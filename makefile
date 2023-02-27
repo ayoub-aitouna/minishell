@@ -18,7 +18,7 @@ libft = libft/libft.a
 all: $(NAME)
 
 $(NAME) : $(obj) $(libft)
-	gcc $(obj) $(libft) $(libreadline) $() -o $(NAME)
+	gcc $(obj) $(libft) $(libreadline) -o $(NAME)
 
 $(libft):
 	make bonus --directory=libft
@@ -38,3 +38,11 @@ files = $(shell git diff --name-only HEAD)
 
 commit_and_push: fclean
 	git add . && git commit -m "changes $(files)" && git push;
+
+	
+test_src = play.c tree.c
+
+test_obj = ${test_src:.c=.o}
+
+test: $(test_obj) $(libft)
+	gcc $(test_obj) $(libft)  $(libreadline) -o test && ./test
