@@ -6,18 +6,18 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 12:19:17 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/26 07:54:44 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *splite_env_val(char *line, char *new_str, m_node *node, int *index)
+char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 {
-	int j;
-	char *env_value;
-	char **splited_env_val;
-	int max;
+	int		j;
+	char	*env_value;
+	char	**splited_env_val;
+	int		max;
 
 	env_value = NULL;
 	j = 0;
@@ -29,7 +29,7 @@ char *splite_env_val(char *line, char *new_str, m_node *node, int *index)
 		while (j < max - 1)
 		{
 			add_arg_t_node(node, mini_strjoin(new_str,
-											  ft_strdup(splited_env_val[j])));
+						ft_strdup(splited_env_val[j])));
 			free(new_str);
 			new_str = NULL;
 			free(splited_env_val[j]);
@@ -41,13 +41,13 @@ char *splite_env_val(char *line, char *new_str, m_node *node, int *index)
 	return (new_str);
 }
 
-void parse(char *line, t_list **list)
+void	parse(char *line, t_list **list)
 {
-	int i;
-	m_node *node;
+	int		i;
+	m_node	*node;
 
 	if (line == NULL)
-		return;
+		return ;
 	node = new_m_node();
 	i = 0;
 	while (line[i] && line[i] != '|')
@@ -65,11 +65,11 @@ void parse(char *line, t_list **list)
 		parse(&line[++i], list);
 }
 
-char *get_relative_path(char *HOME, char *w_directory)
+char	*get_relative_path(char *HOME, char *w_directory)
 {
-	int i;
-	char *relative_dir;
-	char *temp;
+	int		i;
+	char	*relative_dir;
+	char	*temp;
 
 	relative_dir = NULL;
 	i = 0;
@@ -85,13 +85,13 @@ char *get_relative_path(char *HOME, char *w_directory)
 	return (relative_dir);
 }
 
-char *get_promt_text(void)
+char	*get_promt_text(void)
 {
-	char *working_directory;
-	char *dir;
-	char *default_promt;
-	char *HOME;
-	char *USER;
+	char	*working_directory;
+	char	*dir;
+	char	*default_promt;
+	char	*HOME;
+	char	*USER;
 
 	working_directory = getcwd(NULL, 0);
 	HOME = getenv("HOME");
@@ -107,9 +107,9 @@ char *get_promt_text(void)
 	return (default_promt);
 }
 
-void replace_b_slash(char *ptr)
+void	replace_b_slash(char *ptr)
 {
-	int i;
+	int	i;
 
 	i = ft_strlen(ptr);
 	while (i >= 0 && ptr[i] != '\\' && ptr[i] != '|')
@@ -118,10 +118,10 @@ void replace_b_slash(char *ptr)
 		ptr[i] = 0;
 }
 
-char *get_full_line(char *line)
+char	*get_full_line(char *line)
 {
-	char *temp;
-	char *new_line;
+	char	*temp;
+	char	*new_line;
 
 	while (!is_complete(line))
 	{
@@ -139,11 +139,21 @@ char *get_full_line(char *line)
 	return (line);
 }
 
-void tty(void)
+int	exit_if_null(char *line)
 {
-	char *line;
-	t_list *list;
-	char *default_promt;
+	if (!line)
+	{
+		printf("exit\n");
+		return (1);
+	}
+	return (0);
+}
+
+void	tty(void)
+{
+	char	*line;
+	t_list	*list;
+	char	*default_promt;
 
 	list = NULL;
 	line = NULL;
@@ -152,25 +162,17 @@ void tty(void)
 		default_promt = get_promt_text();
 		line = readline(default_promt);
 		free(default_promt);
-		if (!line)
-		{
-			printf("exit\n");
-			break;
-		}
+		if (exit_if_null(line))
+			break ;
 		if (handle_syntax(line))
-			continue;
+			continue ;
 		line = get_full_line(line);
-		if (!line)
-		{
-			printf("exit\n");
-			break;
-		}
+		if (exit_if_null(line))
+			break ;
 		add_history(line);
 		parse(line, &list);
-		// printf_list(list);
 		exec(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
-		// exit(0);
 	}
 }

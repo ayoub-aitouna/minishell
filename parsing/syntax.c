@@ -6,15 +6,15 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/23 04:08:42 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/26 08:01:41 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int find_file_name(char *ptr)
+int	find_file_name(char *ptr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ptr[i] && ptr[i] == ' ')
@@ -28,12 +28,13 @@ int find_file_name(char *ptr)
 	return (-1);
 }
 
-char check_redirections_syntax(char *line)
+char	check_redirections_syntax(char *line)
 {
-	int i;
-	int val;
+	int	i;
+	int	val;
 
 	i = 0;
+	val = -1;
 	if (is_n_escaped(line, '>', i))
 	{
 		if (is_n_escaped(line, '>', i + 1))
@@ -41,8 +42,6 @@ char check_redirections_syntax(char *line)
 		if (ft_strchr(">;|<\n", line[i + 1]) || line[i + 1] == 0)
 			return (line[i]);
 		val = find_file_name(&line[i + 1]);
-		if (val != 1)
-			return (val);
 	}
 	if (is_n_escaped(line, '<', i))
 	{
@@ -53,16 +52,14 @@ char check_redirections_syntax(char *line)
 		if (ft_strchr(">;|<\n", line[i + 1]) || line[i + 1] == 0)
 			return (line[i + 1]);
 		val = find_file_name(&line[i + 1]);
-		if (val != 1)
-			return (val);
 	}
-	return (-1);
+	return (val);
 }
 
-char check_syntax(char *line, int *pos)
+char	check_syntax(char *line, int *pos)
 {
-	int pipe_flag;
-	char element_err;
+	int		pipe_flag;
+	char	element_err;
 
 	int i, qute_flag;
 	i = 0;
@@ -91,10 +88,11 @@ char check_syntax(char *line, int *pos)
 	return (-1);
 }
 
-int syntax_here_doc(int flag, char *limiter)
+int	syntax_here_doc(int flag, char *limiter)
 {
-	int fd;
-	int pid;
+	int	fd;
+	int	pid;
+
 	fd = open(".temp_file", O_CREAT | O_RDWR | O_TRUNC, 0664);
 	pid = fork();
 	if (pid == 0)
@@ -105,24 +103,27 @@ int syntax_here_doc(int flag, char *limiter)
 	close(fd);
 	signal(SIGINT, SIG_IGN);
 	free(limiter);
-	return pid;
+	return (pid);
 }
 
-void manage_here_doc(char *line, int pos)
+void	manage_here_doc(char *line, int pos)
 {
-	int i;
-	int status;
-	int canceled = 0;
+	int	i;
+	int	status;
+	int	canceled;
+
+	canceled = 0;
 	if (line == NULL)
-		return;
+		return ;
 	i = 0;
 	while (i < pos)
 	{
-		if (is_n_escaped(line, '<', i) && is_n_escaped(line, '<', i + 1) && !canceled)
+		if (is_n_escaped(line, '<', i) && is_n_escaped(line, '<', i + 1)
+			&& !canceled)
 		{
 			i += 2;
 			int pid = syntax_here_doc(is_between_qute(&line[i]),
-									  get_input_value(&line[i], NULL, &i, 2));
+										get_input_value(&line[i], NULL, &i, 2));
 			waitpid(pid, &status, 0);
 			if (WEXITSTATUS(status) != 0 && WEXITSTATUS(status) == M_SIG_INT)
 				canceled = 1;
@@ -130,14 +131,13 @@ void manage_here_doc(char *line, int pos)
 		else
 			i++;
 	}
-
 	signal(SIGINT, handle_sigint);
 }
 
-int handle_syntax(char *line)
+int	handle_syntax(char *line)
 {
-	char near;
-	int pos;
+	char	near;
+	int		pos;
 
 	if ((near = check_syntax(line, &pos)) != -1)
 	{
@@ -145,7 +145,7 @@ int handle_syntax(char *line)
 			ft_printf(RED "-bash: syntax error near  unexpected token `newline' \n" RESET);
 		else
 			ft_printf(RED "-bash: syntax error near  unexpected token `%c' \n" RESET,
-					  near);
+						near);
 		add_history(line);
 		manage_here_doc(line, pos);
 		return (1);
@@ -153,9 +153,9 @@ int handle_syntax(char *line)
 	return (0);
 }
 
-int is_nl(char *line, int i)
+int	is_nl(char *line, int i)
 {
-	int n_only;
+	int	n_only;
 
 	n_only = 0;
 	if (i > 0)
@@ -163,10 +163,10 @@ int is_nl(char *line, int i)
 	return (line[i] == '\\' && line[i + 1] == 0 && !n_only);
 }
 
-int is_complete(char *line)
+int	is_complete(char *line)
 {
-	int i;
-	int is_complete;
+	int	i;
+	int	is_complete;
 
 	i = 0;
 	is_complete = 1;
