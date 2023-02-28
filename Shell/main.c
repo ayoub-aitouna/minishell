@@ -1,17 +1,18 @@
-#include "./tree.h"
+#include "./shell.h"
 #include "stdio.h"
 
-int is_and_or(char *line)
+int	is_and_or(char *line)
 {
-	if ((line[0] == '|' && line[1] == '|') && (line[0] == '&' && line[1] == '&'))
+	if ((line[0] == '|' && line[1] == '|') && (line[0] == '&'
+			&& line[1] == '&'))
 		return (2);
 	else
 		return (0);
 }
-int check_for_op(char *line)
+int	check_for_op(char *line)
 {
-	int flag;
-	int i;
+	int	flag;
+	int	i;
 
 	i = 0;
 	flag = 0;
@@ -24,10 +25,10 @@ int check_for_op(char *line)
 	return (0);
 }
 
-int check_brackets_balance(char *line)
+int	check_brackets_balance(char *line)
 {
-	int i;
-	int brackets_flag;
+	int	i;
+	int	brackets_flag;
 
 	i = 0;
 	brackets_flag = 0;
@@ -43,19 +44,11 @@ int check_brackets_balance(char *line)
 	}
 	return (brackets_flag == 0);
 }
-int spaces_count(char *s)
-{
-	int i;
 
-	i = 0;
-	while (s[i] && (s[i] == ' ' || s[i] == '\n' || s[i] == '\t'))
-		i++;
-	return (i);
-}
-int is_between_brackets(char *line)
+int	is_between_brackets(char *line)
 {
-	int i;
-	int brackets_flag;
+	int	i;
+	int	brackets_flag;
 
 	i = 0;
 	brackets_flag = 0;
@@ -77,34 +70,12 @@ int is_between_brackets(char *line)
 	return (1);
 }
 
-char *ft_str_append(char *s, char c)
+char	*remove_outer_brackets(char *ptr)
 {
-	int i;
-	int len;
-	char *new_str;
-
-	i = 0;
-	len = ft_strlen(s);
-	new_str = malloc((len + 3) * sizeof(char));
-	while (i < len)
-	{
-		new_str[i] = s[i];
-		i++;
-	}
-	new_str[i++] = c;
-	new_str[i] = 0;
-	if (s != NULL)
-		free(s);
-	return (new_str);
-}
-
-char *remove_outer_brackets(char *ptr)
-{
-	char *new_ptr;
-	int i;
+	char	*new_ptr;
+	int		i;
 
 	new_ptr = NULL;
-
 	if (!is_between_brackets(ptr))
 		return (ptr);
 	i = 1;
@@ -120,9 +91,9 @@ char *remove_outer_brackets(char *ptr)
 	return (new_ptr);
 }
 
-char *copy_str(int start, int end, char *ptr)
+char	*tr_copy_str(int start, int end, char *ptr)
 {
-	char *new_ptr;
+	char	*new_ptr;
 
 	new_ptr = NULL;
 	start += spaces_count(ptr + start);
@@ -131,17 +102,18 @@ char *copy_str(int start, int end, char *ptr)
 	return (new_ptr);
 }
 
-void split_by_op(char *ptr, t_tree **tree)
+void	split_by_op(char *ptr, t_tree **tree)
 {
-	int i;
-	int brackets_flag;
-	int op;
+	int		i;
+	int		brackets_flag;
+	int		op;
+	char	*lft;
 
 	op = 0;
 	i = 0;
 	brackets_flag = 0;
 	if (!ptr)
-		return;
+		return ;
 	while (ptr[i])
 	{
 		op = 0;
@@ -152,50 +124,52 @@ void split_by_op(char *ptr, t_tree **tree)
 		if (ptr[i] == '|' && ptr[i + 1] == '|' && brackets_flag == 0)
 		{
 			op = 1;
-			break;
+			break ;
 		}
 		if (ptr[i] == '&' && ptr[i + 1] == '&' && brackets_flag == 0)
 		{
 			op = 2;
-			break;
+			break ;
 		}
 		i++;
 	}
 	*tree = new_tree_node(op, ptr);
 	if (op)
 	{
-		char *lft = copy_str(0, i, ptr);
-		split_by_op(remove_outer_brackets(copy_str(0, i, ptr)),
+		split_by_op(remove_outer_brackets(tr_copy_str(0, i, ptr)),
 					&(*tree)->left);
-		split_by_op(remove_outer_brackets(copy_str(i + 2, ft_strlen(ptr), ptr)),
+		split_by_op(remove_outer_brackets(tr_copy_str(i + 2, ft_strlen(ptr),
+						ptr)),
 					&(*tree)->right);
 	}
 }
 
-int exit_if_null(char *line)
+int	main(int ac, char **av, char **env)
 {
-	if (!line)
-	{
-		printf("exit\n");
-		return (1);
-	}
-	return (0);
-}
-
-int main(int ac, char **av)
-{
+	(void)ac;
+	(void)av;
+	char *default_promt;
+	get_env(env);
 	char *line;
 	t_tree *tree;
-
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	line = NULL;
 	while (1)
 	{
-		tree = NULL;
-		line = readline("test > ");
+		default_promt = get_promt_text();
+		line = readline(default_promt);
+		free(default_promt);
 		if (exit_if_null(line))
-			break;
+			break ;
+		if (handle_syntax(line))
+			continue ;
+		line = get_full_line(line);
+		if (exit_if_null(line))
+			break ;
 		add_history(line);
 		split_by_op(remove_outer_brackets(line), &tree);
+		parse_tree(tree);
 		tree_iterat(tree, 1);
 		free(line);
 	}

@@ -1,38 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   int_utils.c                                        :+:      :+:    :+:   */
+/*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/24 07:31:03 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/28 12:55:32 by aaitouna         ###   ########.fr       */
+/*   Created: 2023/02/28 12:43:34 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/02/28 12:46:05 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./utils.h"
+#ifndef TYPES_H
+# define TYPES_H
 
-int	list_append(int **list, int new_pid, int size)
+typedef struct node
 {
-	int i;
-	int *new_list;
-	int *tab;
+	int				input_file;
+	char			*command;
+	char			**arguments;
+	int				output_file;
+}					m_node;
 
-	tab = *list;
-	i = 0;
-	new_list = malloc(sizeof(int) * (size + 1));
-	if (!new_list)
-		return (0);
-	while (i < size + 1)
-	{
-		if (i == 0)
-			new_list[i] = new_pid;
-		else
-			new_list[i] = tab[i - 1];
-		i++;
-	}
-	if (*list != NULL)
-		free(*list);
-	*list = new_list;
-	return (size + 1);
-}
+enum				EXIT_STATUS
+{
+	M_SIG_INT = 78
+};
+
+enum				file_input
+{
+	NONE = -3,
+	NO_FILE = -1,
+	ERROR = -2,
+};
+
+typedef struct s_tree
+{
+	int				op;
+	char			*content;
+
+	struct s_tree	*left;
+	struct s_tree	*right;
+	struct node		*node;
+}					t_tree;
+
+#endif

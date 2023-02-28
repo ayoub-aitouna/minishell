@@ -12,6 +12,25 @@
 
 #include "../minishell.h"
 
+char	**get_env(char **p)
+{
+	static char	**env;
+	int			i;
+
+	i = 0;
+	if (p != NULL)
+	{
+		env = malloc((size(p) + 1) * sizeof(char *));
+		while (p[i])
+		{
+			env[i] = ft_strdup(p[i]);
+			i++;
+		}
+		env[i] = NULL;
+	}
+	return (env);
+}
+
 char	*ft_getenv(char *name)
 {
 	int		i;

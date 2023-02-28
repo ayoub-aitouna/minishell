@@ -1,12 +1,14 @@
-src = main.c parsing/parsing.c parsing/parsing_utils.c parsing/copy_str.c \
+src = parsing/parsing.c parsing/parsing_utils.c parsing/copy_str.c \
 		parsing/expand_functions.c parsing/m_node.c parsing/strings_functions.c\
 		parsing/files.c parsing/here_doc.c parsing/syntax.c  parsing/start.c\
-		parsing/garbage.c  parsing/paths.c  parsing/Signals.c \
+		parsing/garbage.c  parsing/paths.c  parsing/Signals.c  parsing/print.c \
 		exec/main_exec.c exec/builtin/change_directory.c exec/builtin/echo.c \
 		exec/builtin/pwd.c exec/builtin/env.c  Utils/equals.c  Utils/random.c \
-		Utils/int_utils.c Utils/status.c Utils/Strings.c parsing/env.c 
-
+		Utils/int_utils.c Utils/status.c Utils/Strings.c parsing/env.c \
+		Utils/promt.c Utils/full_line.c
+main = main.c 
 obj = ${src:.c=.o}
+main_obj = ${main:.c=.o}
 
 NAME =  minishell
 
@@ -17,8 +19,8 @@ libft = libft/libft.a
 
 all: $(NAME)
 
-$(NAME) : $(obj) $(libft)
-	gcc $(obj) $(libft) $(libreadline) -o $(NAME)
+$(NAME) : $(main_obj) $(obj) $(libft)
+	gcc $(main_obj) $(obj) $(libft) $(libreadline) -o $(NAME)
 
 $(libft):
 	make bonus --directory=libft
@@ -39,10 +41,11 @@ files = $(shell git diff --name-only HEAD)
 commit_and_push: fclean
 	git add . && git commit -m "changes $(files)" && git push;
 
-	
-test_src = play.c tree.c
+Bonus = SHELL
 
-test_obj = ${test_src:.c=.o}
+Shell_src = Shell/main.c Shell/tree.c
 
-test: $(test_obj) $(libft)
-	gcc $(test_obj) $(libft)  $(libreadline) -o test && ./test
+Shell_obj = ${Shell_src:.c=.o}
+
+$(Bonus): $(Shell_obj)  $(obj) $(libft)
+	gcc $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(Bonus)
