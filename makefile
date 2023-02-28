@@ -8,6 +8,7 @@ src = parsing/parsing.c parsing/parsing_utils.c parsing/copy_str.c \
 		Utils/promt.c Utils/full_line.c
 
 main = main.c 
+B_NAME = bonushell
 Shell_src = Shell/main.c Shell/tree.c
 
 obj = ${src:.c=.o}
@@ -46,5 +47,7 @@ files = $(shell git diff --name-only HEAD)
 commit_and_push: fclean
 	git add . && git commit -m "changes $(files)" && git push;
 
-$(Bonus): $(Shell_obj)  $(obj) $(libft)
-	gcc $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(Bonus)
+$(B_NAME): $(Shell_obj)  $(obj) $(libft)
+	gcc -fsanitize=address -g $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(B_NAME)
+
+$(Bonus): $(B_NAME)

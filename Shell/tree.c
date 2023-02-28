@@ -74,8 +74,6 @@ void	tr_parse(char *line, t_tree *tree)
 	}
 	node->command = update_command(node->command);
 	tree->node = node;
-	// if (line[i] && line[i] == '|')
-	// 	tr_parse(&line[++i], tree);
 }
 
 void	parse_tree(t_tree *tree)
@@ -84,7 +82,6 @@ void	parse_tree(t_tree *tree)
 		return ;
 	if (tree->left == NULL && tree->right == NULL)
 	{
-		printf("parsing %s \n", tree->content);
 		tr_parse(tree->content, tree);
 	}
 	parse_tree(tree->left);

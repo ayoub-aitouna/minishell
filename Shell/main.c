@@ -1,34 +1,19 @@
 #include "./shell.h"
 #include "stdio.h"
 
-int	is_and_or(char *line)
+int update_brackets_flag(char c)
 {
-	if ((line[0] == '|' && line[1] == '|') && (line[0] == '&'
-			&& line[1] == '&'))
-		return (2);
-	else
-		return (0);
-}
-int	check_for_op(char *line)
-{
-	int	flag;
-	int	i;
-
-	i = 0;
-	flag = 0;
-	if (line[i] == 0)
-		return (0);
-	if (is_and_or(line) != 0)
-		return (2);
-	if (ft_strchr(">;<|", line[i]))
-		return (1);
-	return (0);
+	if (c == '(')
+		return 1;
+	else if (c == ')')
+		return -1;
+	return 0;
 }
 
-int	check_brackets_balance(char *line)
+int check_brackets_balance(char *line)
 {
-	int	i;
-	int	brackets_flag;
+	int i;
+	int brackets_flag;
 
 	i = 0;
 	brackets_flag = 0;
@@ -45,13 +30,15 @@ int	check_brackets_balance(char *line)
 	return (brackets_flag == 0);
 }
 
-int	is_between_brackets(char *line)
+int is_between_brackets(char *line)
 {
-	int	i;
-	int	brackets_flag;
+	int i;
+	int brackets_flag;
 
 	i = 0;
 	brackets_flag = 0;
+	if (line == NULL)
+		return 0;
 	if (!check_brackets_balance(line))
 		return (0);
 	while (line[i])
@@ -70,13 +57,13 @@ int	is_between_brackets(char *line)
 	return (1);
 }
 
-char	*remove_outer_brackets(char *ptr)
+char *remove_outer_brackets(char *ptr)
 {
-	char	*new_ptr;
-	int		i;
+	char *new_ptr;
+	int i;
 
 	new_ptr = NULL;
-	if (!is_between_brackets(ptr))
+	if (!is_between_brackets(ptr) || ptr == NULL)
 		return (ptr);
 	i = 1;
 	new_ptr = ft_strtrim(ptr, " ");
@@ -91,9 +78,9 @@ char	*remove_outer_brackets(char *ptr)
 	return (new_ptr);
 }
 
-char	*tr_copy_str(int start, int end, char *ptr)
+char *get_part_of_string(int start, int end, char *ptr)
 {
-	char	*new_ptr;
+	char *new_ptr;
 
 	new_ptr = NULL;
 	start += spaces_count(ptr + start);
@@ -102,49 +89,67 @@ char	*tr_copy_str(int start, int end, char *ptr)
 	return (new_ptr);
 }
 
-void	split_by_op(char *ptr, t_tree **tree)
+int get_operatur(char *ptr, int *index)
 {
-	int		i;
-	int		brackets_flag;
-	int		op;
-	char	*lft;
+	int brackets_flag;
+	int i;
 
-	op = 0;
 	i = 0;
 	brackets_flag = 0;
-	if (!ptr)
-		return ;
 	while (ptr[i])
 	{
-		op = 0;
-		if (ptr[i] == '(')
-			brackets_flag++;
-		else if (ptr[i] == ')')
-			brackets_flag--;
-		if (ptr[i] == '|' && ptr[i + 1] == '|' && brackets_flag == 0)
-		{
-			op = 1;
-			break ;
-		}
+		brackets_flag += update_brackets_flag(ptr[i]);
+		*index = i;
 		if (ptr[i] == '&' && ptr[i + 1] == '&' && brackets_flag == 0)
-		{
-			op = 2;
-			break ;
-		}
+			return 3;
+		if (ptr[i] == '|' && ptr[i + 1] == '|' && brackets_flag == 0)
+			return 2;
+		if (ptr[i] == '|' && brackets_flag == 0)
+			return 1;
 		i++;
 	}
+	return 0;
+}
+
+void split_by_nd_n_or(char *ptr, t_tree **tree)
+{
+	int i;
+	int op;
+
+	if (!ptr)
+		return;
+	op = get_operatur(ptr, &i);
 	*tree = new_tree_node(op, ptr);
 	if (op)
 	{
-		split_by_op(remove_outer_brackets(tr_copy_str(0, i, ptr)),
-					&(*tree)->left);
-		split_by_op(remove_outer_brackets(tr_copy_str(i + 2, ft_strlen(ptr),
-						ptr)),
-					&(*tree)->right);
+		split_by_nd_n_or(remove_outer_brackets(get_part_of_string(0, i, ptr)),
+						 &(*tree)->left);
+		split_by_nd_n_or(remove_outer_brackets(get_part_of_string(i + 2, ft_strlen(ptr),
+																  ptr)),
+						 &(*tree)->right);
+	}
+	else
+		split_by_pip(ptr, tree);
+}
+
+void split_by_pip(char *ptr, t_tree **tree)
+{
+	int i;
+
+	if (!ptr)
+		return;
+	int op = get_operatur(ptr, &i);
+	if (op)
+	{
+		*tree = new_tree_node(op, ptr);
+		split_by_nd_n_or(remove_outer_brackets(get_part_of_string(0, i, ptr)),
+						 &(*tree)->left);
+		split_by_nd_n_or(remove_outer_brackets(get_part_of_string(i + 1, ft_strlen(ptr), ptr)),
+						 &(*tree)->right);
 	}
 }
 
-int	main(int ac, char **av, char **env)
+int main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
@@ -157,18 +162,17 @@ int	main(int ac, char **av, char **env)
 	line = NULL;
 	while (1)
 	{
+		tree = NULL;
 		default_promt = get_promt_text();
 		line = readline(default_promt);
 		free(default_promt);
 		if (exit_if_null(line))
-			break ;
-		// if (handle_syntax(line))
-		// 	continue ;
+			break;
 		line = get_full_line(line);
 		if (exit_if_null(line))
-			break ;
+			break;
 		add_history(line);
-		split_by_op(remove_outer_brackets(line), &tree);
+		split_by_nd_n_or(remove_outer_brackets(line), &tree);
 		parse_tree(tree);
 		tree_iterat(tree, 1);
 		free(line);
