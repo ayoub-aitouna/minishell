@@ -95,7 +95,6 @@ void	tree_iterat(t_tree *tree, int depth)
 {
 	if (tree == NULL)
 		return ;
-	tree_iterat(tree->left, depth + ft_strlen(tree->content));
 	for (int i = 0; i < depth + 7; i++)
 	{
 		if (i < depth)
@@ -105,5 +104,6 @@ void	tree_iterat(t_tree *tree, int depth)
 	}
 	printf(BOLDBLUE "|--%d:" BOLDMAGENTA "%s\n" RESET, tree->op, tree->content);
 	print_node(tree, depth + 7);
+	tree_iterat(tree->left, depth + ft_strlen(tree->content));
 	tree_iterat(tree->right, depth + ft_strlen(tree->content));
 }

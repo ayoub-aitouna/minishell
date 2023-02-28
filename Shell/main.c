@@ -162,8 +162,8 @@ int	main(int ac, char **av, char **env)
 		free(default_promt);
 		if (exit_if_null(line))
 			break ;
-		if (handle_syntax(line))
-			continue ;
+		// if (handle_syntax(line))
+		// 	continue ;
 		line = get_full_line(line);
 		if (exit_if_null(line))
 			break ;

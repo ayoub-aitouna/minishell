@@ -6,10 +6,15 @@ src = parsing/parsing.c parsing/parsing_utils.c parsing/copy_str.c \
 		exec/builtin/pwd.c exec/builtin/env.c  Utils/equals.c  Utils/random.c \
 		Utils/int_utils.c Utils/status.c Utils/Strings.c parsing/env.c \
 		Utils/promt.c Utils/full_line.c
+
 main = main.c 
+Shell_src = Shell/main.c Shell/tree.c
+
 obj = ${src:.c=.o}
 main_obj = ${main:.c=.o}
+Shell_obj = ${Shell_src:.c=.o}
 
+Bonus = bonus
 NAME =  minishell
 
 # CFLAGS = -Wall -Werror -Wextra
@@ -29,7 +34,7 @@ clean_libft:
 	make clean  --directory=libft
 
 clean : clean_libft
-	rm -rf $(obj) $(mandatory_obj) $(bonus_obj)
+	rm -rf $(main_obj) $(Shell_obj) $(obj) $(mandatory_obj) $(bonus_obj)
 
 fclean : clean clean_libft
 	rm -rf $(NAME) $(libft) $(CHECKER)
@@ -40,12 +45,6 @@ files = $(shell git diff --name-only HEAD)
 
 commit_and_push: fclean
 	git add . && git commit -m "changes $(files)" && git push;
-
-Bonus = SHELL
-
-Shell_src = Shell/main.c Shell/tree.c
-
-Shell_obj = ${Shell_src:.c=.o}
 
 $(Bonus): $(Shell_obj)  $(obj) $(libft)
 	gcc $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(Bonus)
