@@ -6,26 +6,42 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:23:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 11:31:16 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:54:56 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	clear_node(void *content)
+void	ft_free(void *ptr)
 {
-	m_node	*node;
+	if (!ptr)
+		return ;
+	free(ptr);
+}
 
-	node = content;
+void	clear_node(m_node *node)
+{
+	if (node == NULL)
+		return ;
 	if (node->input_file > 2)
 		close(node->input_file);
 	if (node->output_file > 2)
 		close(node->output_file);
 	if (node->arguments != NULL)
 		free_list(node->arguments);
-	if (node->command != NULL)
-		free(node->command);
-	free(content);
+	ft_free(node->command);
+	free(node);
+}
+
+void	clear_tree(t_tree *node)
+{
+	if (node == NULL)
+		return ;
+	ft_free(node->content);
+	clear_node(node->node);
+	clear_tree(node->left);
+	clear_tree(node->right);
+	free(node);
 }
 
 void	free_list(char **list)

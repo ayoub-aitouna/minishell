@@ -1,0 +1,16 @@
+Shell
+Utils
+asd
+bonushell
+colors.h
+exec
+libft
+ll
+main.c
+makefile
+minishell.h
+notes
+parsing
+pwd
+tmp
+types.h

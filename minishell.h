@@ -20,6 +20,7 @@
 # include "./libft/libft.h"
 # include "Utils/utils.h"
 # include "parsing/parsing.h"
+# include "types.h"
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -29,14 +30,13 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-#include "types.h"
 
 size_t	size(char **ptr);
 char	**get_env(char **p);
 m_node	*new_m_node(void);
 void	exec(t_list *list);
 void	free_list(char **list);
-void	clear_node(void *content);
+void	clear_node(m_node *node);
 void	handle_sigint(int sig);
 void	print_name(void);
 void	handle_sigquit(int sig);
@@ -44,4 +44,7 @@ char	*ft_getenv(char *name);
 void	printf_arg(char **str);
 void	print_table(m_node *node);
 void	printf_list(t_list *list);
+void	clear_tree(t_tree *node);
+int	proccess(m_node *node, int in_fd, int out_fd, int len, int index);
+void	run_built_in(m_node *node);
 #endif

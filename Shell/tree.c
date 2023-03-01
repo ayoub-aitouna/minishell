@@ -17,7 +17,7 @@ void	t_printf_arg(char **str, int white_space)
 	int	i;
 
 	i = 0;
-	printf("%*s arguments  		< ", white_space, "-");
+	printf("%*s|arguments  		< ", white_space, "");
 	if (str == NULL)
 	{
 		printf("(null) >\n");
@@ -30,11 +30,12 @@ void	t_printf_arg(char **str, int white_space)
 
 void	t_print_table(m_node *node, int white_space)
 {
-	printf("%*s-input file 		<%d> \n", white_space, "", node->input_file);
-	printf("%*s-command    		<%s> \n", white_space, "", node->command);
+	printf("%*s|input file 		<%d>\n", white_space, "",
+					node->input_file);
+	printf("%*s|command    		<%s>\n", white_space, "", node->command);
 	t_printf_arg(node->arguments, white_space);
-	printf("%*s-output_file file 	<%d> \n", white_space, "",
-				node->output_file);
+	printf("%*s|output_file file 		<%d>\n", white_space, "",
+					node->output_file);
 }
 
 void	print_node(t_tree *tree, int white_space)
@@ -49,9 +50,9 @@ void	print_node(t_tree *tree, int white_space)
 		printf("node null");
 		return ;
 	}
-	printf("\n%*s---------------\tnode\t--------------\n", white_space, "");
+	printf("%*s-----------------node--------------------\n", white_space, "");
 	t_print_table(node, white_space);
-	printf("%*s--------------------------------------\n", white_space, "");
+	printf("%*s-----------------------------------------\n", white_space, "");
 }
 
 void	tr_parse(char *line, t_tree *tree)
@@ -92,6 +93,7 @@ void	tree_iterat(t_tree *tree, int depth)
 {
 	if (tree == NULL)
 		return ;
+	printf("\n");
 	for (int i = 0; i < depth + 7; i++)
 	{
 		if (i < depth)
@@ -99,8 +101,9 @@ void	tree_iterat(t_tree *tree, int depth)
 		else
 			printf("-");
 	}
-	printf(BOLDBLUE "|--%d:" BOLDMAGENTA "%s\n" RESET, tree->op, tree->content);
+	printf(BOLDBLUE "|--%d:" BOLDMAGENTA "%s\n\n" RESET, tree->op,
+			tree->content);
 	print_node(tree, depth + 7);
-	tree_iterat(tree->left, depth + ft_strlen(tree->content));
-	tree_iterat(tree->right, depth + ft_strlen(tree->content));
+	tree_iterat(tree->left, depth + 20);
+	tree_iterat(tree->right, depth + 20);
 }
