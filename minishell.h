@@ -36,7 +36,7 @@ char	**get_env(char **p);
 m_node	*new_m_node(void);
 void	exec(t_list *list);
 void	free_list(char **list);
-void	clear_node(m_node *node);
+void	clear_node(void *node);
 void	handle_sigint(int sig);
 void	print_name(void);
 void	handle_sigquit(int sig);

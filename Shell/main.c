@@ -45,7 +45,10 @@ int	is_between_brackets(char *line)
 	{
 		brackets_flag += update_brackets_flag(line[i]);
 		if (brackets_flag == 0)
-			return (!line[++i + spaces_count(line + i)]);
+		{
+			i++;
+			return (!line[i + spaces_count(line + i)]);
+		}
 		i++;
 	}
 	return (1);
@@ -174,7 +177,7 @@ int	main(int ac, char **av, char **env)
 		split_by_nd_n_or(remove_outer_brackets(line), &tree);
 		parse_tree(tree);
 		tree_iterat(tree, 1);
-		shell_exec(tree);
+		// shell_exec(tree);
 		clear_tree(tree);
 	}
 }

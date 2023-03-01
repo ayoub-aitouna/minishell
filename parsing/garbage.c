@@ -19,8 +19,11 @@ void	ft_free(void *ptr)
 	free(ptr);
 }
 
-void	clear_node(m_node *node)
+void	clear_node(void *conetent)
 {
+	m_node	*node;
+
+	node = (m_node *)conetent;
 	if (node == NULL)
 		return ;
 	if (node->input_file > 2)

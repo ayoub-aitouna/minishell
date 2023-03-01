@@ -48,6 +48,6 @@ commit_and_push: fclean
 	git add . && git commit -m "changes $(files)" && git push;
 
 $(B_NAME): $(Shell_obj)  $(obj) $(libft)
-	gcc $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(B_NAME)
+	gcc -fsanitize=address -g $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(B_NAME)
 
 $(Bonus): $(B_NAME)
