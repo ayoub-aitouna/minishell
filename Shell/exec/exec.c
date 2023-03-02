@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:25:53 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/03/01 17:50:00 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/03/02 02:13:29 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int recursive_exec(t_tree *tree, int in_fd, int out_fd, t_proccess *proccess, in
 			status = recursive_exec(tree->right, in_fd, out_fd, proccess, ends_count, index, 1);
 		else if (tree->op == 3 && status == 0)
 			status = recursive_exec(tree->right, in_fd, out_fd, proccess, ends_count, index, 1);
+
 		return (status);
 	}
 	else if (tree->op == 1)

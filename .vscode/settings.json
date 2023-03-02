@@ -1,9 +1,13 @@
 {
     "files.associations": {
+        "*.h": "c",
+        "*.c": "c",
         "built.h": "c",
         "unistd.h": "c",
         "minishell.h": "c",
         "ft_printf.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "memory_resource": "c",
+        "random": "c"
     }
 }

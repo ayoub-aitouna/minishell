@@ -38,7 +38,7 @@ clean : clean_libft
 	rm -rf $(main_obj) $(Shell_obj) $(obj) $(mandatory_obj) $(bonus_obj)
 
 fclean : clean clean_libft
-	rm -rf $(NAME) $(libft) $(CHECKER)
+	rm -rf $(NAME) $(libft) $(CHECKER) $(B_NAME)
 
 re : fclean $(NAME)
 
