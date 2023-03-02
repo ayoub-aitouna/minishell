@@ -100,8 +100,8 @@ int recursive_exec(t_tree *tree, int in_fd, int out_fd, t_proccess *proccess, in
 	{
 		pipe(fd);
 		status = recursive_exec(tree->left, in_fd, out_fd, proccess, ends_count, index, 0);
-		status = recursive_exec(tree->right, fd[0], out_fd, proccess, ends_count, index, 0);
 		in_fd = handle_fd(fd);
+		status = recursive_exec(tree->right, in_fd, out_fd, proccess, ends_count, index, 0);
 	}
 	return (run_proccess(tree->node, in_fd, out_fd, w, index, ends_count, proccess));
 }
