@@ -11,30 +11,35 @@
 /* ************************************************************************** */
 
 #include "../shell.h"
-int handle_fd(int *fd);
-int reset(int len, int **proccess, int pid);
-void manage_input_output(m_node *node, int out_fd, int in_fd, int index,
-						 int len);
-int wait_all_proccess(int *procces, int len)
+
+void dup_input_output(int in, int out)
+{
+	dup2(out, STDOUT_FILENO);
+	dup2(in, STDIN_FILENO);
+}
+
+int wait_all_proccess(t_proccess proccess)
 {
 	int i;
 	int status;
 
 	i = 0;
-	while (i < len)
+	if (proccess.lenght == 0)
+		return -1;
+	while (i < proccess.lenght)
 	{
-		waitpid(procces[i++], &status, 0);
+		waitpid(proccess.proccess[i++], &status, 0);
 		set_exit_status(WEXITSTATUS(status));
 	}
 	return (WEXITSTATUS(status));
 }
 
-int shell_proccess(m_node *node, int in_fd, int out_fd, int len, int ends_count)
+int shell_proccess(m_node *node, int in_fd, int out_fd, int is_last)
 {
 	signal(SIGINT, exit);
 	if (node->input_file == ERROR || node->output_file == ERROR || node->output_file == NO_FILE || node->input_file == NO_FILE)
 		return (1);
-	manage_input_output(node, out_fd, in_fd, ends_count, len);
+	dup_input_output(in_fd, is_last ? 1 : out_fd);
 	if (is_builtin(node->command))
 		run_built_in(node);
 	else
@@ -50,43 +55,54 @@ int shell_proccess(m_node *node, int in_fd, int out_fd, int len, int ends_count)
 	return (1);
 }
 
-int recursive_exec(t_tree *tree, int in_fd, int **procces_id, int *len, int ends_count, int *index, int w)
+int run_proccess(m_node *node, int in_fd, int out_fd, int w, int *index, int ends_count, t_proccess *proccess)
 {
+	int status;
 	int pid;
+	if (node == NULL)
+		return 0;
+	pid = fork();
+	if (pid == 0)
+		exit(shell_proccess(node, in_fd, out_fd, ends_count == *index));
+	else if (w)
+	{
+		(*index)++;
+		waitpid(pid, &status, 0);
+		return (WEXITSTATUS(status));
+	}
+	(*index)++;
+	proccess->lenght = reset(&(proccess->proccess), proccess->lenght, pid);
+	return (0);
+}
+
+int recursive_exec(t_tree *tree, int in_fd, int out_fd, t_proccess *proccess, int ends_count, int *index, int w)
+{
 	int status;
 	int fd[2];
+	int s;
+
+	status = 0;
 	if (tree == NULL)
 		return (-1);
 	if (tree->op == 2 || tree->op == 3)
 	{
-		status = recursive_exec(tree->left, in_fd, procces_id, len, ends_count, index, 1);
-		status = wait_all_proccess(*procces_id, *len);
+		status = recursive_exec(tree->left, in_fd, out_fd, proccess, ends_count, index, 1);
+		s = wait_all_proccess(*proccess);
+		status = s != -1 ? s : status;
 		if (tree->op == 2 && status != 0)
-			status = recursive_exec(tree->right, in_fd, procces_id, len, ends_count, index, 1);
+			status = recursive_exec(tree->right, in_fd, out_fd, proccess, ends_count, index, 1);
 		else if (tree->op == 3 && status == 0)
-			status = recursive_exec(tree->right,  in_fd, procces_id, len, ends_count, index, 1);
+			status = recursive_exec(tree->right, in_fd, out_fd, proccess, ends_count, index, 1);
 		return (status);
 	}
-	recursive_exec(tree->left, in_fd, procces_id, len, ends_count, index, 0);
-	if (tree->node == NULL)
-		return (0);
-	(*index)++;
-	pid = fork();
-	pipe(fd);
-	if (pid == 0)
-		exit(shell_proccess(tree->node, in_fd, fd[1], ends_count, *index));
-	else
+	else if (tree->op == 1)
 	{
+		pipe(fd);
+		status = recursive_exec(tree->left, in_fd, out_fd, proccess, ends_count, index, 0);
+		status = recursive_exec(tree->right, fd[0], out_fd, proccess, ends_count, index, 0);
 		in_fd = handle_fd(fd);
-		*len = reset(*len, procces_id, pid);
 	}
-	if (w)
-	{
-		waitpid(pid, &status, 0);
-		return (WEXITSTATUS(status));
-	}
-	recursive_exec(tree->right, in_fd, procces_id, len, ends_count, index, 0);
-	return (0);
+	return (run_proccess(tree->node, in_fd, out_fd, w, index, ends_count, proccess));
 }
 
 void calculate_tree_ends(t_tree *tree, int *len)
@@ -101,11 +117,12 @@ void calculate_tree_ends(t_tree *tree, int *len)
 
 void shell_exec(t_tree *tree)
 {
-	int *proccess_id = NULL;
-	int len = 0;
+	t_proccess *proccess = malloc(sizeof(t_proccess));
+	proccess->proccess = NULL;
+	proccess->lenght = 0;
 	int ends_count = 0;
 	int index = 0;
 	calculate_tree_ends(tree, &ends_count);
-	int status = recursive_exec(tree, STDIN_FILENO, &proccess_id, &len, ends_count, &index, 0);
-	status = wait_all_proccess(proccess_id, len);
+	int status = recursive_exec(tree, STDIN_FILENO, STDOUT_FILENO, proccess, ends_count, &index, 0);
+	status = wait_all_proccess(*proccess);
 }

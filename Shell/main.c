@@ -117,7 +117,7 @@ void	split_by_nd_n_or(char *ptr, t_tree **tree)
 		return ;
 	op = get_operatur(ptr, &i);
 	*tree = new_tree_node(op, ptr);
-	if (op)
+	if (op == 2 || op == 3)
 	{
 		split_by_nd_n_or(remove_outer_brackets(get_part_of_string(0, i, ptr)),
 							&(*tree)->left);
@@ -177,7 +177,7 @@ int	main(int ac, char **av, char **env)
 		split_by_nd_n_or(remove_outer_brackets(line), &tree);
 		parse_tree(tree);
 		tree_iterat(tree, 1);
-		// shell_exec(tree);
+		shell_exec(tree);
 		clear_tree(tree);
 	}
 }

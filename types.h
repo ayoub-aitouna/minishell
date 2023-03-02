@@ -43,4 +43,11 @@ typedef struct s_tree
 	struct node		*node;
 }					t_tree;
 
+
+typedef struct prooccess
+{
+	int lenght;
+	int *proccess;
+} t_proccess;
+
 #endif

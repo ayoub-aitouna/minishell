@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-void	run_built_in(m_node *node)
+void run_built_in(m_node *node)
 {
 	if (is_equal(node->command, "echo"))
 	{
@@ -24,7 +24,7 @@ void	run_built_in(m_node *node)
 		print_working_directory();
 }
 
-int	run_built_in_on_main(m_node *node, int len)
+int run_built_in_on_main(m_node *node, int len)
 {
 	if (is_equal(node->command, "exit"))
 		exit(0);
@@ -58,8 +58,8 @@ int	run_built_in_on_main(m_node *node, int len)
 	return (0);
 }
 
-void	manage_input_output(m_node *node, int out_fd, int in_fd, int index,
-		int len)
+void manage_input_output(m_node *node, int out_fd, int in_fd, int index,
+						 int len)
 {
 	if (len == 1)
 	{
@@ -67,7 +67,7 @@ void	manage_input_output(m_node *node, int out_fd, int in_fd, int index,
 			dup2(node->input_file, STDIN_FILENO);
 		if (node->output_file != NONE)
 			dup2(node->output_file, STDOUT_FILENO);
-		return ;
+		return;
 	}
 	if (index == 0)
 	{
@@ -100,11 +100,10 @@ void	manage_input_output(m_node *node, int out_fd, int in_fd, int index,
 	}
 }
 
-int	proccess(m_node *node, int in_fd, int out_fd, int len, int index)
+int proccess(m_node *node, int in_fd, int out_fd, int len, int index)
 {
 	signal(SIGINT, exit);
-	if (node->input_file == ERROR || node->output_file == ERROR
-		|| node->output_file == NO_FILE || node->input_file == NO_FILE)
+	if (node->input_file == ERROR || node->output_file == ERROR || node->output_file == NO_FILE || node->input_file == NO_FILE)
 		return (1);
 	manage_input_output(node, out_fd, in_fd, index, len);
 	if (is_builtin(node->command))
@@ -114,7 +113,7 @@ int	proccess(m_node *node, int in_fd, int out_fd, int len, int index)
 		if (node->command == NULL)
 		{
 			ft_printf(RED "%s: command not found \n" RESET,
-						size(node->arguments) > 0 ? node->arguments[0] : NULL);
+					  size(node->arguments) > 0 ? node->arguments[0] : NULL);
 			return (127);
 		}
 		execve(node->command, node->arguments, get_env(NULL));
@@ -122,46 +121,42 @@ int	proccess(m_node *node, int in_fd, int out_fd, int len, int index)
 	return (1);
 }
 
-int	reset(int len, int **proccess, int pid)
+int reset(int **proccess, int len, int pid)
 {
 	signal(SIGINT, handle_sigint_n_chld);
 	return (list_append(proccess, pid, len));
 }
 
-int	handle_fd(int *fd)
+int handle_fd(int *fd)
 {
 	close(fd[1]);
 	return (fd[0]);
 }
 
-void	exec(t_list *list)
+void exec(t_list *list)
 {
-	m_node	*node;
-	int		pid;
-	int		index;
-	int		len;
-	int		proccess_len;
-	int		*procces;
-	int		fd[2];
-	int		i;
-	int		i_fd;
-	int		status;
+	m_node *node;
+	int pid;
+	int index;
+	int len;
+	int fd[2];
+	int i;
+	int i_fd;
+	int status;
 
 	index = 0;
 	i_fd = 1;
-	proccess_len = 0;
-	procces = NULL;
+	t_proccess procces = {.proccess = NULL, .lenght = 0};
 	len = ft_lstsize(list);
 	while (index < len)
 	{
 		pipe(fd);
 		node = (m_node *)list->content;
-		if (run_built_in_on_main(node, len) || (is_equal(node->command, "cd")
-				&& len > 1))
+		if (run_built_in_on_main(node, len) || (is_equal(node->command, "cd") && len > 1))
 		{
 			list = list->next;
 			len--;
-			continue ;
+			continue;
 		}
 		pid = fork();
 		if (pid == 0)
@@ -169,17 +164,17 @@ void	exec(t_list *list)
 		else
 		{
 			i_fd = handle_fd(fd);
-			proccess_len = reset(proccess_len, &procces, pid);
+			procces.lenght = reset(&procces.proccess, procces.lenght, pid);
 		}
 		index++;
 		list = list->next;
 	}
 	i = 0;
-	while (i < proccess_len)
+	while (i < procces.lenght)
 	{
-		waitpid(procces[i++], &status, 0);
+		waitpid(procces.proccess[i++], &status, 0);
 		set_exit_status(WEXITSTATUS(status));
 	}
-	free(procces);
+	free(procces.proccess);
 	signal(SIGINT, handle_sigint);
 }
