@@ -30,8 +30,7 @@ void	t_printf_arg(char **str, int white_space)
 
 void	t_print_table(m_node *node, int white_space)
 {
-	printf("%*s|input file 		<%d>\n", white_space, "",
-					node->input_file);
+	printf("%*s|input file 		<%d>\n", white_space, "", node->input_file);
 	printf("%*s|command    		<%s>\n", white_space, "", node->command);
 	t_printf_arg(node->arguments, white_space);
 	printf("%*s|output_file file 		<%d>\n", white_space, "",
