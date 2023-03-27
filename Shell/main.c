@@ -176,7 +176,7 @@ int	main(int ac, char **av, char **env)
 		add_history(line);
 		split_by_nd_n_or(remove_outer_brackets(line), &tree);
 		parse_tree(tree);
-		tree_iterat(tree, 1);
+//		tree_iterat(tree, 1);
 		shell_exec(tree);
 		clear_tree(tree);
 	}
