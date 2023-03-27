@@ -6,7 +6,7 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:23:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/23 12:25:53 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:01:12 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	remove_env(char **p, int index)
 	free_list(p);
 	free_list(new_env);
 }
+
 void	add_env(char *env_val)
 {
 	int		i;
