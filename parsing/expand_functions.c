@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:32:11 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 09:04:09 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/04/04 05:09:38 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 char	*get_env_name(char *s, int *len)
 {

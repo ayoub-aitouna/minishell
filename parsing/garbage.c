@@ -3,29 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:23:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 11:31:16 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/04/04 05:09:38 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
-void	clear_node(void *content)
+void	ft_free(void *ptr)
+{
+	if (!ptr)
+		return ;
+	free(ptr);
+}
+
+void	clear_node(void *conetent)
 {
 	m_node	*node;
 
-	node = content;
+	node = (m_node *)conetent;
+	if (node == NULL)
+		return ;
 	if (node->input_file > 2)
 		close(node->input_file);
 	if (node->output_file > 2)
 		close(node->output_file);
 	if (node->arguments != NULL)
 		free_list(node->arguments);
-	if (node->command != NULL)
-		free(node->command);
-	free(content);
+	ft_free(node->command);
+	free(node);
+}
+
+void	clear_tree(t_tree *node)
+{
+	if (node == NULL)
+		return ;
+	ft_free(node->content);
+	clear_node(node->node);
+	clear_tree(node->left);
+	clear_tree(node->right);
+	free(node);
 }
 
 void	free_list(char **list)

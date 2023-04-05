@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   copy_str.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 19:10:46 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/25 10:13:49 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/04/04 05:09:38 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 char	*ft_str_append(char *s, char c)
 {
@@ -58,7 +58,8 @@ char	*concate_str(char *s, char *str, int flag, int *index)
 	return (str);
 }
 
-char	*on_error_clear(char **new_str_spltd, char *env_value, char *new_str, int *index)
+char	*on_error_clear(char **new_str_spltd, char *env_value, char *new_str,
+		int *index)
 {
 	free_list(new_str_spltd);
 	free(env_value);

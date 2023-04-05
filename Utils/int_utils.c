@@ -6,11 +6,11 @@
 /*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 07:31:03 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/02/24 07:31:08 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:55:32 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./utils.h"
 
 int	list_append(int **list, int new_pid, int size)
 {
