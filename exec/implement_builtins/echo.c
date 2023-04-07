@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:37:32 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/02 07:02:13 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/07 07:53:01 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_newline(char *str)
 void	echo_command(m_node *node)
 {
 	int	i;
-	
+
 	if (!node->arguments[1])
 		printf("\n");
 	else

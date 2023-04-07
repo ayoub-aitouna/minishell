@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 00:33:11 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/04 04:59:28 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/07 12:10:33 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	get_nub_len(char *str)
 void	is_max_min(char *str)
 {
 	long	status;
-	int		len;
 	int		check;
+	int		len;
 
 	len = get_nub_len(str);
 	check = -1;

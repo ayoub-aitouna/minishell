@@ -6,16 +6,16 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:45:41 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/04 06:44:11 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/07 08:12:25 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec.h"
 
-void	pwd_command(m_node *node)
+void	pwd_command(void)
 {
 	char	*pwd;
-	(void) node;
+
 	pwd = getcwd(NULL, 0);
 	if (pwd != NULL)
 		printf("%s\n", pwd);
@@ -26,7 +26,7 @@ char	**cd_tilde(m_node *node)
 {
 	char	**dir;
 	int		i;
-	
+
 	dir = NULL;
 	if (node->arguments[1][1] == '/')
 	{
@@ -46,8 +46,9 @@ void	cd(m_node *node)
 {			
 	char		**dir;
 	struct stat	sb;
-	int i = 5;
-	
+	int			i;
+
+	i = 5;
 	if (node->arguments[1][0] == '~')
 	{
 		dir = cd_tilde(node);
@@ -60,11 +61,11 @@ void	cd(m_node *node)
 	}
 	else if (stat(node->arguments[1], &sb) == 0 && S_ISDIR(sb.st_mode))
 		i = chdir(node->arguments[1]);
-	else if (S_ISREG(sb.st_mode)) {
-        printf("cd: %s: Not a directory\n", node->arguments[1]);
-	}
-	if(!getcwd(NULL, 0))
-		perror("chdir: error retrieving current directory: getcwd: cannot access parent directories: ");
+	else if (S_ISREG(sb.st_mode))
+		printf("cd: %s: Not a directory\n", node->arguments[1]);
+	if (!getcwd(NULL, 0))
+		perror("chdir: error retrieving current directory:"
+			"getcwd: cannot access parent directories: ");
 }
 
 void	cd_command(m_node *node, char **env, char **export)

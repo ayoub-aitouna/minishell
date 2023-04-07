@@ -6,20 +6,20 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:31:49 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/05 10:54:26 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/07 07:50:08 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../exec.h"
+#include "export.h"
 
-int	string_exists(char **export, int n, char *argument, int len)
+int	is_add_plus_str(char *argument)
 {
 	int	i;
 
 	i = 0;
-	while (i < n)
+	while (argument && argument[i])
 	{
-		if (strncmp(export[i], argument, len) == 0)
+		if (argument[i] == '=' && argument[i - 1] == '+')
 			return (1);
 		i++;
 	}
@@ -30,44 +30,32 @@ void	add_new_export(char **export, char **old_export, char **arguments)
 {
 	int	i;
 	int	j;
-	int k;
+	int	is_valid;
 
-	i = 0;
-	while (old_export && old_export[i])
-	{
+	i = -1;
+	while (old_export && old_export[++i])
 		export[i] = ft_strdup(old_export[i]);
-		i++;
-	}
-	sorted_list(export, size(old_export));
 	j = 1;
-	while (arguments&& arguments[j] && !string_exists(old_export, size(old_export), arguments[j], ft_strlen(arguments[j])))
+	while (arguments && arguments[j] && !string_exists(old_export, \
+		size(old_export), arguments[j], ft_strlen(arguments[j])))
 	{
+		is_valid = 0;
 		if (arguments[j] && arguments[j][0] == '#')
-				break ;
-		if (arguments && arguments[j])
-		{
-			k = 0;
-			while (arguments && arguments[j] && arguments[j][k])
-			{
-				if (arguments[j][k] == '=' && arguments[j][k - 1] == '+')
-				{
-					export[i++] = ft_strdup(add_plus_string(old_export, arguments[j++]));
-					break ;
-				}
-				k++;
-			}
+			break ;
+		if (is_add_plus_str(arguments[j]))
+			export[i++] = ft_strdup(add_plus_string(old_export, \
+					arguments[j]));
+		else
 			export[i++] = ft_strdup(arguments[j]);
-		}
 		j++;
 	}
 	export[i] = NULL;
-	// free_list (old_export);
 }
 
 char	**get_new_export(char **old_export, char **str)
 {
 	char	**export;
-	
+
 	export = NULL;
 	if (old_export != NULL && !str[1])
 	{
