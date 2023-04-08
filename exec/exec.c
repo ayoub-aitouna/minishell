@@ -78,7 +78,6 @@ char	**get_export(char **p)
 
 void	exec(t_list *list)
 {
-	char	**env;
 	m_node	*node;
 	int		num_commands;
 
@@ -89,7 +88,6 @@ void	exec(t_list *list)
 		return ;
 	if (!node->command || !node->arguments[0])
 		return ;
-	env = get_env(NULL);
 	num_commands = ft_lstsize(list);
 	if (num_commands >= 709)
 	{
