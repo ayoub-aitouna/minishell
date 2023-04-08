@@ -6,37 +6,11 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:38:44 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/07 08:20:35 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/08 08:58:35 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "export.h"
-
-char	**the_new_env(char **env, m_node *node)
-{	
-	char	*new_under;
-	char	**new_env;
-	char	*sh_lvl;
-	char	*pwd;
-	int		i;
-
-	new_under = get_underscore(env, node);
-	sh_lvl = shell_level(node, env);
-	pwd = pwd_env(env);
-	i = 0;
-	new_env = malloc((size(env) + 4) * sizeof(char *));
-	while (env[i])
-	{
-		new_env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	new_env[i] = ft_strdup(sh_lvl);
-	new_env[++i] = ft_strdup(new_under);
-	new_env[++i] = ft_strdup(pwd);
-	new_env[++i] = NULL;
-	free(new_under);
-	return (new_env);
-}
 
 int	is_equal_plus_str(char *arg)
 {
@@ -63,6 +37,7 @@ void	add_new_env(char **env, char **old_env, char **arguments)
 	k = 1;
 	while (old_env && old_env[++i])
 		env[i] = ft_strdup(old_env[i]);
+	printf("%s\n", get_underscore(env, arguments));
 	while (arguments && arguments[k])
 	{
 		if (arguments[k][0] == '#')
@@ -85,7 +60,7 @@ char	**get_new_env(char **old_env, char **arguments)
 		env = get_env(NULL);
 	else if (old_env != NULL)
 	{
-		env = malloc((size(old_env) + size(arguments)) * sizeof(char *));
+		env = malloc((size(old_env) + size(arguments) + 1) * sizeof(char *));
 		add_new_env(env, old_env, arguments);
 	}
 	env = reset_forbidden_env(env);

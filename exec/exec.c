@@ -6,44 +6,71 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:28 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/05 09:56:20 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/08 08:29:33 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-char *change_env(char **env)
+char	*shell_level(char **env)
 {
-	char *pwd;
-	char *old_pwd;
-	
-	old_pwd = NULL;
-	pwd = getcwd(NULL, 0);
-	while(env && *env)
+	char		*lvl_sh;
+	int			shell_lvl;
+
+	shell_lvl = is_high_shlvl(env);
+	shell_lvl++;
+	lvl_sh = NULL;
+	while (env && *env)
 	{
-		if(!ft_strncmp(*env, "OLDPWD", 6))
+		if (!ft_strncmp(*env, "SHLVL", 5))
 			remove_env(env);
 		else
 			env++;
 	}
-	old_pwd = ft_strjoin("OLDPWD=", pwd);
-	free(pwd);
-	return(old_pwd);
+	if (shell_lvl >= 1000)
+		shell_lvl = 1;
+	lvl_sh = ft_strjoin("SHLVL=", ft_itoa(shell_lvl));
+	return (lvl_sh);
+}
+
+char	**necessary_values(char **env)
+{
+	char		**export;
+	char		*pwd;
+	int			i;
+
+
+	i = 0;
+	pwd = pwd_env(env);
+	underscore_export(env);
+	export = malloc(((size(env) + 4 )* sizeof(char *)));
+	while (env[i])
+	{
+		export[i] = env[i];
+		i++;
+	}
+	export[i++] = ft_strdup(shell_level(env));
+	export[i++] = ft_strdup(pwd);
+	export[i++] = ft_strdup("_=");
+	export[i] = NULL;
+	return (export);
 }
 
 char	**get_export(char **p)
 {
-	static char **export;
-	
-	int i = 0;
+	static char	**export;
+	int			i;
+
+	i = 0;
 	if (p != NULL)
 	{
-		export = malloc((size(p) + 1) * sizeof(char *));
+		export = malloc((size(p) + 3) * sizeof(char *));
 		while (p && p[i])
 		{
 			export[i] = ft_strdup(p[i]);
 			i++;
 		}
+		export[i++] = ft_strdup("OLDPWD");
 		export[i] = NULL;
 	}
 	return (export);
@@ -51,19 +78,26 @@ char	**get_export(char **p)
 
 void	exec(t_list *list)
 {
-	char **env = get_env(NULL);
+	char	**env;
+	m_node	*node;
+	int		num_commands;
+
 	if (list == NULL)
 		return ;
-	m_node *node = (m_node *)list->content;
+	node = (m_node *)list->content;
 	if (!node)
 		return ;
-	if(!node->command || !node->arguments[0])
+	if (!node->command || !node->arguments[0])
 		return ;
-	if (ft_lstsize(list) == 1)
+	env = get_env(NULL);
+	num_commands = ft_lstsize(list);
+	if (num_commands >= 709)
 	{
-		pipe_exec(node);
-		builtins(node);
+		printf("fork: Resource temporarily unavailable\n");
+		return ;
 	}
+	if (num_commands == 1 && is_builtin(node->command))
+		builtins(node);
 	else
-		multiple_pipes(node, list, env);
+		multiple_pipes(node, list, num_commands);
 }

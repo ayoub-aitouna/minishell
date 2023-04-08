@@ -15,25 +15,19 @@
 
 #include "../includes/minishell.h"
 
-// char **fill_necessary_values(char **env)
-// {
-// 	char **new_export;
-
-// 	new_export = NULL;
-// 	if(!env)
-// 	{
-// 		new_env = ft_strdup("heta _tji a khadija");
-// 	}
-// }
-
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
+
 	print_name();
 	get_env(env);
 	get_export(env);
-	// fill_necessary_values();
+	env = necessary_values(env);
+	get_env(env);
+	// set SHLVL
+	// if Size(env) == 0 , set _ and PWD and OLDPWD
+	// set /bin/ as default if size(env) == 0;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	tty();

@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 00:20:37 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/07 08:21:02 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/08 08:38:04 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**reset(char **env, char **argument);
 char	**remove_duplicate(char **export);
 void	underscore_export(char **export);
 char	**export_underscore(char **export, m_node *node);
-char	*get_underscore(char **export, m_node *node);
+char	*get_underscore(char **export, char **arguments);
 void	sorted_list(char **export, int len);
 void	remove_env(char **env);
 char	*change_env(char **env);

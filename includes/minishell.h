@@ -4,6 +4,7 @@
 #include "../libft/libft.h"
 #include "../Utils/utils.h"
 #include "../parsing/parsing.h"
+#include "../exec/exec.h"
 #include "types.h"
 #include <fcntl.h>
 #include <readline/history.h>

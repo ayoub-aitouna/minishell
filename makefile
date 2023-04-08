@@ -28,12 +28,13 @@ src = parsing/parsing.c\
 	exec/implement_builtins/export/underscore_env.c \
 	exec/implement_builtins/export/export_utils.c\
 	exec/implement_builtins/export/export_env.c\
+	exec/implement_builtins/export/main_export.c\
 	exec/implement_builtins/export/reset_export.c\
 	exec/implement_builtins/exit.c\
 	exec/implement_builtins/env.c\
 	exec/implement_builtins/cd_pwd.c\
 	exec/implement_builtins/builtins.c\
-	exec/pipes/pipe.c\
+	exec/pipes/get_path.c \
 	exec/pipes/piping.c\
 	exec/implement_builtins/export//export_equal.c\
 

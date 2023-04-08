@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:43:34 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/05 09:31:37 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/08 06:11:19 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct node
 	char	*command;
 	char	**arguments;
 	int		output_file;
+	int		shelvl;
 }			m_node;
 
 enum				EXIT_STATUS
@@ -44,10 +45,10 @@ typedef struct s_tree
 }					t_tree;
 
 
-typedef struct prooccess
+typedef struct proccess
 {
-	int lenght;
-	int *proccess;
-} t_proccess;
+	int	length;
+	int	*proccess;
+}	t_proccess;
 
 #endif

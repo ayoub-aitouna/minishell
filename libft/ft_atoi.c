@@ -6,37 +6,42 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 14:38:16 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/03/15 18:20:33 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/08 05:38:11 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+static int	count(const char *str, int sym)
 {
-	int					i;
-	long int		nmbr;
-	int					sign;
+	unsigned long long	res;
 
-	i = 0;
-	nmbr = 0;
-	sign = 1;
-	while (nptr[i] && ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' '))
-		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
-		if (nptr[i++] == '-')
-			sign *= -1;
-	while (nptr[i] >= '0' && nptr[i] <= '9')
+	res = 0;
+	while (str && ft_isdigit(*str))
 	{
-		nmbr *= 10;
-		nmbr += nptr[i++] - '0';
-		if (nmbr >= LLONG_MAX)
-		{
-			if (sign < 0)
-				return (0);
-			else
-				return (-1);
-		}
+		res = 10 * res + (*str - '0');
+		if (res > 9223372036854775807 && sym == 1)
+			return (-1);
+		if (res > 9223372036854775807 && sym == -1)
+			return (0);
+		str++;
 	}
-	return (sign * nmbr);
+	return (res * sym);
+}
+
+int	ft_atoi(const char *str)
+{
+	int					sym;
+
+	sym = 1;
+	while (str && (*str == '\t' || *str == '\n' || *str == '\v' || *str == '\f'
+			|| *str == '\r' || *str == ' '))
+		str++;
+	if (str && (*str == '-' || *str == '+'))
+	{
+		if (*str == '-')
+			sym *= (-1);
+		str++;
+	}
+	return (count(str, sym));
 }
