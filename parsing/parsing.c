@@ -24,7 +24,7 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 	env_value = copy_variable_value(env_value, line, index);
 	if (env_value != NULL)
 	{
-		splited_env_val = ft_split(env_value, ' ');
+		splited_env_val = ft_split(env_value, " ");
 		max = size(splited_env_val);
 		while (j < max - 1)
 		{
@@ -59,7 +59,6 @@ void	parse(char *line, t_list **list)
 		else
 			get_input_value(&line[i], node, &i, 0);
 	}
-	// node->command = update_command(node->command);
 	ft_lstadd_back(list, ft_lstnew(node));
 	if (line[i] && line[i] == '|')
 		parse(&line[++i], list);
@@ -88,6 +87,7 @@ void	tty(void)
 		default_prompt = get_prompt_text();
 		line = readline(default_prompt);
 		free(default_prompt);
+		set_interrupted(0);
 		if (exit_if_null(line))
 			break ;
 		if (handle_syntax(line))
@@ -97,7 +97,6 @@ void	tty(void)
 			break ;
 		add_history(line);
 		parse(line, &list);
-		//printf_list(list);
 		exec(list);
 		ft_lstclear(&list, clear_node);
 		free(line);

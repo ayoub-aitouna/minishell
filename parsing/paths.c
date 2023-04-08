@@ -53,7 +53,7 @@ char	*get_fullpath(char *s)
 	paths_list = get_path();
 	if (paths_list == NULL)
 		return (NULL);
-	paths = ft_split(paths_list, ':');
+	paths = ft_split(paths_list, ":");
 	free(paths_list);
 	while (paths[i])
 	{

@@ -24,4 +24,6 @@ void	replace_b_slash(char *ptr);
 char	*get_full_line(char *line);
 int		get_exit_status(void);
 void	set_exit_status(int status_val);
+void	set_interrupted(int value);
+int		is_interrupted(void);
 #endif

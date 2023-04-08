@@ -35,7 +35,7 @@ char	**cd_tilde(m_node *node)
 		{
 			if (node->arguments[1][i] == '~')
 				i++;
-			dir = ft_split(node->arguments[1], '/');
+			dir = ft_split(node->arguments[1], "/");
 			i++;
 		}
 	}

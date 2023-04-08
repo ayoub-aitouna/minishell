@@ -20,6 +20,7 @@ src = parsing/parsing.c\
 	parsing/env.c \
 	Utils/promt.c\
 	Utils/full_line.c\
+	Utils/her_doc_interrupte.c\
 	exec/exec.c \
 	exec/exuc_utlis.c\
 	exec/implement_builtins/echo.c\
@@ -56,7 +57,7 @@ Shell_obj = ${Shell_src:.c=.o}
 #NAMES
 Bonus = bonus
 NAME =  minishell
-USER := kmahdi
+USER := aaitouna
 cc = cc
 
 CFLAGS = -Wall -Werror -Wextra

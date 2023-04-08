@@ -41,7 +41,7 @@ void	path(char *paths, char **full_path, char *command)
 	j = 0;
 	if (paths)
 	{
-		my_paths = ft_split(paths + 5, ':');
+		my_paths = ft_split(paths + 5, ":");
 		while (my_paths && my_paths[j])
 		{
 			program = ft_strjoin("/", command);
@@ -81,7 +81,7 @@ char	*get_paths(char **env, char *command)
 	char	*program_path;
 	char	**list ;
 
-	list = ft_split(command, ' ');
+	list = ft_split(command, " ");
 	program_path = get_command_path(list[0], env);
 	return (program_path);
 }
