@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:31:49 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 09:11:29 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 03:37:25 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	add_new_export(char **export, char **old_export, char **arguments)
 {
 	int	i;
 	int	j;
+	int	is_valid;
 
 	i = -1;
 	while (old_export && old_export[++i])
@@ -38,6 +39,7 @@ void	add_new_export(char **export, char **old_export, char **arguments)
 	while (arguments && arguments[j] && !string_exists(old_export, \
 		size(old_export), arguments[j], ft_strlen(arguments[j])))
 	{
+		is_valid = 0;
 		if (arguments[j] && arguments[j][0] == '#')
 			break ;
 		if (is_add_plus_str(arguments[j]))

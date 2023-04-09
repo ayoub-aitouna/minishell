@@ -6,11 +6,22 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:28 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 08:29:33 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 03:09:14 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+void	remove_shell_lvl(char **env)
+{
+	while (env && *env)
+	{
+		if (!ft_strncmp(*env, "SHLVL", 5))
+			remove_env(env);
+		else
+			env++;
+	}
+}
 
 char	*shell_level(char **env)
 {
@@ -20,13 +31,7 @@ char	*shell_level(char **env)
 	shell_lvl = is_high_shlvl(env);
 	shell_lvl++;
 	lvl_sh = NULL;
-	while (env && *env)
-	{
-		if (!ft_strncmp(*env, "SHLVL", 5))
-			remove_env(env);
-		else
-			env++;
-	}
+	remove_shell_lvl(env);
 	if (shell_lvl >= 1000)
 		shell_lvl = 1;
 	lvl_sh = ft_strjoin("SHLVL=", ft_itoa(shell_lvl));
@@ -39,11 +44,10 @@ char	**necessary_values(char **env)
 	char		*pwd;
 	int			i;
 
-
 	i = 0;
 	pwd = pwd_env(env);
 	underscore_export(env);
-	export = malloc(((size(env) + 4 )* sizeof(char *)));
+	export = malloc(((size(env) + 4) * sizeof(char *)));
 	while (env[i])
 	{
 		export[i] = env[i];
@@ -78,6 +82,7 @@ char	**get_export(char **p)
 
 void	exec(t_list *list)
 {
+	char	**env;
 	m_node	*node;
 	int		num_commands;
 
@@ -88,6 +93,7 @@ void	exec(t_list *list)
 		return ;
 	if (!node->command || !node->arguments[0])
 		return ;
+	env = get_env(NULL);
 	num_commands = ft_lstsize(list);
 	if (num_commands >= 709)
 	{

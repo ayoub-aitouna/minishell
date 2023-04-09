@@ -1,0 +1,90 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/kmahdi/Desktop/minishell copy/minizbel'
+mkdir -p objects/main/
+cc -Wall -Werror -Wextra -c main/main.c -o objects/main/main.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/parsing.c -o objects/parsing/parsing.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/parsing_utils.c -o objects/parsing/parsing_utils.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/copy_str.c -o objects/parsing/copy_str.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/expand_functions.c -o objects/parsing/expand_functions.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/m_node.c -o objects/parsing/m_node.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/strings_functions.c -o objects/parsing/strings_functions.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/files.c -o objects/parsing/files.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/here_doc.c -o objects/parsing/here_doc.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/syntax.c -o objects/parsing/syntax.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/start.c -o objects/parsing/start.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/garbage.c -o objects/parsing/garbage.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/paths.c -o objects/parsing/paths.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/Signals.c -o objects/parsing/Signals.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/print.c -o objects/parsing/print.o
+mkdir -p objects/Utils/
+cc -Wall -Werror -Wextra -c Utils/equals.c -o objects/Utils/equals.o
+mkdir -p objects/Utils/
+cc -Wall -Werror -Wextra -c Utils/random.c -o objects/Utils/random.o
+mkdir -p objects/Utils/
+cc -Wall -Werror -Wextra -c Utils/int_utils.c -o objects/Utils/int_utils.o
+mkdir -p objects/Utils/
+cc -Wall -Werror -Wextra -c Utils/status.c -o objects/Utils/status.o
+mkdir -p objects/Utils/
+cc -Wall -Werror -Wextra -c Utils/Strings.c -o objects/Utils/Strings.o
+mkdir -p objects/parsing/
+cc -Wall -Werror -Wextra -c parsing/env.c -o objects/parsing/env.o
+mkdir -p objects/Utils/
+cc -Wall -Werror -Wextra -c Utils/promt.c -o objects/Utils/promt.o
+mkdir -p objects/Utils/
+cc -Wall -Werror -Wextra -c Utils/full_line.c -o objects/Utils/full_line.o
+mkdir -p objects/Utils/
+cc -Wall -Werror -Wextra -c Utils/her_doc_interrupte.c -o objects/Utils/her_doc_interrupte.o
+mkdir -p objects/exec/
+cc -Wall -Werror -Wextra -c exec/exec.c -o objects/exec/exec.o
+mkdir -p objects/exec/
+cc -Wall -Werror -Wextra -c exec/exuc_utlis.c -o objects/exec/exuc_utlis.o
+mkdir -p objects/exec/implement_builtins/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/echo.c -o objects/exec/implement_builtins/echo.o
+mkdir -p objects/exec/implement_builtins/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/unset.c -o objects/exec/implement_builtins/unset.o
+mkdir -p objects/exec/implement_builtins/export/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/export/export.c -o objects/exec/implement_builtins/export/export.o
+mkdir -p objects/exec/implement_builtins/export/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/export/underscore_env.c -o objects/exec/implement_builtins/export/underscore_env.o
+mkdir -p objects/exec/implement_builtins/export/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/export/export_utils.c -o objects/exec/implement_builtins/export/export_utils.o
+mkdir -p objects/exec/implement_builtins/export/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/export/export_env.c -o objects/exec/implement_builtins/export/export_env.o
+mkdir -p objects/exec/implement_builtins/export/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/export/main_export.c -o objects/exec/implement_builtins/export/main_export.o
+mkdir -p objects/exec/implement_builtins/export/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/export/reset_export.c -o objects/exec/implement_builtins/export/reset_export.o
+mkdir -p objects/exec/implement_builtins/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/exit.c -o objects/exec/implement_builtins/exit.o
+mkdir -p objects/exec/implement_builtins/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/env.c -o objects/exec/implement_builtins/env.o
+mkdir -p objects/exec/implement_builtins/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/cd_pwd.c -o objects/exec/implement_builtins/cd_pwd.o
+mkdir -p objects/exec/implement_builtins/
+cc -Wall -Werror -Wextra -c exec/implement_builtins/builtins.c -o objects/exec/implement_builtins/builtins.o
+mkdir -p objects/exec/pipes/
+cc -Wall -Werror -Wextra -c exec/pipes/get_path.c -o objects/exec/pipes/get_path.o
+mkdir -p objects/exec/pipes/
+cc -Wall -Werror -Wextra -c exec/pipes/piping.c -o objects/exec/pipes/piping.o
+ 
+mkdir -p objects/exec/implement_builtins/export//
+cc -Wall -Werror -Wextra -c exec/implement_builtins/export//export_equal.c -o objects/exec/implement_builtins/export//export_equal.o
+make -s bonus --directory=libft
+echo "Comiling MINISHELL ..."
+cc objects/main/main.o objects/parsing/parsing.o objects/parsing/parsing_utils.o objects/parsing/copy_str.o objects/parsing/expand_functions.o objects/parsing/m_node.o objects/parsing/strings_functions.o objects/parsing/files.o objects/parsing/here_doc.o objects/parsing/syntax.o objects/parsing/start.o objects/parsing/garbage.o objects/parsing/paths.o objects/parsing/Signals.o objects/parsing/print.o objects/Utils/equals.o objects/Utils/random.o objects/Utils/int_utils.o objects/Utils/status.o objects/Utils/Strings.o objects/parsing/env.o objects/Utils/promt.o objects/Utils/full_line.o objects/Utils/her_doc_interrupte.o objects/exec/exec.o objects/exec/exuc_utlis.o objects/exec/implement_builtins/echo.o objects/exec/implement_builtins/unset.o objects/exec/implement_builtins/export/export.o objects/exec/implement_builtins/export/underscore_env.o objects/exec/implement_builtins/export/export_utils.o objects/exec/implement_builtins/export/export_env.o objects/exec/implement_builtins/export/main_export.o objects/exec/implement_builtins/export/reset_export.o objects/exec/implement_builtins/exit.o objects/exec/implement_builtins/env.o objects/exec/implement_builtins/cd_pwd.o objects/exec/implement_builtins/builtins.o objects/exec/pipes/get_path.o objects/exec/pipes/piping.o objects/exec/implement_builtins/export//export_equal.o libft/libft.a -Wall -Werror -Wextra -lreadline -L/Users/kmahdi/homebrew/opt/readline/lib -fsanitize=address -g3   -o minishell
+make: Leaving directory `/Users/kmahdi/Desktop/minishell copy/minizbel'
+ 

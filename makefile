@@ -1,4 +1,4 @@
-src	:= parsing/parsing.c\
+src = parsing/parsing.c\
 	parsing/parsing_utils.c\
 	parsing/copy_str.c \
 	parsing/expand_functions.c \
@@ -20,7 +20,6 @@ src	:= parsing/parsing.c\
 	parsing/env.c \
 	Utils/promt.c\
 	Utils/full_line.c\
-	Utils/her_doc_interrupte.c\
 	exec/exec.c \
 	exec/exuc_utlis.c\
 	exec/implement_builtins/echo.c\
@@ -39,45 +38,42 @@ src	:= parsing/parsing.c\
 	exec/pipes/piping.c\
 	exec/implement_builtins/export//export_equal.c\
 
-main		:= main/main.c 
-B_NAME		:= bonushell
-Shell_src	:= Shell/main.c\
+main = main/main.c 
+
+B_NAME = bonushell
+Shell_src = Shell/main.c\
 	Shell/tree.c\
 	Shell/exec/exec.c
+
 # Directories
-OBJ_DIR		:= objects
+OBJ_DIR := objects
+
 #object files 
-main_obj	:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(main))
-obj			:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(src))
-Shell_obj	:= ${Shell_src:.c=.o}
+main_obj = $(patsubst %.c,$(OBJ_DIR)/%.o,$(main))
+obj := $(patsubst %.c,$(OBJ_DIR)/%.o,$(src))
+Shell_obj = ${Shell_src:.c=.o}
+
 #NAMES
-Bonus		:=	bonus
-NAME		:= 	minishell
-USER		:=	$(USER)
-DEBUGGER	:=#	-fsanitize=address -g3  
+Bonus = bonus
+NAME =  minishell
+USER := kmahdi
 cc = cc
 
-CFLAGS		:= -Wall -Werror -Wextra
-incldlib	:= -I/Users/${USER}/homebrew/opt/readline/include
-libreadline	:= -lreadline -L/Users/${USER}/homebrew/opt/readline/lib
-libft		:= libft/libft.a
-PROGRESS	:= 0
-TOTAL		:= $(words $(src))
-PROGRESS_BINARY := progress
+CFLAGS = -Wall -Werror -Wextra
+incldlib = -I/Users/${USER}/homebrew/opt/readline/include
+libreadline = -lreadline -L/Users/${USER}/homebrew/opt/readline/lib
+libft = libft/libft.a
+
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	@$(cc) ${CFLAGS} -c $< -o $@
 
 all: $(NAME)
 
-$(OBJ_DIR)/%.o: %.c 
-	@mkdir -p $(dir $@)
-	@$(eval PROGRESS=$(shell expr $(PROGRESS) + 1))
-	@$(cc) ${CFLAGS} -c $< -o $@
-	
-# 
-# 
 
 $(NAME) : $(main_obj) $(obj) $(libft)
 	@ echo "Comiling MINISHELL ..."
-	@ ${cc} $(main_obj) $(obj) $(libft) ${CFLAGS} $(libreadline) $(DEBUGGER) -o $(NAME)
+	@ ${cc} $(main_obj) $(obj) $(libft) ${CFLAGS} $(libreadline) -fsanitize=address -g3 -o $(NAME)
 
 $(libft):
 	@ make -s bonus --directory=libft
@@ -102,9 +98,5 @@ commit_and_push: fclean
 
 $(B_NAME): $(Shell_obj)  $(obj) $(libft)
 	@ ${cc} -fsanitize=address -g $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(B_NAME)
-
-PROGRESS_BINARY : $(libft)
-	$(CC) progress.c libft/libft.a -o $(PROGRESS_BINARY)
-
 
 $(Bonus): $(B_NAME)

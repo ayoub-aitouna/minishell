@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:39:40 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 08:37:22 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 02:30:39 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ void	underscore_export(char **export)
 		else
 			export++;
 	}
-}
-
-char	**export_underscore(char **export, m_node *node)
-{
-	char		**tmp;
-
-	tmp = export;
-	if (!ft_strcmp(node->command, "export"))
-		underscore_export(export);
-	return (tmp);
 }
 
 char	*get_underscore(char **export, char **arguments)

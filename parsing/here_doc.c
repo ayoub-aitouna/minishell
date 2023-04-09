@@ -60,8 +60,7 @@ int	here_doc(int flag, char *limiter)
 	int		status;
 	char	*random;
 	char	*file_name;
-	if(is_interrupted())
-		return (NO_FILE);
+
 	random = random_string(10);
 	file_name = ft_strjoin("tmp/", random);
 	free(random);
@@ -77,10 +76,7 @@ int	here_doc(int flag, char *limiter)
 	waitpid(pid, &status, 0);
 	signal(SIGINT, handle_sigint);
 	if (WEXITSTATUS(status) != 0 && WEXITSTATUS(status) == M_SIG_INT)
-	{
-		set_interrupted(1);
 		return (NO_FILE);
-	}
 	free(limiter);
 	fd = open(file_name, O_RDONLY);
 	return (fd);

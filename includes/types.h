@@ -6,21 +6,28 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:43:34 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/08 06:11:19 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 02:08:35 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
 
+extern int num;
 typedef struct node
 {
 	int		input_file;
 	char	*command;
 	char	**arguments;
 	int		output_file;
-	int		shelvl;
+	int		checker;
 }			m_node;
+
+typedef struct s_helper
+{
+	int	checker;
+
+}	t_helper;
 
 enum				EXIT_STATUS
 {

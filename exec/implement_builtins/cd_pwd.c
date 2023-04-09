@@ -35,7 +35,7 @@ char	**cd_tilde(m_node *node)
 		{
 			if (node->arguments[1][i] == '~')
 				i++;
-			dir = ft_split(node->arguments[1], "/");
+			dir = ft_split(node->arguments[1], '/');
 			i++;
 		}
 	}
@@ -46,19 +46,21 @@ void	cd(m_node *node)
 {			
 	char		**dir;
 	struct stat	sb;
+	int			i;
 
+	i = 5;
 	if (node->arguments[1][0] == '~')
 	{
 		dir = cd_tilde(node);
 		while (*dir)
 		{
 			if (stat(*dir, &sb) == 0 && S_ISDIR(sb.st_mode))
-				chdir(*dir);
+				i = chdir(*dir);
 			dir++;
 		}
 	}
 	else if (stat(node->arguments[1], &sb) == 0 && S_ISDIR(sb.st_mode))
-		 chdir(node->arguments[1]);
+		i = chdir(node->arguments[1]);
 	else if (S_ISREG(sb.st_mode))
 		printf("cd: %s: Not a directory\n", node->arguments[1]);
 	if (!getcwd(NULL, 0))

@@ -50,6 +50,7 @@ int	open_input_file(char *line, int *i, int output)
 	}
 	open_flag = O_RDONLY;
 	file_name = get_input_value(&line[++(*i)], NULL, i, 1);
+	printf("fine_name <%s>", file_name);
 	if (file_name == NULL)
 	{
 		input_file = ERROR;
