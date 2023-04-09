@@ -99,7 +99,6 @@ void	tty(void)
 			break ;
 		add_history(line);
 		parse(line, &list);
-		printf("%d", is_interrupted());
 		if(!is_interrupted())
 			exec(list);
 		else

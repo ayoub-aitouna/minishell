@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include "includes/colors.h"
 
 int ft_isdigit(int c)
 {
@@ -47,7 +45,7 @@ int main(int ac, char **av)
 {
 	int value;
 	int total;
-	double persontage;
+	double percentage;
 	int i;
 
 	if(ac < 3)
@@ -55,14 +53,14 @@ int main(int ac, char **av)
 	i = 0;
 	value = ft_atoi(av[1]);
 	total = ft_atoi(av[2]);
-	persontage = (((float)value) / ((float)total));
+	percentage = (((float)value) / ((float)total));
 	printf("\033[A\33[2K\r");
 	printf("\r	");
 	while (i++ < value)
 		printf("\u25A0");
 	while (i++ < total)
 		printf("\u25A1");
-	printf(" %d%%", (int)(persontage * 100));
+	printf(" %d%%", (int)(percentage * 100));
 	printf("\n");
 	return (0);
 }

@@ -50,17 +50,17 @@ Shell_src = Shell/main.c\
 OBJ_DIR := objects
 
 #object files 
-main_obj	:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(main))
-obj			:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(src))
-PROGRESSBINARY := progress
-Shell_obj	:= ${Shell_src:.c=.o}
+main_obj		:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(main))
+obj				:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(src))
+PROGRESSBINARY 	:= $(OBJ_DIR)/progress
+Shell_obj		:= ${Shell_src:.c=.o}
 #NAMES
 Bonus = bonus
 NAME =  minishell
 USER := $(USER)
 cc = cc
 
-CFLAGS		:= #-Wall -Werror -Wextra
+CFLAGS		:= -Wall -Werror -Wextra
 incldlib	:= -I/Users/${USER}/homebrew/opt/readline/include
 libreadline	:= -lreadline -L/Users/${USER}/homebrew/opt/readline/lib
 libft		:= libft/libft.a
@@ -71,7 +71,7 @@ TOTAL		:= $(words $(src))
 all: $(NAME)
 
 $(PROGRESSBINARY) :
-	@$(CC) progress.c -o $(PROGRESSBINARY)
+	@$(CC) tools/progress.c -o $(PROGRESSBINARY)
 
 $(OBJ_DIR)/%.o: %.c 
 	@mkdir -p $(dir $@)
