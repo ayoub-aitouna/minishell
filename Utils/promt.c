@@ -31,27 +31,35 @@ char	*get_relative_path(char *HOME, char *w_directory)
 	return (relative_dir);
 }
 
+char	*basic_prompt(char *wd)
+{
+	char	*default_prompt;
+
+	default_prompt = m_safe_strjoin(BOLDMAGENTA, wd, 0);
+	default_prompt = m_safe_strjoin(default_prompt,
+			m_safe_strjoin(RESET, GREEN, 0), 1);
+	default_prompt = m_safe_strjoin("Mini-Shell:",
+			default_prompt, 2);
+	default_prompt = m_safe_strjoin(default_prompt,
+			m_safe_strjoin("$ ", RESET, 0), 2);
+	return (default_prompt);
+}
+
 char	*get_prompt_text(void)
 {
 	char	*working_directory;
 	char	*dir;
 	char	*default_prompt;
-	char	*HOME;
-	char	*USER;
+	char	*home;
+	char	*user;
 
 	working_directory = getcwd(NULL, 0);
-	HOME = getenv("HOME");
-	USER = getenv("USER");
-	if(!HOME || !USER)
-	{
-		default_prompt = m_safe_strjoin(BOLDMAGENTA, working_directory, 0);
-		default_prompt = m_safe_strjoin(default_prompt, m_safe_strjoin(RESET, GREEN, 0), 1);
-		default_prompt = m_safe_strjoin("Mini-Shell:", default_prompt, 2);
-		default_prompt = m_safe_strjoin(default_prompt, m_safe_strjoin("$ ", RESET, 0), 2);
-		return (default_prompt);
-	}
-	dir = get_relative_path(HOME, working_directory);
-	default_prompt = m_safe_strjoin(USER, "@", 0);
+	home = getenv("HOME");
+	user = getenv("USER");
+	if (!home || !user)
+		return (basic_prompt(working_directory));
+	dir = get_relative_path(home, working_directory);
+	default_prompt = m_safe_strjoin(user, "@", 0);
 	default_prompt = m_safe_strjoin(default_prompt, "Mini-Shell", 1);
 	default_prompt = m_safe_strjoin(BOLDMAGENTA, default_prompt, 2);
 	default_prompt = m_safe_strjoin(default_prompt, RESET, 1);

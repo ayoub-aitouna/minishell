@@ -75,11 +75,7 @@ char	check_syntax(char *line, int *pos)
 		*pos = i;
 		if (toggle_flag(line[i], &qute_flag, &i))
 			continue ;
-		if (!qute_flag && (is_n_escaped(line, '|', i)
-				|| is_n_escaped(line, ';', i)))
-			pipe_flag++;
-		else if (!qute_flag && line[i] != ' ' && line[i] != '\n')
-			pipe_flag = 0;
+		update_pipe(&pipe_flag, line, qute_flag, i);
 		if (pipe_flag == 2)
 			return (line[i]);
 		element_err = check_redirections_syntax(&line[i]);
@@ -87,15 +83,7 @@ char	check_syntax(char *line, int *pos)
 			return (element_err);
 		i++;
 	}
-	if (qute_flag != 0)
-	{
-		if (qute_flag == 2)
-			return ('"');
-		else
-			return ('\'');
-	}
-	*pos = -1;
-	return (-1);
+	return (type(qute_flag, pos));
 }
 
 int	syntax_here_doc(int flag, char *limiter)

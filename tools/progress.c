@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   progress.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aaitouna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/09 20:26:58 by aaitouna          #+#    #+#             */
+/*   Updated: 2023/04/09 20:27:00 by aaitouna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <unistd.h>
 
-int ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if ((c >= '0' && c <= '9') || c == '+')
 		return (1);
 	return (0);
 }
 
-static int count(const char *str, int sym)
+static int	count(const char *str, int sym)
 {
-	unsigned long long res;
+	unsigned long long	res;
 
 	res = 0;
 	while (str && ft_isdigit(*str))
@@ -25,12 +37,13 @@ static int count(const char *str, int sym)
 	return (res * sym);
 }
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int sym;
+	int	sym;
 
 	sym = 1;
-	while (str && (*str == '\t' || *str == '\n' || *str == '\v' || *str == '\f' || *str == '\r' || *str == ' '))
+	while (str && (*str == '\t' || *str == '\n' || *str == '\v'
+			|| *str == '\f' || *str == '\r' || *str == ' '))
 		str++;
 	if (str && (*str == '-' || *str == '+'))
 	{
@@ -41,14 +54,14 @@ int ft_atoi(const char *str)
 	return (count(str, sym));
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	int value;
-	int total;
-	double percentage;
-	int i;
+	int		value;
+	int		total;
+	double	percentage;
+	int		i;
 
-	if(ac < 3)
+	if (ac < 3)
 		return (0);
 	i = 0;
 	value = ft_atoi(av[1]);

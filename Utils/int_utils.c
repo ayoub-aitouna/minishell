@@ -14,9 +14,9 @@
 
 int	list_append(int **list, int new_pid, int size)
 {
-	int i;
-	int *new_list;
-	int *tab;
+	int	i;
+	int	*new_list;
+	int	*tab;
 
 	tab = *list;
 	i = 0;

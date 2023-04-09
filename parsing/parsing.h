@@ -19,7 +19,7 @@
 char	*get_path(void);
 char	*get_fullpath(char *s);
 void	print_working_directory(void);
-void	rl_replace_line(const char *, int);
+void	rl_replace_line(const char *s, int i);
 void	here_doc_signal(int sig);
 void	handle_sigint_n_chld(int sig);
 m_node	*new_m_node(void);

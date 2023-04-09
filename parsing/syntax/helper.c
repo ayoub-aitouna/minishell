@@ -34,6 +34,16 @@ int	handle_syntax(char *line)
 	return (0);
 }
 
+int	type(int flag, int *pos)
+{
+	if (flag == 2)
+		return ('"');
+	else if (flag == 1)
+		return ('\'');
+	*pos = -1;
+	return (-1);
+}
+
 int	is_nl(char *line, int i)
 {
 	int	n_only;
@@ -62,4 +72,13 @@ int	is_complete(char *line)
 		i++;
 	}
 	return (is_complete);
+}
+
+void	update_pipe(int *flag, char *line, int qute_flag, int i)
+{
+	if (!qute_flag && (is_n_escaped(line, '|', i)
+			|| is_n_escaped(line, ';', i)))
+		(*flag)++;
+	else if (!qute_flag && line[i] != ' ' && line[i] != '\n')
+		*flag = 0;
 }
