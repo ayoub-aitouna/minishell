@@ -74,7 +74,7 @@ char	**unset_env(char **str, char **env)
 	return (tmp);
 }
 
-void	unset_command(m_node *node, char **env)
+void	unset_command(t_node *node, char **env)
 {
 	char	**new_env;
 

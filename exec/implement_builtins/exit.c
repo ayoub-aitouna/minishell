@@ -54,7 +54,7 @@ void	is_max_min(char *str)
 	}
 }
 
-void	numeric_required(m_node *node, int len)
+void	numeric_required(t_node *node, int len)
 {
 	long	status;
 	int		i;
@@ -79,7 +79,7 @@ void	numeric_required(m_node *node, int len)
 		exit_msg("MiniSHell: exit\n", status);
 }
 
-void	exit_command(m_node *node)
+void	exit_command(t_node *node)
 {
 	int	i;
 	int	len;

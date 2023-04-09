@@ -12,7 +12,7 @@
 
 #include "../exec.h"
 
-void	child_proccess(m_node *node, char **env)
+void	child_proccess(t_node *node, char **env)
 {
 	char	*path;
 
@@ -46,7 +46,7 @@ void	parent_proccess(int num_commands, int pipes[2], int in)
 	close (in);
 }
 
-void	multiple_pipes(m_node *node, t_list *list, int num_commands)
+void	multiple_pipes(t_node *node, t_list *list, int num_commands)
 {
 	int		pipes[2];
 	int		i;
@@ -56,7 +56,7 @@ void	multiple_pipes(m_node *node, t_list *list, int num_commands)
 	i = 0;
 	while (list)
 	{
-		node = (m_node *) list->content;
+		node = (t_node *) list->content;
 		pipe(pipes);
 		if (fork() == 0)
 		{

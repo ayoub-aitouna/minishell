@@ -34,7 +34,7 @@ int wait_all_proccess(t_proccess proccess)
 	return (WEXITSTATUS(status));
 }
 
-int shell_proccess(m_node *node, int in_fd, int out_fd, int is_last)
+int shell_proccess(t_node *node, int in_fd, int out_fd, int is_last)
 {
 	signal(SIGINT, exit);
 	if (node->input_file == ERROR || node->output_file == ERROR || node->output_file == NO_FILE || node->input_file == NO_FILE)
@@ -55,7 +55,7 @@ int shell_proccess(m_node *node, int in_fd, int out_fd, int is_last)
 	return (1);
 }
 
-int run_proccess(m_node *node, int in_fd, int out_fd, int w, int *index, int ends_count, t_proccess *proccess)
+int run_proccess(t_node *node, int in_fd, int out_fd, int w, int *index, int ends_count, t_proccess *proccess)
 {
 	int status;
 	int pid;

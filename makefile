@@ -2,7 +2,7 @@ src = parsing/parsing.c\
 	parsing/parsing_utils.c\
 	parsing/copy_str.c \
 	parsing/expand_functions.c \
-	parsing/m_node.c \
+	parsing/t_node.c \
 	parsing/strings_functions.c\
 	parsing/files.c\
 	parsing/here_doc.c\

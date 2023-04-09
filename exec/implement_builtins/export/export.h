@@ -19,8 +19,8 @@
 
 void	add_new_env(char **env, char **old_env, char **arguments);
 char	**get_new_env(char **old_env, char **arguments);
-void	print_export(char **export, m_node *node);
-void	export_command(m_node *node, char **old_export, char	**old_env);
+void	print_export(char **export, t_node *node);
+void	export_command(t_node *node, char **old_export, char	**old_env);
 char	*add_quotes(char *str, int is_env);
 char	*add_plus_string(char **export, char *new_str);
 int		is_value(char *argument);
@@ -34,7 +34,7 @@ char	**reset_forbidden_env(char **name);
 char	**reset(char **env, char **argument);
 char	**remove_duplicate(char **export);
 void	underscore_export(char **export);
-char	**export_underscore(char **export, m_node *node);
+char	**export_underscore(char **export, t_node *node);
 char	*get_underscore(char **export, char **arguments);
 void	sorted_list(char **export, int len);
 void	remove_env(char **env);

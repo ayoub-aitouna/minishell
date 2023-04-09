@@ -13,7 +13,6 @@
 #ifndef TYPES_H
 # define TYPES_H
 
-extern int num;
 typedef struct node
 {
 	int		input_file;
@@ -21,7 +20,7 @@ typedef struct node
 	char	**arguments;
 	int		output_file;
 	int		checker;
-}			m_node;
+}			t_node;
 
 typedef struct s_helper
 {
@@ -29,12 +28,12 @@ typedef struct s_helper
 
 }	t_helper;
 
-enum				EXIT_STATUS
+enum	e_exit_status
 {
 	M_SIG_INT = 78
 };
 
-enum				file_input
+enum	e_file_input
 {
 	NONE = -3,
 	NO_FILE = -1,
@@ -50,7 +49,6 @@ typedef struct s_tree
 	struct s_tree	*right;
 	struct node		*node;
 }					t_tree;
-
 
 typedef struct proccess
 {

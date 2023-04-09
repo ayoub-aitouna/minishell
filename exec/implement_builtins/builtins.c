@@ -12,7 +12,7 @@
 
 #include "../exec.h"
 
-void	under_value(char **env, m_node *node)
+void	under_value(char **env, t_node *node)
 {
 	char	**new_env;
 	int		i;
@@ -29,7 +29,7 @@ void	under_value(char **env, m_node *node)
 	get_env(env);
 }
 
-void	builtins(m_node *node)
+void	builtins(t_node *node)
 {
 	char	**env;
 	char	**export;

@@ -14,12 +14,12 @@
 # define LIBFT_H
 # include <limits.h>
 # include <stdio.h>
-#include <stdint.h>
+# include <stdint.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
 # include "get_next_line/get_next_line.h"
-#include "ft_printf/src/ft_printf.h"
+# include "ft_printf/src/ft_printf.h"
 
 typedef struct s_list
 {

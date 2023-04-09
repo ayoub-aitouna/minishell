@@ -28,7 +28,7 @@ void	t_printf_arg(char **str, int white_space)
 	printf(" >\n");
 }
 
-void	t_print_table(m_node *node, int white_space)
+void	t_print_table(t_node *node, int white_space)
 {
 	printf("%*s|input file 		<%d>\n", white_space, "", node->input_file);
 	printf("%*s|command    		<%s>\n", white_space, "", node->command);
@@ -39,11 +39,11 @@ void	t_print_table(m_node *node, int white_space)
 
 void	print_node(t_tree *tree, int white_space)
 {
-	m_node	*node;
+	t_node	*node;
 
 	if (tree == NULL || tree->node == NULL)
 		return ;
-	node = (m_node *)tree->node;
+	node = (t_node *)tree->node;
 	if (!node)
 	{
 		printf("node null");
@@ -57,11 +57,11 @@ void	print_node(t_tree *tree, int white_space)
 void	tr_parse(char *line, t_tree *tree)
 {
 	int		i;
-	m_node	*node;
+	t_node	*node;
 
 	if (line == NULL)
 		return ;
-	node = new_m_node();
+	node = new_t_node();
 	i = 0;
 	while (line[i])
 	{

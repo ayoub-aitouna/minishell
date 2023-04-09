@@ -12,7 +12,7 @@
 
 #include "../exec.h"
 
-int	is_builtins(m_node *node)
+int	is_builtins(t_node *node)
 {
 	if (ft_strcmp(node->command, "cd") == 0)
 		return (1);

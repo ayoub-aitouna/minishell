@@ -69,7 +69,7 @@ char	*on_error_clear(char **new_str_spltd, char *env_value, char *new_str,
 	return (NULL);
 }
 
-char	*copy_string_t_args(char *s, m_node *node, int *index, int mode)
+char	*copy_string_t_args(char *s, t_node *node, int *index, int mode)
 {
 	int		qute_flag;
 	char	*new_str;

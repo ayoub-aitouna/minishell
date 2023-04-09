@@ -32,29 +32,29 @@
 
 int		ft_strcmp(char *s1, char *s2);
 void	exit_msg(char *msg, int i);
-void	exit_command(m_node *node);
-void	env_command(m_node *node, char **env);
-void	echo_command(m_node *node);
+void	exit_command(t_node *node);
+void	env_command(t_node *node, char **env);
+void	echo_command(t_node *node);
 void	unset(char **str, char **env, int i);
-void	cd_command(m_node *node, char **env, char **export);
+void	cd_command(t_node *node, char **env, char **export);
 void	exec(t_list *list);
 void	pwd_command(void);
-void	export_command(m_node *node, char	**old_export, char	**old_env);
+void	export_command(t_node *node, char	**old_export, char	**old_env);
 int		f_isdigit(int c);
-void	builtins(m_node *node);
+void	builtins(t_node *node);
 char	*get_paths(char **env, char *command);
-int		is_builtins(m_node *node);
-void	unset_command(m_node *node, char **env);
+int		is_builtins(t_node *node);
+void	unset_command(t_node *node, char **env);
 char	**unset_env(char **str, char **env);
 void	remove_env(char **env);
 char	**update_env(char **env);
 void	update(char **env);
-void	multiple_pipes(m_node *node, t_list *list, int n_cmd);
+void	multiple_pipes(t_node *node, t_list *list, int n_cmd);
 char	*change_env(char **env);
-char	**the_new_env(char **env, m_node *node);
+char	**the_new_env(char **env, t_node *node);
 int		ft_is_alnum(int c);
 int		is_high_shlvl(char **env);
 char	**necessary_values(char **env);
-void	under_value(char **env, m_node *node);
+void	under_value(char **env, t_node *node);
 
 #endif

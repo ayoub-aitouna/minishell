@@ -67,7 +67,7 @@ void	update(char **env)
 	free_list(new_env);
 }
 
-void	env_command(m_node *node, char **env)
+void	env_command(t_node *node, char **env)
 {
 	int		i;
 	char	*underscore;

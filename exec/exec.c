@@ -83,12 +83,12 @@ char	**get_export(char **p)
 void	exec(t_list *list)
 {
 	char	**env;
-	m_node	*node;
+	t_node	*node;
 	int		num_commands;
 
 	if (list == NULL)
 		return ;
-	node = (m_node *)list->content;
+	node = (t_node *)list->content;
 	if (!node)
 		return ;
 	if (!node->command || !node->arguments[0])

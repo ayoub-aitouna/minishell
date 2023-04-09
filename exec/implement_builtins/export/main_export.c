@@ -62,7 +62,7 @@ int	is_underscore(char **export)
 	return (0);
 }
 
-void	print_export(char **export, m_node *node)
+void	print_export(char **export, t_node *node)
 {
 	char	*value;
 	int		i;
@@ -108,7 +108,7 @@ int	is_high_shlvl(char **env)
 	return (len);
 }
 
-void	export_command(m_node *node, char	**old_export, char	**old_env)
+void	export_command(t_node *node, char	**old_export, char	**old_env)
 {
 	char	**export;
 	char	**env;

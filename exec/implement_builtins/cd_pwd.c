@@ -22,7 +22,7 @@ void	pwd_command(void)
 	free (pwd);
 }
 
-char	**cd_tilde(m_node *node)
+char	**cd_tilde(t_node *node)
 {
 	char	**dir;
 	int		i;
@@ -42,7 +42,7 @@ char	**cd_tilde(m_node *node)
 	return (dir);
 }
 
-void	cd(m_node *node)
+void	cd(t_node *node)
 {			
 	char		**dir;
 	struct stat	sb;
@@ -68,7 +68,7 @@ void	cd(m_node *node)
 			"getcwd: cannot access parent directories: ");
 }
 
-void	cd_command(m_node *node, char **env, char **export)
+void	cd_command(t_node *node, char **env, char **export)
 {
 	update(env);
 	update(export);

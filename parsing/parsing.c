@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
+char	*splite_env_val(char *line, char *new_str, t_node *node, int *index)
 {
 	int		j;
 	char	*env_value;
@@ -46,11 +46,11 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 void	parse(char *line, t_list **list)
 {
 	int		i;
-	m_node	*node;
+	t_node	*node;
 
 	if (line == NULL)
 		return ;
-	node = new_m_node();
+	node = new_t_node();
 	i = 0;
 	while (line[i] && line[i] != '|')
 	{
