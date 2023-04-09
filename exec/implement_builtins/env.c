@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:43:41 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 08:49:01 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 03:14:16 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ char	**update_env(char **env)
 {
 	char	*old_pwd;
 	int		i;
-	char    *pwd;
+	char	*pwd;
 	char	**new_env;
 
 	new_env = NULL;
 	old_pwd = change_env(env);
 	pwd = pwd_env(env);
-	printf("%s\n", pwd);
 	if (old_pwd != NULL)
 	{
 		new_env = malloc((size(env) + 3) * sizeof(char *));
@@ -68,20 +67,23 @@ void	update(char **env)
 	free_list(new_env);
 }
 
-void	env_command(m_node *node)
+void	env_command(m_node *node, char **env)
 {
-	char	**env;
 	int		i;
+	char	*underscore;
 
 	i = 0;
-	env = get_env(NULL);
+	under_value(env, node);
+	underscore = get_underscore(env, node->arguments);
+	env = remove_duplicate(env);
 	if (env == NULL)
 		perror("env");
 	if (!node->arguments[1])
 	{
 		while (env && env[i] && is_value(env[i]))
 			printf("%s\n", env[i++]);
-	}	
+		printf("%s\n", underscore);
+	}
 	else
 		printf("env: %s: No such file or directory\n", node->arguments[1]);
 }

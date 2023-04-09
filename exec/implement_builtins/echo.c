@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:37:32 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 02:34:34 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 03:47:53 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	echo_command(m_node *node)
 			&& is_newline(node->arguments[i]))
 			i++;
 		while (node->arguments[i])
-			printf("%s ", node->arguments[i++]);
+			printf(" %s", node->arguments[i++]);
 		if ((!is_newline(node->arguments[1])))
 			printf("\n");
 	}

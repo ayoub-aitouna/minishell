@@ -95,7 +95,7 @@ char	*copy_string_t_args(char *s, m_node *node, int *index, int mode)
 					env_value = ft_str_append(env_value, 0);
 				if (env_value != NULL)
 				{
-					new_str_spltd = ft_split(env_value, " ");
+					new_str_spltd = ft_split(env_value, ' ');
 					if (size(new_str_spltd) > 1 && qute_flag == 0)
 						return (on_error_clear(new_str_spltd, env_value,
 								new_str, index));

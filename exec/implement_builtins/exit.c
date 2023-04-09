@@ -81,8 +81,10 @@ void	numeric_required(m_node *node, int len)
 
 void	exit_command(m_node *node)
 {
+	int	i;
 	int	len;
 
+	i = 0;
 	len = get_nub_len(node->arguments[1]);
 	if (!node->arguments[1])
 		exit_msg("MiniSHell: exit\n", 0);

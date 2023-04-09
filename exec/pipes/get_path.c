@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 08:42:19 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 07:20:01 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 02:32:16 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	path(char *paths, char **full_path, char *command)
 	j = 0;
 	if (paths)
 	{
-		my_paths = ft_split(paths + 5, ":");
+		my_paths = ft_split(paths + 5, ':');
 		while (my_paths && my_paths[j])
 		{
 			program = ft_strjoin("/", command);
@@ -66,7 +66,7 @@ char	*get_command_path(char *command, char **env)
 	full_path = NULL;
 	if (access(command, F_OK) == 0)
 		return (command);
-	if (access(ft_strjoin("/bin/", command), F_OK) == 0)
+	if ((size(env) <= 3) && access(ft_strjoin("/bin/", command), F_OK) == 0)
 		return (ft_strjoin("/bin/", command));
 	while (env && env[i])
 	{
@@ -81,7 +81,7 @@ char	*get_paths(char **env, char *command)
 	char	*program_path;
 	char	**list ;
 
-	list = ft_split(command, " ");
+	list = ft_split(command, ' ');
 	program_path = get_command_path(list[0], env);
 	return (program_path);
 }

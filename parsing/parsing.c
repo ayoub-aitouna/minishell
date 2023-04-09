@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 #include <unistd.h>
 
 char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
@@ -25,7 +26,7 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 	env_value = copy_variable_value(env_value, line, index);
 	if (env_value != NULL)
 	{
-		splited_env_val = ft_split(env_value, " ");
+		splited_env_val = ft_split(env_value, ' ');
 		max = size(splited_env_val);
 		while (j < max - 1)
 		{
@@ -98,6 +99,7 @@ void	tty(void)
 			break ;
 		add_history(line);
 		parse(line, &list);
+		printf("%d", is_interrupted());
 		if(!is_interrupted())
 			exec(list);
 		else

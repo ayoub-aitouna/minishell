@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 06:11:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 08:13:58 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 02:40:13 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 int		ft_strcmp(char *s1, char *s2);
 void	exit_msg(char *msg, int i);
 void	exit_command(m_node *node);
-void	env_command(m_node *node);
+void	env_command(m_node *node, char **env);
 void	echo_command(m_node *node);
 void	unset(char **str, char **env, int i);
 void	cd_command(m_node *node, char **env, char **export);
@@ -55,5 +55,6 @@ char	**the_new_env(char **env, m_node *node);
 int		ft_is_alnum(int c);
 int		is_high_shlvl(char **env);
 char	**necessary_values(char **env);
+void	under_value(char **env, m_node *node);
 
 #endif

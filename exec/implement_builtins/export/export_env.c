@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:38:44 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 08:58:35 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 00:18:38 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	add_new_env(char **env, char **old_env, char **arguments)
 	k = 1;
 	while (old_env && old_env[++i])
 		env[i] = ft_strdup(old_env[i]);
-	printf("%s\n", get_underscore(env, arguments));
 	while (arguments && arguments[k])
 	{
 		if (arguments[k][0] == '#')

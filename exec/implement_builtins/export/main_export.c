@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 02:13:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 08:36:30 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 03:37:43 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ void	sorted_list(char **export, int len)
 	}
 }
 
+int	is_underscore(char **export)
+{
+	while (export && *export)
+	{
+		if (!ft_strncmp(*export, "_=", 2))
+			return (1);
+		else
+			export++;
+	}
+	return (0);
+}
+
 void	print_export(char **export, m_node *node)
 {
 	char	*value;
@@ -58,7 +70,7 @@ void	print_export(char **export, m_node *node)
 	i = 0;
 	while (export && export[i] && !node->arguments[1])
 	{
-		if (is_value(export[i]))
+		if (is_value(export[i]) && !is_underscore(export))
 		{
 			value = add_quotes(export[i], 0);
 			printf("declare -x %s\n", value);
@@ -81,7 +93,7 @@ int	is_high_shlvl(char **env)
 	shell_lvl = NULL;
 	while (env && env[i])
 	{
-		if (!ft_strncmp(env[i], "SHLVL",5))
+		if (!ft_strncmp(env[i], "SHLVL", 5))
 		{
 			shell_lvl = malloc(ft_strlen(env[i] + 1));
 			shell_lvl = ft_strdup(env[i]);
@@ -93,21 +105,20 @@ int	is_high_shlvl(char **env)
 		i = get_start(shell_lvl);
 	shlvl_value = ft_substr(shell_lvl, i, ft_strlen(shell_lvl));
 		len = ft_atoi(shlvl_value);
-	
 	return (len);
 }
 
 void	export_command(m_node *node, char	**old_export, char	**old_env)
 {
-	char	**export = NULL;
-	char	**env = NULL;
-	(void)old_env;
+	char	**export;
+	char	**env;
 
-	export = necessary_values (old_export);
+	export = NULL;
+	env = NULL;
 	if (node->arguments)
 	{
-		env = reset(env, node->arguments);
-		export = reset(export, node->arguments);
+		env = reset(old_env, node->arguments);
+		export = reset(old_export, node->arguments);
 	}
 	underscore_export(export);
 	get_export(export);
