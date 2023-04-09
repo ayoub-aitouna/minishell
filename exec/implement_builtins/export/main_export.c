@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 02:13:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 03:37:43 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 05:51:58 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void	export_command(m_node *node, char	**old_export, char	**old_env)
 		export = reset(old_export, node->arguments);
 	}
 	underscore_export(export);
-	get_export(export);
 	export = get_new_export(export, node->arguments);
 	sorted_list(export, size(export));
 	print_export(export, node);

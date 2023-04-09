@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:25:36 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/07 04:20:30 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 05:53:49 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ char	*add_plus_string(char **export, char *new_str)
 	is_equal = -1;
 	new_str = add_quotes(new_str, 1);
 	start = get_start(new_str);
-	while (export[i])
+	export = get_export(NULL);
+	while (export && export[i])
 	{
 		if (!ft_strncmp(export[i], new_str, start))
 		{
