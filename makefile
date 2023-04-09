@@ -49,6 +49,7 @@ OBJ_DIR		:= objects
 #object files 
 main_obj	:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(main))
 obj			:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(src))
+PROGRESSBINARY := progress
 Shell_obj	:= ${Shell_src:.c=.o}
 #NAMES
 Bonus		:=	bonus
@@ -63,19 +64,19 @@ libreadline	:= -lreadline -L/Users/${USER}/homebrew/opt/readline/lib
 libft		:= libft/libft.a
 PROGRESS	:= 0
 TOTAL		:= $(words $(src))
-PROGRESS_BINARY := progress
 
 all: $(NAME)
+
+$(PROGRESSBINARY) : $(libft)
+	$(CC) $(libft) progress.c -o $(PROGRESSBINARY)
 
 $(OBJ_DIR)/%.o: %.c 
 	@mkdir -p $(dir $@)
 	@$(eval PROGRESS=$(shell expr $(PROGRESS) + 1))
 	@$(cc) ${CFLAGS} -c $< -o $@
-	
-# 
-# 
+	@./$(PROGRESSBINARY) $(PROGRESS) $(TOTAL)	
 
-$(NAME) : $(main_obj) $(obj) $(libft)
+$(NAME) : $(PROGRESSBINARY)  $(main_obj) $(obj) $(libft)
 	@ echo "Comiling MINISHELL ..."
 	@ ${cc} $(main_obj) $(obj) $(libft) ${CFLAGS} $(libreadline) $(DEBUGGER) -o $(NAME)
 
