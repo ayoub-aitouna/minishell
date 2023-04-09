@@ -35,7 +35,8 @@ void	add_new_export(char **export, char **old_export, char **arguments)
 	while (old_export && old_export[++i])
 		export[i] = ft_strdup(old_export[i]);
 	j = 1;
-	while (arguments && arguments[j] && !string_exists(old_export, size(old_export), arguments[j], ft_strlen(arguments[j])))
+	while (arguments && arguments[j] && !string_exists(old_export,
+			size(old_export), arguments[j], ft_strlen(arguments[j])))
 	{
 		if (arguments[j] && arguments[j][0] == '#')
 			break ;

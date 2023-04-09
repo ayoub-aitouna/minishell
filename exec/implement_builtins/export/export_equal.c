@@ -78,12 +78,11 @@ char	*add_plus_string(char **export, char *new_str)
 	export = get_export(NULL);
 	while (export && export[i])
 	{
-		if (!ft_strncmp(export[i], new_str, start))
+		if (!ft_strncmp(export[i++], new_str, start))
 		{
 			new_export = ft_strdup(export[i]);
 			is_equal = 0;
 		}
-		i++;
 	}
 	if (!is_equal && new_export)
 		new_string = the_added_string(new_export, export, new_str, start);
