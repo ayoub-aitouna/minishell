@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <unistd.h>
 
 char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 {
@@ -97,8 +98,10 @@ void	tty(void)
 			break ;
 		add_history(line);
 		parse(line, &list);
-		printf_list(list);
-		exec(list);
+		if(!is_interrupted())
+			exec(list);
+		else
+			write(1, "\n", 1);
 		ft_lstclear(&list, clear_node);
 		free(line);
 	}
