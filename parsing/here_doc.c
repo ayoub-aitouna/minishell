@@ -63,7 +63,7 @@ int	here_doc(int flag, char *limiter)
 	if(is_interrupted())
 		return (NO_FILE);
 	random = random_string(10);
-	file_name = ft_strjoin("tmp/", random);
+	file_name = ft_strjoin("/tmp/", random);
 	free(random);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0664);
 	pid = fork();

@@ -3,16 +3,16 @@
 #include <unistd.h>
 #include "includes/colors.h"
 
-int     ft_isdigit(int c)
+int ft_isdigit(int c)
 {
-	if ((c >= '0' && c <= '9' ) || c == '+')
+	if ((c >= '0' && c <= '9') || c == '+')
 		return (1);
 	return (0);
 }
 
-static int      count(const char *str, int sym)
+static int count(const char *str, int sym)
 {
-	unsigned long long      res;
+	unsigned long long res;
 
 	res = 0;
 	while (str && ft_isdigit(*str))
@@ -27,13 +27,12 @@ static int      count(const char *str, int sym)
 	return (res * sym);
 }
 
-int     ft_atoi(const char *str)
+int ft_atoi(const char *str)
 {
-	int                                     sym;
+	int sym;
 
 	sym = 1;
-	while (str && (*str == '\t' || *str == '\n' || *str == '\v' || *str == '\f'
-				|| *str == '\r' || *str == ' '))
+	while (str && (*str == '\t' || *str == '\n' || *str == '\v' || *str == '\f' || *str == '\r' || *str == ' '))
 		str++;
 	if (str && (*str == '-' || *str == '+'))
 	{
@@ -46,30 +45,27 @@ int     ft_atoi(const char *str)
 
 int main(int ac, char **av)
 {
-	int value = 0;
-	int total = 0;
-	int i = 0;
+	int value;
+	int total;
+	double persontage;
+	int i;
 
-	if(ac >= 3)
-	{
-		value = ft_atoi(av[1]);
-		total = ft_atoi(av[2]);
-	}
+	if(ac < 3)
+		return (0);
+	i = 0;
+	value = ft_atoi(av[1]);
+	total = ft_atoi(av[2]);
+	persontage = (((float)value) / ((float)total));
 	printf("\033[A\33[2KT\r");
-	printf("\rprogress %.3d, total %.3d [", value , total);
-	while (i < value) {
-		printf(BLUE"#"RESET);
-		i++;
-	}
-	if(i < total)
-		printf(RED">"RESET);
+	printf("\rprogress %.3d, total %.3d persontage %.3d%%[", value, total, (int)(persontage * 100));
+	while (i++ < value)
+		printf(BLUE "#" RESET);
+	if (i < total)
+		printf(RED ">" RESET);
 	else
-		printf(RED"100%%"RESET);
-	while (i < total) {
+		printf(BLUE "#" RESET);
+	while (i++ < total)
 		printf("_");
-		i++;
-	}
 	printf("]\n");
-	usleep(10000);
 	return (0);
 }
