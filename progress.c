@@ -56,16 +56,13 @@ int main(int ac, char **av)
 	value = ft_atoi(av[1]);
 	total = ft_atoi(av[2]);
 	persontage = (((float)value) / ((float)total));
-	printf("\033[A\33[2KT\r");
-	printf("\rprogress %.3d, total %.3d persontage %.3d%%[", value, total, (int)(persontage * 100));
+	printf("\033[A\33[2K\r");
+	printf("\r	");
 	while (i++ < value)
-		printf(BLUE "#" RESET);
-	if (i < total)
-		printf(RED ">" RESET);
-	else
-		printf(BLUE "#" RESET);
+		printf("\u25A0");
 	while (i++ < total)
-		printf("_");
-	printf("]\n");
+		printf("\u25A1");
+	printf(" %d%%", (int)(persontage * 100));
+	printf("\n");
 	return (0);
 }
