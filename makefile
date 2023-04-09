@@ -51,10 +51,10 @@ main_obj	:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(main))
 obj			:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(src))
 Shell_obj	:= ${Shell_src:.c=.o}
 #NAMES
-Bonus		:= bonus
-NAME		:=  minishell
-USER		:= aaitouna
-DEBUGGER	:= #-fsanitize=address -g3  
+Bonus		:=	bonus
+NAME		:= 	minishell
+USER		:=	$(USER)
+DEBUGGER	:=#	-fsanitize=address -g3  
 cc = cc
 
 CFLAGS		:= -Wall -Werror -Wextra
@@ -71,8 +71,9 @@ $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(eval PROGRESS=$(shell expr $(PROGRESS) + 1))
 	@$(cc) ${CFLAGS} -c $< -o $@
-# $(PROGRESS_BINARY)
-# @./$(PROGRESS_BINARY) $(PROGRESS) $(TOTAL)
+	
+# 
+# 
 
 $(NAME) : $(main_obj) $(obj) $(libft)
 	@ echo "Comiling MINISHELL ..."

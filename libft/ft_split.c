@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitouna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:02:51 by aaitouna          #+#    #+#             */
-/*   Updated: 2022/10/14 16:02:53 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/04/09 04:45:36 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char	**ft_split(char const *s, char *set)
 	int		strings_count;
 	char	**rs;
 
-	if (!s)
+	if (!s || !set)
 		return (NULL);
 	strings_count = cont_strings(s, set);
 	rs = (char **)malloc((strings_count + 1) * sizeof(char *));

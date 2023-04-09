@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:24 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 09:12:11 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 04:46:17 by aaitouna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char **under_value(char **env, m_node *node)
 	char	**new_env;
 	int		i;
 
-	new_env = malloc(size(env) + 2 * sizeof(char *));
+	new_env = malloc((size(env) + 2) * sizeof(char *));
 	i = -1;
 	while (env[++i])
 		new_env[i] = env[i];
