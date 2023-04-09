@@ -60,7 +60,7 @@ NAME =  minishell
 USER := $(USER)
 cc = cc
 
-CFLAGS		:= -Wall -Werror -Wextra
+CFLAGS		:= #-Wall -Werror -Wextra
 incldlib	:= -I/Users/${USER}/homebrew/opt/readline/include
 libreadline	:= -lreadline -L/Users/${USER}/homebrew/opt/readline/lib
 libft		:= libft/libft.a
@@ -70,14 +70,14 @@ TOTAL		:= $(words $(src))
 
 all: $(NAME)
 
-$(PROGRESSBINARY) : $(libft)
-#$(CC) $(libft) progress.c -o $(PROGRESSBINARY)
+$(PROGRESSBINARY) :
+	@$(CC) progress.c -o $(PROGRESSBINARY)
 
 $(OBJ_DIR)/%.o: %.c 
 	@mkdir -p $(dir $@)
 	@$(cc) ${CFLAGS} -c $< -o $@
-	
-#@./$(PROGRESSBINARY) $(PROGRESS) $(TOTAL)	
+	@./$(PROGRESSBINARY) $(PROGRESS) $(TOTAL)	
+	@$(eval PROGRESS = $(shell expr $(PROGRESS) + 1))
 
 all: $(NAME)
 
@@ -93,7 +93,7 @@ clean_libft:
 
 clean : clean_libft
 	@ echo "removing object files ..."
-	@ rm -rf $(main_obj) $(Shell_obj) $(obj) $(mandatory_obj) $(bonus_obj)
+	@ rm -rf $(main_obj) $(Shell_obj) $(obj) $(mandatory_obj) $(bonus_obj) $(PROGRESSBINARY)
 
 fclean : clean clean_libft
 	@ echo "removing MINISHELL ..."
