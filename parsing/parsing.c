@@ -31,7 +31,7 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 		while (j < max - 1)
 		{
 			add_arg_t_node(node, mini_strjoin(new_str,
-						ft_strdup(splited_env_val[j])));
+					ft_strdup(splited_env_val[j])));
 			free(new_str);
 			new_str = NULL;
 			free(splited_env_val[j]);
@@ -76,6 +76,14 @@ int	exit_if_null(char *line)
 	return (0);
 }
 
+void	run_commands(t_list *list)
+{
+	if (!is_interrupted())
+		exec(list);
+	else
+		write(1, "\n", 1);
+}
+
 void	tty(void)
 {
 	char	*line;
@@ -99,10 +107,7 @@ void	tty(void)
 			break ;
 		add_history(line);
 		parse(line, &list);
-		if(!is_interrupted())
-			exec(list);
-		else
-			write(1, "\n", 1);
+		run_commands(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
 	}

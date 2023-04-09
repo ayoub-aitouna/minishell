@@ -25,7 +25,7 @@ int	spaces_count(char *s)
 int	is_qute(char *s, int i)
 {
 	return ((s[i] == '"' || s[i] == '\'') && (i == 0 || (i > 0 && s[i
-			- 1] != '\\')));
+					- 1] != '\\')));
 }
 
 void	add_arg_t_node(m_node *node, char *str)

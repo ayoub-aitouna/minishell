@@ -12,9 +12,9 @@
 
 #include "../includes/minishell.h"
 
-int find_file_name(char *ptr)
+int	find_file_name(char *ptr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ptr[i] && ptr[i] == ' ')
@@ -28,10 +28,10 @@ int find_file_name(char *ptr)
 	return (-1);
 }
 
-char check_redirections_syntax(char *line)
+char	check_redirections_syntax(char *line)
 {
-	int i;
-	int val;
+	int	i;
+	int	val;
 
 	i = 0;
 	val = -1;
@@ -56,12 +56,13 @@ char check_redirections_syntax(char *line)
 	return (val);
 }
 
-char check_syntax(char *line, int *pos)
+char	check_syntax(char *line, int *pos)
 {
-	int pipe_flag;
-	char element_err;
+	int		pipe_flag;
+	char	element_err;
+	int		i;
+	int		qute_flag;
 
-	int i, qute_flag;
 	i = 0;
 	qute_flag = 0;
 	pipe_flag = 0;
@@ -72,14 +73,16 @@ char check_syntax(char *line, int *pos)
 	{
 		*pos = i;
 		if (toggle_flag(line[i], &qute_flag, &i))
-			continue;
-		if (!qute_flag && (is_n_escaped(line, '|', i) || is_n_escaped(line, ';', i)))
+			continue ;
+		if (!qute_flag && (is_n_escaped(line, '|', i)
+				|| is_n_escaped(line, ';', i)))
 			pipe_flag++;
 		else if (!qute_flag && line[i] != ' ' && line[i] != '\n')
 			pipe_flag = 0;
 		if (pipe_flag == 2)
 			return (line[i]);
-		if (!qute_flag && (element_err = check_redirections_syntax(&line[i])) != -1)
+		element_err = check_redirections_syntax(&line[i]);
+		if (!qute_flag && element_err != -1)
 			return (element_err);
 		i++;
 	}

@@ -6,7 +6,8 @@ src = parsing/parsing.c\
 	parsing/strings_functions.c\
 	parsing/files.c\
 	parsing/here_doc.c\
-	parsing/syntax.c\
+	parsing/syntax/syntax.c\
+	parsing/syntax/helper.c\
 	parsing/start.c\
 	parsing/garbage.c \
 	parsing/paths.c \

@@ -20,11 +20,11 @@ void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 }
+
 void	handle_sigint_n_chld(int sig)
 {
 	(void)sig;
 	write(0, "\n", 1);
-
 }
 
 void	handle_sigquit(int sig)
@@ -32,6 +32,7 @@ void	handle_sigquit(int sig)
 	(void)sig;
 	exit(0);
 }
+
 void	here_doc_signal(int sig)
 {
 	(void)sig;
