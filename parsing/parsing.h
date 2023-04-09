@@ -53,4 +53,5 @@ char	*copy_string_t_args(char *s, t_node *node, int *index, int mode);
 int		spaces_count(char *s);
 size_t	string_list_len(char **list);
 int		exit_if_null(char *line);
+char	*open_tmp_file(int *fd);
 #endif

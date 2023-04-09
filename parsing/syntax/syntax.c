@@ -88,10 +88,11 @@ char	check_syntax(char *line, int *pos)
 
 int	syntax_here_doc(int flag, char *limiter)
 {
-	int	fd;
-	int	pid;
+	int		fd;
+	int		pid;
+	char	*file_name;
 
-	fd = open(".temp_file", O_CREAT | O_RDWR | O_TRUNC, 0664);
+	file_name = open_tmp_file(&fd);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -101,6 +102,7 @@ int	syntax_here_doc(int flag, char *limiter)
 	close(fd);
 	signal(SIGINT, SIG_IGN);
 	free(limiter);
+	free(file_name);
 	return (pid);
 }
 
