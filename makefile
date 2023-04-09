@@ -61,13 +61,18 @@ CFLAGS		:= -Wall -Werror -Wextra
 incldlib	:= -I/Users/${USER}/homebrew/opt/readline/include
 libreadline	:= -lreadline -L/Users/${USER}/homebrew/opt/readline/lib
 libft		:= libft/libft.a
-
-$(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(dir $@)
-	@$(cc) ${CFLAGS} -c $< -o $@
+PROGRESS	:= 0
+TOTAL		:= $(words $(src))
+PROGRESS_BINARY := progress
 
 all: $(NAME)
 
+$(OBJ_DIR)/%.o: %.c 
+	@mkdir -p $(dir $@)
+	@$(eval PROGRESS=$(shell expr $(PROGRESS) + 1))
+	@$(cc) ${CFLAGS} -c $< -o $@
+# $(PROGRESS_BINARY)
+# @./$(PROGRESS_BINARY) $(PROGRESS) $(TOTAL)
 
 $(NAME) : $(main_obj) $(obj) $(libft)
 	@ echo "Comiling MINISHELL ..."
@@ -96,5 +101,9 @@ commit_and_push: fclean
 
 $(B_NAME): $(Shell_obj)  $(obj) $(libft)
 	@ ${cc} -fsanitize=address -g $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(B_NAME)
+
+PROGRESS_BINARY : $(libft)
+	$(CC) progress.c libft/libft.a -o $(PROGRESS_BINARY)
+
 
 $(Bonus): $(B_NAME)
