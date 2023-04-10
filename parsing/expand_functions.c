@@ -61,8 +61,7 @@ char	*copy_variable_value(char *dst, char *src, int *index)
 
 	name_len = 0;
 	j = 0;
-	(*index)++;
-	if (src[*index] == '?')
+	if (src[++*(index)] == '?')
 		value = ft_itoa(get_exit_status());
 	else if (src[*index] == '$')
 		return (dst);

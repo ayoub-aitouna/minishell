@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:28:00 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/04 05:11:40 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 01:41:49 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 char	*get_path(void);
 char	*get_fullpath(char *s);
 void	print_working_directory(void);
-void	rl_replace_line(const char *, int);
+void	rl_replace_line(const char *s, int i);
 void	here_doc_signal(int sig);
 void	handle_sigint_n_chld(int sig);
-m_node	*new_m_node(void);
+t_node	*new_t_node(void);
 void	printf_list(t_list *list);
 char	*get_env_name(char *s, int *index);
 char	*update_command(char *command);
@@ -46,11 +46,12 @@ char	*copy_variable_value(char *dst, char *src, int *index);
 char	*mini_strjoin(char const *s1, char const *s2);
 int		is_token_sep(char *c, int i);
 char	*concate_str(char *s, char *str, int flag, int *index);
-char	*splite_env_val(char *line, char *new_str, m_node *node, int *index);
-void	add_arg_t_node(m_node *node, char *str);
-char	*get_input_value(char *s, m_node *node, int *index, int mode);
-char	*copy_string_t_args(char *s, m_node *node, int *index, int mode);
+char	*splite_env_val(char *line, char *new_str, t_node *node, int *index);
+void	add_arg_t_node(t_node *node, char *str);
+char	*get_input_value(char *s, t_node *node, int *index, int mode);
+char	*copy_string_t_args(char *s, t_node *node, int *index, int mode);
 int		spaces_count(char *s);
 size_t	string_list_len(char **list);
 int		exit_if_null(char *line);
+char	*open_tmp_file(int *fd);
 #endif

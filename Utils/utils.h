@@ -13,6 +13,7 @@
 #ifndef UTILS_H
 # define UTILS_H
 # include "../includes/minishell.h"
+
 char	*m_safe_strjoin(char *s1, char *s2, int free_mode);
 char	*random_string(int len);
 int		is_equal(char *s, char *s2);

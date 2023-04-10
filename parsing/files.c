@@ -30,6 +30,25 @@ int	is_between_qute(char *line)
 	return (flag);
 }
 
+int	open_file(char *file_name, int open_flag, int input)
+{
+	int	fd;
+
+	fd = NONE;
+	if (file_name == NULL)
+	{
+		fd = ERROR;
+		printf(RED "ambiguous redirect\n" RESET);
+	}
+	else if (input != ERROR && input != NO_FILE)
+	{
+		fd = open(file_name, open_flag, 0664);
+		if (fd == -1)
+			perror("-bash :");
+	}
+	return (fd);
+}
+
 int	open_input_file(char *line, int *i, int output)
 {
 	int		input_file;
@@ -50,17 +69,7 @@ int	open_input_file(char *line, int *i, int output)
 	}
 	open_flag = O_RDONLY;
 	file_name = get_input_value(&line[++(*i)], NULL, i, 1);
-	printf("fine_name <%s>", file_name);
-	if (file_name == NULL)
-	{
-		input_file = ERROR;
-		printf(RED "ambiguous redirect \n" RESET);
-	}
-	else if (output != ERROR && output != NO_FILE)
-	{
-		if ((input_file = open(file_name, open_flag, 0664)) == -1)
-			perror("-bash :");
-	}
+	input_file = open_file(file_name, open_flag, output);
 	if (file_name != NULL)
 		free(file_name);
 	return (input_file);
@@ -82,16 +91,7 @@ int	open_output_file(char *line, int *i, int input)
 	else
 		opne_flag = O_CREAT | O_RDWR | O_TRUNC;
 	file_name = get_input_value(&line[++(*i)], NULL, i, 1);
-	if (file_name == NULL)
-	{
-		output_file = ERROR;
-		printf(RED "ambiguous redirect\n" RESET);
-	}
-	else if (input != ERROR && input != NO_FILE)
-	{
-		if ((output_file = open(file_name, opne_flag, 0664)) == -1)
-			perror("-bash :");
-	}
+	output_file = open_file(file_name, opne_flag, input);
 	if (file_name != NULL)
 		free(file_name);
 	return (output_file);

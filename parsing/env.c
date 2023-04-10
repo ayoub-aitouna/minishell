@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:41:59 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/08 07:13:21 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 00:18:04 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	**get_env(char **p)
 	if (p != NULL)
 	{
 		env = malloc((size(p) + 1) * sizeof(char *));
+		if (!env)
+			exit (1);
 		while (p[i])
 		{
 			env[i] = ft_strdup(p[i]);

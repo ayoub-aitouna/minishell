@@ -16,12 +16,19 @@ void	print_name(void)
 {
 	printf("\e[1;1H\e[2J\n");
 	printf("\n");
-    printf(BOLDGREEN" *****     *****  ***  *****     ***  ***  "BOLDBLUE"*********   ***      ***  *********  ***        ***      \n");
-    printf(BOLDGREEN" *** **   ** ***  ***  *** **    ***  ***  "BOLDBLUE"***         ***      ***  ***        ***        ***      \n");
-    printf(BOLDGREEN" ***  ** **  ***  ***  ***  **   ***  *** "BOLDBLUE" ***         ***      ***  ***        ***        ***      \n");
-    printf(BOLDGREEN" ***   ***   ***  ***  ***   **  ***  *** "BOLDBLUE" **********  ************  ********   ***        ***      \n");
-    printf(BOLDGREEN" ***    *    ***  ***  ***    ** ***  *** "BOLDBLUE"        ***  ***      ***  ***        ***        ***      \n");
-    printf(BOLDGREEN" ***         ***  ***  ***     *****  ***        "BOLDBLUE" ***  ***      ***  ***        ***        ***      \n");
-    printf(BOLDGREEN" ***         ***  ***  ***      ****  ***  "BOLDBLUE"*********   ***      ***  *********  *********  *********\n");
-    printf(RESET "\n");
+	printf(BOLDGREEN" *****     *****  ***  *****     ***  ***  "
+		BOLDBLUE"*********   ***      ***  *********  ***        ***      \n");
+	printf(BOLDGREEN" *** **   ** ***  ***  *** **    ***  ***  "
+		BOLDBLUE"***         ***      ***  ***        ***        ***      \n");
+	printf(BOLDGREEN" ***  ** **  ***  ***  ***  **   ***  *** "
+		BOLDBLUE" ***         ***      ***  ***        ***        ***      \n");
+	printf(BOLDGREEN" ***   ***   ***  ***  ***   **  ***  *** "
+		BOLDBLUE" **********  ************  ********   ***        ***      \n");
+	printf(BOLDGREEN" ***    *    ***  ***  ***    ** ***  *** "
+		BOLDBLUE"        ***  ***      ***  ***        ***        ***      \n");
+	printf(BOLDGREEN" ***         ***  ***  ***     *****  ***        "
+		BOLDBLUE" ***  ***      ***  ***        ***        ***      \n");
+	printf(BOLDGREEN" ***         ***  ***  ***      ****  ***  "
+		BOLDBLUE"*********   ***      ***  *********  *********  *********\n");
+	printf(RESET "\n");
 }

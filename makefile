@@ -2,11 +2,12 @@ src = parsing/parsing.c\
 	parsing/parsing_utils.c\
 	parsing/copy_str.c \
 	parsing/expand_functions.c \
-	parsing/m_node.c \
+	parsing/t_node.c \
 	parsing/strings_functions.c\
 	parsing/files.c\
 	parsing/here_doc.c\
-	parsing/syntax.c\
+	parsing/syntax/syntax.c\
+	parsing/syntax/helper.c\
 	parsing/start.c\
 	parsing/garbage.c \
 	parsing/paths.c \
@@ -50,10 +51,10 @@ Shell_src = Shell/main.c\
 OBJ_DIR := objects
 
 #object files 
-main_obj	:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(main))
-obj			:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(src))
-PROGRESSBINARY := progress
-Shell_obj	:= ${Shell_src:.c=.o}
+main_obj		:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(main))
+obj				:= $(patsubst %.c,$(OBJ_DIR)/%.o,$(src))
+PROGRESSBINARY 	:= $(OBJ_DIR)/progress
+Shell_obj		:= ${Shell_src:.c=.o}
 #NAMES
 Bonus = bonus
 NAME =  minishell
@@ -70,14 +71,14 @@ TOTAL		:= $(words $(src))
 
 all: $(NAME)
 
-$(PROGRESSBINARY) : $(libft)
-#$(CC) $(libft) progress.c -o $(PROGRESSBINARY)
+$(PROGRESSBINARY) :
+	@$(CC) tools/progress.c -o $(PROGRESSBINARY)
 
 $(OBJ_DIR)/%.o: %.c 
 	@mkdir -p $(dir $@)
 	@$(cc) ${CFLAGS} -c $< -o $@
-	
-#@./$(PROGRESSBINARY) $(PROGRESS) $(TOTAL)	
+	@./$(PROGRESSBINARY) $(PROGRESS) $(TOTAL)	
+	@$(eval PROGRESS = $(shell expr $(PROGRESS) + 1))
 
 all: $(NAME)
 
@@ -93,7 +94,7 @@ clean_libft:
 
 clean : clean_libft
 	@ echo "removing object files ..."
-	@ rm -rf $(main_obj) $(Shell_obj) $(obj) $(mandatory_obj) $(bonus_obj)
+	@ rm -rf $(main_obj) $(Shell_obj) $(obj) $(mandatory_obj) $(bonus_obj) $(PROGRESSBINARY)
 
 fclean : clean clean_libft
 	@ echo "removing MINISHELL ..."

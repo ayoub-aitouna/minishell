@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <curses.h>
 
 char	*parse_input(char *line, int qute_flag)
 {
@@ -53,25 +54,37 @@ void	handle_here_doc(int fd, char *limiter, int flag)
 	exit(0);
 }
 
+char	*open_tmp_file(int *fd)
+{
+	char	*random;
+	char	*file_name;
+
+	random = random_string(10);
+	file_name = ft_strjoin("/tmp/", random);
+	free(random);
+	*fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0664);
+	return (file_name);
+}
+
+void	her_doc_proccess(int fd, char *limiter, int flag)
+{
+	signal(SIGINT, here_doc_signal);
+	handle_here_doc(fd, limiter, flag);
+}
+
 int	here_doc(int flag, char *limiter)
 {
 	int		fd;
 	int		pid;
 	int		status;
-	char	*random;
 	char	*file_name;
-	if(is_interrupted())
+
+	if (is_interrupted())
 		return (NO_FILE);
-	random = random_string(10);
-	file_name = ft_strjoin("tmp/", random);
-	free(random);
-	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0664);
+	file_name = open_tmp_file(&fd);
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, here_doc_signal);
-		handle_here_doc(fd, limiter, flag);
-	}
+		her_doc_proccess(fd, limiter, flag);
 	close(fd);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);

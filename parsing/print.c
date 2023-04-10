@@ -28,7 +28,7 @@ void	printf_arg(char **str)
 	printf(" >\n");
 }
 
-void	print_table(m_node *node)
+void	print_table(t_node *node)
 {
 	ft_printf("input file 		<%d> \n", node->input_file);
 	ft_printf("command    		<%s> \n", node->command);
@@ -39,14 +39,14 @@ void	print_table(m_node *node)
 void	printf_list(t_list *list)
 {
 	int		i;
-	m_node	*node;
+	t_node	*node;
 
 	i = 0;
 	if (list == NULL)
 		return ;
 	while (list)
 	{
-		node = (m_node *)list->content;
+		node = (t_node *)list->content;
 		if (!node)
 		{
 			printf("node null");

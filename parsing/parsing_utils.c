@@ -25,10 +25,10 @@ int	spaces_count(char *s)
 int	is_qute(char *s, int i)
 {
 	return ((s[i] == '"' || s[i] == '\'') && (i == 0 || (i > 0 && s[i
-			- 1] != '\\')));
+					- 1] != '\\')));
 }
 
-void	add_arg_t_node(m_node *node, char *str)
+void	add_arg_t_node(t_node *node, char *str)
 {
 	if (str)
 	{
@@ -38,7 +38,7 @@ void	add_arg_t_node(m_node *node, char *str)
 	}
 }
 
-char	*get_input_value(char *s, m_node *node, int *index, int mode)
+char	*get_input_value(char *s, t_node *node, int *index, int mode)
 {
 	int		i;
 	char	*value;

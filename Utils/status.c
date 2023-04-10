@@ -12,22 +12,22 @@
 
 #include "../includes/minishell.h"
 
-int status(int a)
+int	status(int a)
 {
-	static int status;
+	static int	status;
 
 	if (a == -1)
 		return (status);
 	status = a;
-	return status;
+	return (status);
 }
 
-int get_exit_status(void)
+int	get_exit_status(void)
 {
 	return (status(-1));
 }
 
-void set_exit_status(int status_val)
+void	set_exit_status(int status_val)
 {
 	status(status_val);
 }

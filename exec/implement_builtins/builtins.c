@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitouna <aaitouna@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:24 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 05:28:36 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/04/10 01:44:53 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec.h"
 
-void	under_value(char **env, m_node *node)
+char	**underscore_value(char **env, t_node *node)
 {
 	char	**new_env;
 	int		i;
 
 	new_env = malloc((size(env) + 2) * sizeof(char *));
+	if (!new_env)
+		exit(1);
 	i = 0;
 	while (env[i])
 	{
@@ -26,17 +28,16 @@ void	under_value(char **env, m_node *node)
 	}
 	new_env[i] = get_underscore(env, node->arguments);
 	new_env[++i] = NULL;
-	get_env(env);
+	return (new_env);
 }
 
-void	builtins(m_node *node)
+void	builtins(t_node *node)
 {
 	char	**env;
 	char	**export;
 
 	export = get_export(NULL);
 	env = get_env(NULL);
-	under_value(env, node);
 	if (!strcmp(node->command, "exit"))
 		exit_command(node);
 	if (!ft_strcmp(node->command, "pwd"))

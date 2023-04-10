@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   m_node.c                                           :+:      :+:    :+:   */
+/*   t_node.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +12,11 @@
 
 #include "../includes/minishell.h"
 
-m_node	*new_m_node(void)
+t_node	*new_t_node(void)
 {
-	m_node	*new_node;
+	t_node	*new_node;
 
-	new_node = malloc(sizeof(m_node));
+	new_node = malloc(sizeof(t_node));
 	if (!new_node)
 		return (NULL);
 	new_node->input_file = NONE;

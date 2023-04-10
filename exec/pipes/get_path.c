@@ -6,13 +6,15 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 08:42:19 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 02:32:16 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 01:42:19 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec.h"
 
-int	is_builtins(m_node *node)
+t_helper	g__helper;
+
+int	is_builtins(t_node *node)
 {
 	if (ft_strcmp(node->command, "cd") == 0)
 		return (1);
@@ -66,7 +68,7 @@ char	*get_command_path(char *command, char **env)
 	full_path = NULL;
 	if (access(command, F_OK) == 0)
 		return (command);
-	if ((size(env) <= 3) && access(ft_strjoin("/bin/", command), F_OK) == 0)
+	if ((!g__helper.checker) && access(ft_strjoin("/bin/", command), F_OK) == 0)
 		return (ft_strjoin("/bin/", command));
 	while (env && env[i])
 	{

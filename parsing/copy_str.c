@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 19:10:46 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/04 05:09:38 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 00:16:26 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*ft_str_append(char *s, char c)
 	i = 0;
 	len = ft_strlen(s);
 	new_str = malloc((len + 3) * sizeof(char));
+	if (!new_str)
+		exit (0);
 	while (i < len)
 	{
 		new_str[i] = s[i];
@@ -69,7 +71,7 @@ char	*on_error_clear(char **new_str_spltd, char *env_value, char *new_str,
 	return (NULL);
 }
 
-char	*copy_string_t_args(char *s, m_node *node, int *index, int mode)
+char	*copy_string_t_args(char *s, t_node *node, int *index, int mode)
 {
 	int		qute_flag;
 	char	*new_str;

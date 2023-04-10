@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 02:13:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 05:51:58 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 08:33:12 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	is_underscore(char **export)
 	return (0);
 }
 
-void	print_export(char **export, m_node *node)
+void	print_export(char **export, t_node *node)
 {
 	char	*value;
 	int		i;
@@ -96,6 +96,8 @@ int	is_high_shlvl(char **env)
 		if (!ft_strncmp(env[i], "SHLVL", 5))
 		{
 			shell_lvl = malloc(ft_strlen(env[i] + 1));
+			if (!shell_lvl)
+				exit(1);
 			shell_lvl = ft_strdup(env[i]);
 			break ;
 		}
@@ -108,7 +110,7 @@ int	is_high_shlvl(char **env)
 	return (len);
 }
 
-void	export_command(m_node *node, char	**old_export, char	**old_env)
+void	export_command(t_node *node, char	**old_export, char	**old_env)
 {
 	char	**export;
 	char	**env;

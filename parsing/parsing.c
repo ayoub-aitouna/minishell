@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/09 06:01:37 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/09 23:25:47 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
+char	*splite_env_val(char *line, char *new_str, t_node *node, int *index)
 {
 	int		j;
 	char	*env_value;
@@ -31,7 +31,7 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 		while (j < max - 1)
 		{
 			add_arg_t_node(node, mini_strjoin(new_str,
-						ft_strdup(splited_env_val[j])));
+					ft_strdup(splited_env_val[j])));
 			free(new_str);
 			new_str = NULL;
 			free(splited_env_val[j]);
@@ -46,11 +46,11 @@ char	*splite_env_val(char *line, char *new_str, m_node *node, int *index)
 void	parse(char *line, t_list **list)
 {
 	int		i;
-	m_node	*node;
+	t_node	*node;
 
 	if (line == NULL)
 		return ;
-	node = new_m_node();
+	node = new_t_node();
 	i = 0;
 	while (line[i] && line[i] != '|')
 	{
@@ -76,6 +76,14 @@ int	exit_if_null(char *line)
 	return (0);
 }
 
+void	run_commands(t_list *list)
+{
+	if (!is_interrupted())
+		exec(list);
+	else
+		write(1, "\n", 1);
+}
+
 void	tty(void)
 {
 	char	*line;
@@ -99,7 +107,7 @@ void	tty(void)
 			break ;
 		add_history(line);
 		parse(line, &list);
-		// printf("%d", is_interrupted());
+		printf("%d", is_interrupted());
 		if(!is_interrupted())
 			exec(list);
 		else

@@ -85,4 +85,3 @@ char	**ft_split(char const *s, char c)
 	k[i] = 0;
 	return (k);
 }
-

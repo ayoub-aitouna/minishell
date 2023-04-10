@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 07:40:58 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/07 04:12:56 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 00:17:38 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*add_quotes(char *str, int is_env)
 	if (str[start] == '=')
 		start++;
 	new_string = malloc(len * sizeof(char));
+	if (!new_string)
+		exit (0);
 	while (j < start)
 	{
 		if (str[j] == '+')
@@ -67,6 +69,8 @@ char	*the_added_string(char	*n_exp, char **exp, char *n_str, int start)
 
 	len = ft_strlen(n_str) + ft_strlen(n_exp) + 3;
 	n_string = malloc(len * sizeof(char));
+	if (n_string)
+		exit (1);
 	j = 0;
 	while (exp && n_exp && n_exp[j])
 		j++;

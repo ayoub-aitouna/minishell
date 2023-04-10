@@ -6,25 +6,25 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:49:05 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 02:30:44 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 01:43:48 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec.h"
 
-void	child_proccess(m_node *node, char **env)
+void	child_proccess(t_node *node, char **env)
 {
 	char	*path;
 
 	if (node->arguments[0] == 0)
 		exit_msg("command not found \n", 127);
 	path = get_paths(env, node->arguments[0]);
-	if (path == NULL && !is_builtins(node))
+	if (path == NULL && !is_builtin(node->command))
 	{
 		printf("%s :", node->arguments[0]);
 		exit_msg("command not found \n", 127);
 	}
-	if (is_builtins(node))
+	if (is_builtin(node->command))
 	{
 		builtins(node);
 		exit(0);
@@ -46,7 +46,7 @@ void	parent_proccess(int num_commands, int pipes[2], int in)
 	close (in);
 }
 
-void	multiple_pipes(m_node *node, t_list *list, int num_commands)
+void	multiple_pipes(t_node *node, t_list *list, int num_commands)
 {
 	int		pipes[2];
 	int		i;
@@ -56,7 +56,7 @@ void	multiple_pipes(m_node *node, t_list *list, int num_commands)
 	i = 0;
 	while (list)
 	{
-		node = (m_node *) list->content;
+		node = (t_node *) list->content;
 		pipe(pipes);
 		if (fork() == 0)
 		{

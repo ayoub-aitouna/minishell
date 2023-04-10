@@ -24,7 +24,7 @@ int	is_newline(char *str)
 	return (0);
 }
 
-void	echo_command(m_node *node)
+void	echo_command(t_node *node)
 {
 	int	i;
 

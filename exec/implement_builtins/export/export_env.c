@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:38:44 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 00:18:38 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 04:56:58 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	add_new_env(char **env, char **old_env, char **arguments)
 		if (is_equal_plus_str(arguments[k]) == 1)
 			env[i++] = ft_strdup(arguments[k]);
 		else if (is_equal_plus_str(arguments[k]) == 2)
-			env[i++] = ft_strdup(add_plus_string(old_env, arguments[k]));
+			env[i++] = ft_strdup(add_plus_string(env, arguments[k]));
 		k++;
 	}
 	env[i] = NULL;
@@ -60,6 +60,8 @@ char	**get_new_env(char **old_env, char **arguments)
 	else if (old_env != NULL)
 	{
 		env = malloc((size(old_env) + size(arguments) + 1) * sizeof(char *));
+		if (!env)
+			exit(1);
 		add_new_env(env, old_env, arguments);
 	}
 	env = reset_forbidden_env(env);

@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:28 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 03:09:14 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 01:40:31 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	**necessary_values(char **env)
 	pwd = pwd_env(env);
 	underscore_export(env);
 	export = malloc(((size(env) + 4) * sizeof(char *)));
+	if (!export)
+		exit(1);
 	while (env[i])
 	{
 		export[i] = env[i];
@@ -69,6 +71,8 @@ char	**get_export(char **p)
 	if (p != NULL)
 	{
 		export = malloc((size(p) + 3) * sizeof(char *));
+		if (!export)
+			exit(1);
 		while (p && p[i])
 		{
 			export[i] = ft_strdup(p[i]);
@@ -83,12 +87,12 @@ char	**get_export(char **p)
 void	exec(t_list *list)
 {
 	char	**env;
-	m_node	*node;
+	t_node	*node;
 	int		num_commands;
 
 	if (list == NULL)
 		return ;
-	node = (m_node *)list->content;
+	node = (t_node *)list->content;
 	if (!node)
 		return ;
 	if (!node->command || !node->arguments[0])
@@ -100,8 +104,8 @@ void	exec(t_list *list)
 		printf("fork: Resource temporarily unavailable\n");
 		return ;
 	}
-	if (num_commands == 1 && is_builtin(node->command))
+	// if (num_commands == 1 && is_builtin(node->command))
 		builtins(node);
-	else
-		multiple_pipes(node, list, num_commands);
+	// else
+	// 	multiple_pipes(node, list, num_commands);
 }

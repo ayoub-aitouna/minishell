@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:45:41 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/08 02:49:36 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/10 08:35:33 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	pwd_command(void)
 	free (pwd);
 }
 
-char	**cd_tilde(m_node *node)
+char	**cd_tilde(t_node *node)
 {
 	char	**dir;
 	int		i;
@@ -42,7 +42,7 @@ char	**cd_tilde(m_node *node)
 	return (dir);
 }
 
-void	cd(m_node *node)
+void	cd(t_node *node)
 {			
 	char		**dir;
 	struct stat	sb;
@@ -63,12 +63,14 @@ void	cd(m_node *node)
 		i = chdir(node->arguments[1]);
 	else if (S_ISREG(sb.st_mode))
 		printf("cd: %s: Not a directory\n", node->arguments[1]);
+	else
+		printf("cd: no such file or directory: %s\n", node->arguments[1]);
 	if (!getcwd(NULL, 0))
 		perror("chdir: error retrieving current directory:"
 			"getcwd: cannot access parent directories: ");
 }
 
-void	cd_command(m_node *node, char **env, char **export)
+void	cd_command(t_node *node, char **env, char **export)
 {
 	update(env);
 	update(export);
