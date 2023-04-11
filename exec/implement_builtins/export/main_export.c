@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 02:13:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/10 08:33:12 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 11:51:44 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,29 @@ void	sorted_list(char **export, int len)
 	}
 }
 
-int	is_underscore(char **export)
+char	*join_values(char *s1, char *s2)
 {
-	while (export && *export)
-	{
-		if (!ft_strncmp(*export, "_=", 2))
-			return (1);
-		else
-			export++;
-	}
-	return (0);
+	char	*re;
+	int		j;
+
+	re = NULL;
+	j = get_start(s1);
+	while (s1 && s1[j])
+		re = ft_str_append(re, s1[j++]);
+	j = get_start(s2);
+	while (s2 && s2[j])
+		re = ft_str_append(re, s2[j++]);
+	re = ft_strjoin(ft_substr(s1, 0, get_start(s1)), re);
+	return (re);
 }
 
-void	print_export(char **export, t_node *node)
+void	print_export(char **export, char **new_args)
 {
 	char	*value;
 	int		i;
 
 	i = 0;
-	while (export && export[i] && !node->arguments[1])
+	while (export && export[i] && !new_args[1])
 	{
 		if (is_value(export[i]) && !is_underscore(export))
 		{
@@ -82,51 +86,26 @@ void	print_export(char **export, t_node *node)
 	}
 }
 
-int	is_high_shlvl(char **env)
-{
-	char		*shell_lvl;
-	char		*shlvl_value;
-	static int	len = 1;
-	int			i;
-
-	i = 0;
-	shell_lvl = NULL;
-	while (env && env[i])
-	{
-		if (!ft_strncmp(env[i], "SHLVL", 5))
-		{
-			shell_lvl = malloc(ft_strlen(env[i] + 1));
-			if (!shell_lvl)
-				exit(1);
-			shell_lvl = ft_strdup(env[i]);
-			break ;
-		}
-		i++;
-	}
-	if (shell_lvl)
-		i = get_start(shell_lvl);
-	shlvl_value = ft_substr(shell_lvl, i, ft_strlen(shell_lvl));
-		len = ft_atoi(shlvl_value);
-	return (len);
-}
-
 void	export_command(t_node *node, char	**old_export, char	**old_env)
 {
 	char	**export;
 	char	**env;
+	char	**new_args;
 
 	export = NULL;
 	env = NULL;
-	if (node->arguments)
+	new_args = get_new_arguments(node->arguments);
+	printf_arg(new_args);
+	if (new_args)
 	{
-		env = reset(old_env, node->arguments);
-		export = reset(old_export, node->arguments);
+		env = reset(old_env, new_args);
+		export = reset(old_export, new_args);
 	}
 	underscore_export(export);
-	export = get_new_export(export, node->arguments);
+	export = get_new_export(export, new_args);
 	sorted_list(export, size(export));
-	print_export(export, node);
-	env = get_new_env(env, node->arguments);
+	print_export(export, new_args);
+	env = get_new_env(env, new_args);
 	get_export(export);
 	get_env(env);
 }

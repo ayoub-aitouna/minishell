@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 06:11:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/10 02:29:54 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 11:54:06 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	*get_paths(char **env, char *command);
 void	unset_command(t_node *node, char **env);
 char	**unset_env(char **str, char **env);
 void	remove_env(char **env);
+void	remove_ptr(char **env, char *ptr);
 char	**update_env(char **env);
 void	update(char **env);
 void	multiple_pipes(t_node *node, t_list *list, int n_cmd);

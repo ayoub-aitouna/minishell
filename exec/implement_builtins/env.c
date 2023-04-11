@@ -6,28 +6,38 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:43:41 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/10 00:13:49 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 11:59:52 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec.h"
 
-char	*pwd_env(char **env)
+int	is_high_shlvl(char **env)
 {
-	char	*pwd;
-	char	*new_pwd;
+	char		*shell_lvl;
+	char		*shlvl_value;
+	static int	len = 1;
+	int			i;
 
-	pwd = getcwd(NULL, 0);
-	while (pwd && env && *env)
+	i = 0;
+	shell_lvl = NULL;
+	while (env && env[i])
 	{
-		if (!ft_strncmp(*env, "PWD", 3))
-			remove_env(env);
-		else
-			env++;
+		if (!ft_strncmp(env[i], "SHLVL", 5))
+		{
+			shell_lvl = malloc(ft_strlen(env[i] + 1));
+			if (!shell_lvl)
+				exit(1);
+			shell_lvl = ft_strdup(env[i]);
+			break ;
+		}
+		i++;
 	}
-	new_pwd = ft_strjoin("PWD=", pwd);
-	return (new_pwd);
-	free (pwd);
+	if (shell_lvl)
+		i = get_start(shell_lvl);
+	shlvl_value = ft_substr(shell_lvl, i, ft_strlen(shell_lvl));
+		len = ft_atoi(shlvl_value);
+	return (len);
 }
 
 char	**update_env(char **env)
@@ -35,11 +45,13 @@ char	**update_env(char **env)
 	char	*old_pwd;
 	int		i;
 	char	*pwd;
+	char	*n_pwd;
 	char	**new_env;
 
 	new_env = NULL;
 	old_pwd = change_env(env);
-	pwd = pwd_env(env);
+	n_pwd = getcwd(NULL, 0);
+	pwd = ft_strjoin("PWD=", n_pwd);
 	if (old_pwd != NULL)
 	{
 		new_env = malloc((size(env) + 3) * sizeof(char *));
@@ -56,6 +68,8 @@ char	**update_env(char **env)
 		new_env[++i] = NULL;
 		free(old_pwd);
 	}
+	free (n_pwd);
+	free (pwd);
 	return (new_env);
 }
 

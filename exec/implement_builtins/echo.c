@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:37:32 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 03:47:53 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 13:07:44 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_newline(char *str)
 	i = 1;
 	while (str[0] == '-' && str[i] && str[i] == 'n')
 		i++;
-	if (str[i] == '\0')
+	if (str[i] == '\0' && str[i - 1] == 'n')
 		return (1);
 	return (0);
 }

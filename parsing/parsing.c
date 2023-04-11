@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/09 23:25:47 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 14:25:20 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ void	tty(void)
 			break ;
 		add_history(line);
 		parse(line, &list);
-		printf("%d", is_interrupted());
-		if(!is_interrupted())
+		if (!is_interrupted())
 			exec(list);
 		else
 			write(1, "\n", 1);

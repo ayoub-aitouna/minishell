@@ -42,5 +42,6 @@ void	printf_arg(char **str);
 void	print_table(t_node *node);
 void	printf_list(t_list *list);
 void	clear_tree(t_tree *node);
+void	child_quit(int sig);
 char	**get_export(char **p);
 #endif

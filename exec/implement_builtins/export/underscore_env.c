@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:39:40 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/09 02:30:39 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 11:55:44 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,16 @@ char	*change_env(char **env)
 	else
 		old_pwd = ft_strdup("OLDPWD=");
 	return (old_pwd);
+}
+
+int	is_underscore(char **export)
+{
+	while (export && *export)
+	{
+		if (!ft_strncmp(*export, "_=", 2))
+			return (1);
+		else
+			export++;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:30:17 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/04 05:09:38 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 12:51:21 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	here_doc(int flag, char *limiter)
 
 	if (is_interrupted())
 		return (NO_FILE);
+	if (!limiter)
+		limiter = ft_strdup("");
 	file_name = open_tmp_file(&fd);
 	pid = fork();
 	if (pid == 0)

@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:38:44 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/10 04:56:58 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 11:24:25 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,18 @@ char	**get_new_env(char **old_env, char **arguments)
 	env = reset_forbidden_env(env);
 	env = remove_duplicate(env);
 	return (env);
+}
+
+int	get_name_index(char *s1)
+{
+	int	i;
+
+	i = 0;
+	while (s1 && s1[i])
+	{
+		if (s1[i] == '+' || s1[i] == '=')
+			return (i);
+		i++;
+	}
+	return (-1);
 }

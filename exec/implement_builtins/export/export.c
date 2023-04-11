@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:31:49 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/10 07:25:35 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 11:23:48 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,41 +25,6 @@ int	is_add_plus_str(char *argument)
 	}
 	return (0);
 }
-
-// int	duplicate_plus_equal(char **arguments, char *argument)
-// {
-// 	char	*new_argument;
-// 	int		i;
-// 	int		start;
-
-// 	i = 0;
-// 	start = 0;
-// 	while (argument && argument[start] && argument[start] != '+')
-// 		start++;
-// 	while (arguments && arguments[i])
-// 	{
-// 		if (is_equal_plus(arguments) && !ft_strncmp(arguments[i], argument, start)
-// 			printf ("%s\n", arg)
-// 	}
-// }
-
-// char	**check_arguments(char **arguments, char arg)
-// {
-// 	char	**new_arguments;
-// 	int		i;
-
-// 	i = 0;
-// 	new_arguments = malloc((size(arguments)) * sizeof(char *));
-// 	if (!new_arguments)
-// 		exit(1);
-// 	while (arguments && arguments[i] && is_add_plus_str(arguments[i]))
-// 	{
-// 		new_arguments[i] = add_plus_string(arguments[i]);
-// 		i++;
-// 	}
-// 	new_arguments[i] = NULL;
-// 	return (new_arguments);
-// }
 
 void	add_new_export(char **export, char **old_export, char **arguments)
 {

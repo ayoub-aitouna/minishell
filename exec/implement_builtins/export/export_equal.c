@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:25:36 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/10 07:17:35 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 11:07:39 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,41 @@ char	*add_plus_string(char **export, char *new_str)
 	else
 		new_string = new_str;
 	return (new_string);
+}
+
+char	**get_new_arguments(char **arguments)
+{
+	char	**new_arg;
+	int		i;
+	int		j;
+	int		been_added;
+
+	new_arg = NULL;
+	i = 0;
+	while (arguments && arguments[i])
+	{
+		j = 0;
+		been_added = 0;
+		while (new_arg && new_arg[j])
+		{
+			if (!ft_strncmp(arguments[i], new_arg[j], get_start(arguments[i]))
+				&& is_equal_plus_str(arguments[i]) == 2)
+			{		
+					new_arg[j] = join_values(new_arg[j], arguments[i]);
+					been_added = 1;
+			}
+			if (!ft_strncmp(arguments[i], new_arg[j],
+					get_name_index(arguments[i]))
+				&& is_equal_plus_str(arguments[i]) == 1)
+			{
+				new_arg[j] = ft_strdup(arguments[i]);
+				been_added = 1;
+			}
+			j++;
+		}
+		if (!been_added)
+			new_arg = append(new_arg, ft_strdup(arguments[i]));
+		i++;
+	}
+	return (new_arg);
 }

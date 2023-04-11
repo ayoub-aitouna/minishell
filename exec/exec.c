@@ -6,17 +6,17 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:28 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/10 01:40:31 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/11 13:43:46 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	remove_shell_lvl(char **env)
+void	remove_ptr(char **env, char *ptr)
 {
 	while (env && *env)
 	{
-		if (!ft_strncmp(*env, "SHLVL", 5))
+		if (!ft_strncmp(*env, ptr, ft_strlen(ptr)))
 			remove_env(env);
 		else
 			env++;
@@ -31,7 +31,7 @@ char	*shell_level(char **env)
 	shell_lvl = is_high_shlvl(env);
 	shell_lvl++;
 	lvl_sh = NULL;
-	remove_shell_lvl(env);
+	remove_ptr(env, "SHLVL");
 	if (shell_lvl >= 1000)
 		shell_lvl = 1;
 	lvl_sh = ft_strjoin("SHLVL=", ft_itoa(shell_lvl));
@@ -42,23 +42,30 @@ char	**necessary_values(char **env)
 {
 	char		**export;
 	char		*pwd;
+	char		*n_pwd;
+	char		*shell;
 	int			i;
 
 	i = 0;
-	pwd = pwd_env(env);
+	shell = shell_level(env);
+	n_pwd = getcwd(NULL, 0);
+	pwd = ft_strjoin("PWD=", n_pwd);
 	underscore_export(env);
 	export = malloc(((size(env) + 4) * sizeof(char *)));
 	if (!export)
 		exit(1);
 	while (env[i])
 	{
-		export[i] = env[i];
+		export[i] = ft_strdup(env[i]);
 		i++;
 	}
-	export[i++] = ft_strdup(shell_level(env));
+	export[i++] = ft_strdup(shell);
 	export[i++] = ft_strdup(pwd);
 	export[i++] = ft_strdup("_=");
 	export[i] = NULL;
+	free (n_pwd);
+	free (pwd);
+	free (shell);
 	return (export);
 }
 
@@ -104,8 +111,5 @@ void	exec(t_list *list)
 		printf("fork: Resource temporarily unavailable\n");
 		return ;
 	}
-	// if (num_commands == 1 && is_builtin(node->command))
-		builtins(node);
-	// else
-	// 	multiple_pipes(node, list, num_commands);
+	multiple_pipes(node, list, num_commands);
 }
