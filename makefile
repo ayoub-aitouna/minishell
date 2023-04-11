@@ -66,10 +66,17 @@ incldlib	:= -I/Users/${USER}/homebrew/opt/readline/include
 libreadline	:= -lreadline -L/Users/${USER}/homebrew/opt/readline/lib
 libft		:= libft/libft.a
 DUBGGER		:= -fsanitize=address -g3
-PROGRESS	:= 0
-TOTAL		:= $(words $(src))
+PROGRESS	:= 1
+newer_file	:= $(SRCS_FILES) 
+TOTAL		:= $(words $(newer_file))
 
-all: $(NAME)
+all: updated_files CALC_TOTAL $(NAME)
+
+updated_files :
+	$(eval newer_file = $(shell (find . -name "*.c" -not -path "./libft/*"  -type f -newer minishell) 2>/dev/null || find . -name "*.c" -type f -not -path "./libft/*"))
+
+CALC_TOTAL : $(updated_files)
+		$(eval TOTAL = $(words $(newer_file)))
 
 $(PROGRESSBINARY) :
 	@$(CC) tools/progress.c -o $(PROGRESSBINARY)
@@ -82,9 +89,17 @@ $(OBJ_DIR)/%.o: %.c
 
 all: $(NAME)
 
-$(NAME) : $(PROGRESSBINARY)  $(main_obj) $(obj) $(libft)
-	@ echo "Comiling MINISHELL ..."
+start:
+	@echo "Compiling object files\n"
+
+end:
+	@echo "\tDone.\n"
+
+
+$(NAME) : start $(PROGRESSBINARY)  $(main_obj)  $(obj) $(libft) end
+	@ echo "Comiling MINISHELL "
 	@ ${cc} $(main_obj) $(obj) $(libft) ${CFLAGS} $(libreadline) $(DUBGGER) -o $(NAME)
+	@ echo "\tDone.\n"
 
 $(libft):
 	@ make -s bonus --directory=libft
@@ -93,21 +108,20 @@ clean_libft:
 	@ make clean -s  --directory=libft
 
 clean : clean_libft
-	@ echo "removing object files ..."
+	@ echo "Removing object files ."
 	@ rm -rf $(main_obj) $(Shell_obj) $(obj) $(mandatory_obj) $(bonus_obj) $(PROGRESSBINARY)
+	@ echo "\tDone.\n"
 
 fclean : clean clean_libft
-	@ echo "removing MINISHELL ..."
+	@ echo "Removing MINISHELL ."
 	@ rm -rf $(NAME) $(libft) $(CHECKER) $(B_NAME)
+	@ echo "\tDone.\n"
 
-re : fclean $(NAME)
+re : fclean all
 
 files = $(shell git diff --name-only HEAD)
 
 commit_and_push: fclean
 	git add . && git commit -m "changes $(files)" && git push;
 
-$(B_NAME): $(Shell_obj)  $(obj) $(libft)
-	@ ${cc} -fsanitize=address -g $(Shell_obj) $(obj) $(libft)  $(libreadline) -o $(B_NAME)
-
-$(Bonus): $(B_NAME)
+.PHONY : clean flcean updated_files CALC_TOTAL

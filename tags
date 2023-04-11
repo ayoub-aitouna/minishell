@@ -1,0 +1,325 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AR	libft/Makefile	/^AR	:= ar crs$/;"	m
+AR	libft/ft_printf/Makefile	/^AR				= ar rcs$/;"	m
+BLACK	includes/colors.h	/^# define BLACK /;"	d
+BLUE	includes/colors.h	/^# define BLUE /;"	d
+BOLDBLACK	includes/colors.h	/^# define BOLDBLACK /;"	d
+BOLDBLUE	includes/colors.h	/^# define BOLDBLUE /;"	d
+BOLDCYAN	includes/colors.h	/^# define BOLDCYAN /;"	d
+BOLDGREEN	includes/colors.h	/^# define BOLDGREEN /;"	d
+BOLDMAGENTA	includes/colors.h	/^# define BOLDMAGENTA /;"	d
+BOLDRED	includes/colors.h	/^# define BOLDRED /;"	d
+BOLDWHITE	includes/colors.h	/^# define BOLDWHITE /;"	d
+BOLDYELLOW	includes/colors.h	/^# define BOLDYELLOW /;"	d
+BONUS_FILES	libft/Makefile	/^BONUS_FILES	:=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \\$/;"	m
+BONUS_OBJS_FILES	libft/Makefile	/^BONUS_OBJS_FILES	:= $(BONUS_FILES:.c=.o)$/;"	m
+BUFFER_SIZE	libft/get_next_line/get_next_line.h	/^#  define BUFFER_SIZE /;"	d
+B_NAME	makefile	/^B_NAME = bonushell$/;"	m
+Bonus	makefile	/^Bonus = bonus$/;"	m
+CC	libft/Makefile	/^CC	:= cc$/;"	m
+CFLAGS	libft/Makefile	/^CFLAGS	:= $/;"	m
+CFLAGS	libft/ft_printf/Makefile	/^CFLAGS			= -Wall -Wextra -Werror$/;"	m
+CFLAGS	makefile	/^CFLAGS		:= -Wall -Werror -Wextra$/;"	m
+COLORS_H	includes/colors.h	/^# define COLORS_H$/;"	d
+CYAN	includes/colors.h	/^# define CYAN /;"	d
+DUBGGER	makefile	/^DUBGGER		:= -fsanitize=address -g3$/;"	m
+ERROR	includes/types.h	/^	ERROR = -2,$/;"	e	enum:e_file_input
+EXEC_H	exec/exec.h	/^# define EXEC_H$/;"	d
+EXPORT_H	exec/implement_builtins/export/export.h	/^# define EXPORT_H$/;"	d
+FT_PRINTF_H	libft/ft_printf/src/ft_printf.h	/^# define FT_PRINTF_H$/;"	d
+GET_NEXT_LINE_H	libft/get_next_line/get_next_line.h	/^# define GET_NEXT_LINE_H$/;"	d
+GREEN	includes/colors.h	/^# define GREEN /;"	d
+LIBFT_H	libft/libft.h	/^# define LIBFT_H$/;"	d
+LIBFT_SRC_FILES	libft/ft_printf/Makefile	/^LIBFT_SRC_FILES		= libft\/ft_putchar_fd.c libft\/ft_putnbr_fd.c libft\/ft_putstr_fd.c libft\/ft_strlen.c $/;"	m
+MAGENTA	includes/colors.h	/^# define MAGENTA /;"	d
+MINISHELL_H	includes/minishell.h	/^# define MINISHELL_H$/;"	d
+M_SIG_INT	includes/types.h	/^	M_SIG_INT = 78$/;"	e	enum:e_exit_status
+NAME	libft/Makefile	/^NAME	:= libft.a$/;"	m
+NAME	libft/ft_printf/Makefile	/^NAME	= libftprintf.a$/;"	m
+NAME	makefile	/^NAME =  minishell$/;"	m
+NONE	includes/types.h	/^	NONE = -3,$/;"	e	enum:e_file_input
+NO_FILE	includes/types.h	/^	NO_FILE = -1,$/;"	e	enum:e_file_input
+OBJS_FILES	libft/Makefile	/^OBJS_FILES	:= $(SRCS_FILES:.c=.o)$/;"	m
+OBJ_DIR	makefile	/^OBJ_DIR := objects$/;"	m
+OBJ_FILES	libft/ft_printf/Makefile	/^OBJ_FILES		= $(LIBFT_SRC_FILES:.c=.o)$/;"	m
+PARSING_H	parsing/parsing.h	/^# define PARSING_H$/;"	d
+PRINTF_OBJ_FILES	libft/ft_printf/Makefile	/^PRINTF_OBJ_FILES		= $(SRC_PRINTF:.c=.o)$/;"	m
+PROGRESS	makefile	/^PROGRESS	:= 1$/;"	m
+PROGRESSBINARY	makefile	/^PROGRESSBINARY 	:= $(OBJ_DIR)\/progress$/;"	m
+RED	includes/colors.h	/^# define RED /;"	d
+RESET	includes/colors.h	/^# define RESET /;"	d
+RM	libft/Makefile	/^RM	:= rm -f$/;"	m
+RM	libft/ft_printf/Makefile	/^RM				= rm -f$/;"	m
+SRCS_FILES	libft/Makefile	/^SRCS_FILES := ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \\$/;"	m
+SRC_PRINTF	libft/ft_printf/Makefile	/^SRC_PRINTF			=$/;"	m
+SYNTAX_H	parsing/syntax/syntax.h	/^# define SYNTAX_H$/;"	d
+Shell_obj	makefile	/^Shell_obj		:= ${Shell_src:.c=.o}$/;"	m
+Shell_src	makefile	/^Shell_src = Shell\/main.c\\$/;"	m
+TOTAL	makefile	/^TOTAL		:= $(words $(newer_file))$/;"	m
+TYPES_H	includes/types.h	/^# define TYPES_H$/;"	d
+USER	makefile	/^USER := $(USER)$/;"	m
+UTILS_H	Utils/utils.h	/^# define UTILS_H$/;"	d
+WHITE	includes/colors.h	/^# define WHITE /;"	d
+YELLOW	includes/colors.h	/^# define YELLOW /;"	d
+add_arg_t_node	parsing/parsing_utils.c	/^void	add_arg_t_node(t_node *node, char *str)$/;"	f
+add_new_env	exec/implement_builtins/export/export_env.c	/^void	add_new_env(char **env, char **old_env, char **arguments)$/;"	f
+add_new_export	exec/implement_builtins/export/export.c	/^void	add_new_export(char **export, char **old_export, char **arguments)$/;"	f
+add_plus_string	exec/implement_builtins/export/export_equal.c	/^char	*add_plus_string(char **export, char *new_str)$/;"	f
+add_quotes	exec/implement_builtins/export/export_equal.c	/^char	*add_quotes(char *str, int is_env)$/;"	f
+append	Utils/Strings.c	/^char	**append(char **Strings, char *String)$/;"	f
+arguments	includes/types.h	/^	char	**arguments;$/;"	m	struct:node
+basic_prompt	Utils/promt.c	/^char	*basic_prompt(char *wd)$/;"	f
+builtins	exec/implement_builtins/builtins.c	/^void	builtins(t_node *node)$/;"	f
+calc_number_len	libft/ft_printf/src/ft_printf.c	/^static int	calc_number_len(int num)$/;"	f	file:
+calculat_number_lenght	libft/ft_itoa.c	/^static int	calculat_number_lenght(long int n)$/;"	f	file:
+cc	makefile	/^cc = cc$/;"	m
+cd	exec/implement_builtins/cd_pwd.c	/^void	cd(t_node *node)$/;"	f
+cd_command	exec/implement_builtins/cd_pwd.c	/^void	cd_command(t_node *node, char **env, char **export)$/;"	f
+cd_tilde	exec/implement_builtins/cd_pwd.c	/^char	**cd_tilde(t_node *node)$/;"	f
+change_env	exec/implement_builtins/export/underscore_env.c	/^char	*change_env(char **env)$/;"	f
+check_if_is_the_one	libft/ft_strnstr.c	/^static char	*check_if_is_the_one(const char *little, const char *big,$/;"	f	file:
+check_redirections_syntax	parsing/syntax/syntax.c	/^char	check_redirections_syntax(char *line)$/;"	f
+check_syntax	parsing/syntax/syntax.c	/^char	check_syntax(char *line, int *pos)$/;"	f
+checker	includes/types.h	/^	int		checker;$/;"	m	struct:node
+checker	includes/types.h	/^	int	checker;$/;"	m	struct:s_helper
+child_proccess	exec/pipes/piping.c	/^void	child_proccess(t_node *node, char **env)$/;"	f
+child_quit	parsing/Signals.c	/^void child_quit(int sig)$/;"	f
+clear_node	parsing/garbage.c	/^void	clear_node(void *conetent)$/;"	f
+clear_tree	parsing/garbage.c	/^void	clear_tree(t_tree *node)$/;"	f
+command	includes/types.h	/^	char	*command;$/;"	m	struct:node
+concate_str	parsing/copy_str.c	/^char	*concate_str(char *s, char *str, int flag, int *index)$/;"	f
+content	includes/types.h	/^	char			*content;$/;"	m	struct:s_tree
+content	libft/libft.h	/^	void			*content;$/;"	m	struct:s_list
+copy_string_t_args	parsing/copy_str.c	/^char	*copy_string_t_args(char *s, t_node *node, int *index, int mode)$/;"	f
+copy_variable_value	parsing/expand_functions.c	/^char	*copy_variable_value(char *dst, char *src, int *index)$/;"	f
+count	libft/ft_atoi.c	/^static int	count(const char *str, int sym)$/;"	f	file:
+count	tools/progress.c	/^static int	count(const char *str, int sym)$/;"	f	file:
+cpy	libft/get_next_line/get_next_line_utils.c	/^void	cpy(char *holder, char *cursor, char *n_holder)$/;"	f
+e_exit_status	includes/types.h	/^enum	e_exit_status$/;"	g
+e_file_input	includes/types.h	/^enum	e_file_input$/;"	g
+echo_command	exec/implement_builtins/echo.c	/^void	echo_command(t_node *node)$/;"	f
+env_command	exec/implement_builtins/env.c	/^void	env_command(t_node *node, char **env)$/;"	f
+exec	exec/exec.c	/^void	exec(t_list *list)$/;"	f
+exit_command	exec/implement_builtins/exit.c	/^void	exit_command(t_node *node)$/;"	f
+exit_if_null	parsing/parsing.c	/^int	exit_if_null(char *line)$/;"	f
+exit_msg	exec/exuc_utlis.c	/^void	exit_msg(char *msg, int i)$/;"	f
+export_command	exec/implement_builtins/export/main_export.c	/^void	export_command(t_node *node, char	**old_export, char	**old_env)$/;"	f
+f_isdigit	exec/exuc_utlis.c	/^int	f_isdigit(int c)$/;"	f
+files	makefile	/^files = $(shell git diff --name-only HEAD)$/;"	m
+find_file_name	parsing/syntax/syntax.c	/^int	find_file_name(char *ptr)$/;"	f
+free_list	libft/ft_lstmap.c	/^static void	free_list(t_list **lst, t_list *node, void (*del)(void *))$/;"	f	file:
+free_list	parsing/garbage.c	/^void	free_list(char **list)$/;"	f
+free_stuff	libft/ft_split.c	/^char	**free_stuff(char **k)$/;"	f
+ft_abs	libft/ft_itoa.c	/^static long int	ft_abs(long int v)$/;"	f	file:
+ft_atoi	libft/ft_atoi.c	/^int	ft_atoi(const char *str)$/;"	f
+ft_atoi	tools/progress.c	/^int	ft_atoi(const char *str)$/;"	f
+ft_bzero	libft/ft_bzero.c	/^void	ft_bzero(void *s, size_t n)$/;"	f
+ft_calc_num_base_size	libft/ft_printf/src/ft_calc_num_base_size.c	/^int	ft_calc_num_base_size(long int n, int base)$/;"	f
+ft_calloc	libft/ft_calloc.c	/^void	*ft_calloc(size_t nmemb, size_t size)$/;"	f
+ft_converter	libft/ft_itoa.c	/^static void	ft_converter(char *s, long int n, int index)$/;"	f	file:
+ft_converter_base_hex	libft/ft_printf/src/ft_converter_base_hex.c	/^void	ft_converter_base_hex(unsigned long int n, char format, int *size)$/;"	f
+ft_free	parsing/garbage.c	/^void	ft_free(void *ptr)$/;"	f
+ft_getenv	parsing/env.c	/^char	*ft_getenv(char *name)$/;"	f
+ft_is_alnum	exec/exuc_utlis.c	/^int	ft_is_alnum(int c)$/;"	f
+ft_isalnum	libft/ft_isalnum.c	/^int	ft_isalnum(int c)$/;"	f
+ft_isalpha	libft/ft_isalpha.c	/^int	ft_isalpha(int c)$/;"	f
+ft_isalpha_nbr	exec/implement_builtins/export/export_utils.c	/^int	ft_isalpha_nbr(char c)$/;"	f
+ft_isascii	libft/ft_isascii.c	/^int	ft_isascii(int c)$/;"	f
+ft_isdigit	libft/ft_isdigit.c	/^int	ft_isdigit(int c)$/;"	f
+ft_isdigit	tools/progress.c	/^int	ft_isdigit(int c)$/;"	f
+ft_isprint	libft/ft_isprint.c	/^int	ft_isprint(int c)$/;"	f
+ft_itoa	libft/ft_itoa.c	/^char	*ft_itoa(int n)$/;"	f
+ft_lstadd_back	libft/ft_lstadd_back.c	/^void	ft_lstadd_back(t_list **lst, t_list *new)$/;"	f
+ft_lstadd_front	libft/ft_lstadd_front.c	/^void	ft_lstadd_front(t_list **lst, t_list *new)$/;"	f
+ft_lstclear	libft/ft_lstclear.c	/^void	ft_lstclear(t_list **lst, void (*del)(void *))$/;"	f
+ft_lstdelone	libft/ft_lstdelone.c	/^void	ft_lstdelone(t_list *lst, void (*del)(void *))$/;"	f
+ft_lstiter	libft/ft_lstiter.c	/^void	ft_lstiter(t_list *lst, void (*f)(void *))$/;"	f
+ft_lstlast	libft/ft_lstlast.c	/^t_list	*ft_lstlast(t_list *lst)$/;"	f
+ft_lstmap	libft/ft_lstmap.c	/^t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))$/;"	f
+ft_lstnew	libft/ft_lstnew.c	/^t_list	*ft_lstnew(void *content)$/;"	f
+ft_lstsize	libft/ft_lstsize.c	/^int	ft_lstsize(t_list *lst)$/;"	f
+ft_memchr	libft/ft_memchr.c	/^void	*ft_memchr(const void *s, int c, size_t n)$/;"	f
+ft_memcmp	libft/ft_memcmp.c	/^int	ft_memcmp(const void *s1, const void *s2, size_t n)$/;"	f
+ft_memcpy	libft/ft_memcpy.c	/^void	*ft_memcpy(void *restrict dest, const void *restrict src, size_t n)$/;"	f
+ft_memmove	libft/ft_memmove.c	/^void	*ft_memmove(void *dest, const void *src, size_t n)$/;"	f
+ft_memset	libft/ft_memset.c	/^void	*ft_memset(void *s, int c, size_t n)$/;"	f
+ft_printf	libft/ft_printf/src/ft_printf.c	/^int	ft_printf(const char *str, ...)$/;"	f
+ft_put_unsigned	libft/ft_printf/src/ft_put_unsigned.c	/^void	ft_put_unsigned(unsigned int num, int *i)$/;"	f
+ft_putchar_fd	libft/ft_putchar_fd.c	/^void	ft_putchar_fd(char c, int fd)$/;"	f
+ft_putendl_fd	libft/ft_putendl_fd.c	/^void	ft_putendl_fd(char *s, int fd)$/;"	f
+ft_putnbr_fd	libft/ft_putnbr_fd.c	/^void	ft_putnbr_fd(int n, int fd)$/;"	f
+ft_putstr_fd	libft/ft_putstr_fd.c	/^void	ft_putstr_fd(char *s, int fd)$/;"	f
+ft_split	libft/ft_split.c	/^char	**ft_split(char const *s, char c)$/;"	f
+ft_str_append	parsing/copy_str.c	/^char	*ft_str_append(char *s, char c)$/;"	f
+ft_strchr	libft/ft_strchr.c	/^char	*ft_strchr(const char *s, int c)$/;"	f
+ft_strcmp	exec/exuc_utlis.c	/^int	ft_strcmp(char *s1, char *s2)$/;"	f
+ft_strdup	libft/ft_strdup.c	/^char	*ft_strdup(const char *s1)$/;"	f
+ft_striteri	libft/ft_striteri.c	/^void	ft_striteri(char *s, void (*f)(unsigned int, char *))$/;"	f
+ft_strjoin	libft/ft_strjoin.c	/^char	*ft_strjoin(char const *s1, char const *s2)$/;"	f
+ft_strlcat	libft/ft_strlcat.c	/^size_t	ft_strlcat(char *restrict dst, const char *restrict src, size_t size)$/;"	f
+ft_strlcpy	libft/ft_strlcpy.c	/^size_t	ft_strlcpy(char *dst, const char *src, size_t dst_size)$/;"	f
+ft_strlen	libft/ft_strlen.c	/^size_t	ft_strlen(const char *c)$/;"	f
+ft_strmapi	libft/ft_strmapi.c	/^char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))$/;"	f
+ft_strncmp	libft/ft_strncmp.c	/^int	ft_strncmp(const char *s1, const char *s2, size_t n)$/;"	f
+ft_strnstr	libft/ft_strnstr.c	/^char	*ft_strnstr(const char *big, const char *little, size_t len)$/;"	f
+ft_strrchr	libft/ft_strrchr.c	/^char	*ft_strrchr(const char *s, int c)$/;"	f
+ft_strtrim	libft/ft_strtrim.c	/^char	*ft_strtrim(char const *s1, char const *set)$/;"	f
+ft_substr	libft/ft_substr.c	/^char	*ft_substr(char const *s, unsigned int start, size_t len)$/;"	f
+ft_tolower	libft/ft_tolower.c	/^int	ft_tolower(int c)$/;"	f
+ft_toupper	libft/ft_toupper.c	/^int	ft_toupper(int c)$/;"	f
+ft_words_count	libft/ft_split.c	/^int	ft_words_count(const char *s, char c)$/;"	f
+g__helper	exec/pipes/get_path.c	/^t_helper	g__helper;$/;"	v
+g__helper	main/main.c	/^t_helper	g__helper;$/;"	v
+get_command_path	exec/pipes/get_path.c	/^char	*get_command_path(char *command, char **env)$/;"	f
+get_cur_line	libft/get_next_line/get_next_line.c	/^char	*get_cur_line(char *holder)$/;"	f
+get_end_index	libft/ft_strtrim.c	/^static int	get_end_index(char const *s1, char const *set)$/;"	f	file:
+get_env	parsing/env.c	/^char	**get_env(char **p)$/;"	f
+get_env_name	parsing/expand_functions.c	/^char	*get_env_name(char *s, int *len)$/;"	f
+get_exit_status	Utils/status.c	/^int	get_exit_status(void)$/;"	f
+get_export	exec/exec.c	/^char	**get_export(char **p)$/;"	f
+get_full_line	Utils/full_line.c	/^char	*get_full_line(char *line)$/;"	f
+get_input_value	parsing/parsing_utils.c	/^char	*get_input_value(char *s, t_node *node, int *index, int mode)$/;"	f
+get_n_holder	libft/get_next_line/get_next_line.c	/^char	*get_n_holder(char *holder)$/;"	f
+get_name_index	exec/implement_builtins/export/export_env.c	/^int	get_name_index(char *s1)$/;"	f
+get_new_arguments	exec/implement_builtins/export/export_equal.c	/^char	**get_new_arguments(char **arguments)$/;"	f
+get_new_env	exec/implement_builtins/export/export_env.c	/^char	**get_new_env(char **old_env, char **arguments)$/;"	f
+get_new_export	exec/implement_builtins/export/export.c	/^char	**get_new_export(char **old_export, char **str)$/;"	f
+get_next_line	libft/get_next_line/get_next_line.c	/^char	*get_next_line(int fd)$/;"	f
+get_nub_len	exec/implement_builtins/exit.c	/^int	get_nub_len(char *str)$/;"	f
+get_path	parsing/paths.c	/^char	*get_path(void)$/;"	f
+get_paths	exec/pipes/get_path.c	/^char	*get_paths(char **env, char *command)$/;"	f
+get_prompt_text	Utils/promt.c	/^char	*get_prompt_text(void)$/;"	f
+get_relative_path	Utils/promt.c	/^char	*get_relative_path(char *HOME, char *w_directory)$/;"	f
+get_start	exec/implement_builtins/export/export_utils.c	/^int	get_start(char *argument)$/;"	f
+get_start_index	libft/ft_strtrim.c	/^static int	get_start_index(char const *s1, char const *set)$/;"	f	file:
+get_underscore	exec/implement_builtins/export/underscore_env.c	/^char	*get_underscore(char **export, char **arguments)$/;"	f
+get_world_len	libft/ft_split.c	/^int	get_world_len(char const *sm, char c)$/;"	f
+gt_strchr	libft/get_next_line/get_next_line_utils.c	/^char	*gt_strchr(const char *s, int c)$/;"	f
+gt_strjoin	libft/get_next_line/get_next_line_utils.c	/^char	*gt_strjoin(char *holder, char *cursor)$/;"	f
+gt_strlen	libft/get_next_line/get_next_line_utils.c	/^size_t	gt_strlen(const char *c)$/;"	f
+handle_here_doc	parsing/here_doc.c	/^void	handle_here_doc(int fd, char *limiter, int flag)$/;"	f
+handle_sigint	parsing/Signals.c	/^void	handle_sigint(int sig)$/;"	f
+handle_sigint_n_chld	parsing/Signals.c	/^void	handle_sigint_n_chld(int sig)$/;"	f
+handle_sigquit	parsing/Signals.c	/^void	handle_sigquit(int sig)$/;"	f
+handle_syntax	parsing/syntax/helper.c	/^int	handle_syntax(char *line)$/;"	f
+her_doc_proccess	parsing/here_doc.c	/^void	her_doc_proccess(int fd, char *limiter, int flag)$/;"	f
+here_doc	parsing/here_doc.c	/^int	here_doc(int flag, char *limiter)$/;"	f
+here_doc_signal	parsing/Signals.c	/^void	here_doc_signal(int sig)$/;"	f
+incldlib	makefile	/^incldlib	:= -I\/Users\/${USER}\/homebrew\/opt\/readline\/include$/;"	m
+input_file	includes/types.h	/^	int		input_file;$/;"	m	struct:node
+interrupted	Utils/her_doc_interrupte.c	/^int	interrupted(int value)$/;"	f
+is_add_plus_str	exec/implement_builtins/export/export.c	/^int	is_add_plus_str(char *argument)$/;"	f
+is_between_qute	parsing/files.c	/^int	is_between_qute(char *line)$/;"	f
+is_builtin	parsing/paths.c	/^int	is_builtin(char *s)$/;"	f
+is_complete	parsing/syntax/helper.c	/^int	is_complete(char *line)$/;"	f
+is_equal	Utils/equals.c	/^int	is_equal(char *s, char *s2)$/;"	f
+is_equal_plus	exec/implement_builtins/export/export_utils.c	/^int	is_equal_plus(char *argument)$/;"	f
+is_equal_plus_str	exec/implement_builtins/export/export_env.c	/^int	is_equal_plus_str(char *arg)$/;"	f
+is_forbidden_char	exec/implement_builtins/export/export_utils.c	/^int	is_forbidden_char(char *argument)$/;"	f
+is_forbidden_unset	exec/implement_builtins/unset.c	/^int	is_forbidden_unset(char *str)$/;"	f
+is_high_shlvl	exec/implement_builtins/env.c	/^int	is_high_shlvl(char **env)$/;"	f
+is_interrupted	Utils/her_doc_interrupte.c	/^int	is_interrupted(void)$/;"	f
+is_max_min	exec/implement_builtins/exit.c	/^void	is_max_min(char *str)$/;"	f
+is_n_escaped	parsing/strings_functions.c	/^int	is_n_escaped(char *s, char c, int i)$/;"	f
+is_newline	exec/implement_builtins/echo.c	/^int	is_newline(char *str)$/;"	f
+is_nl	parsing/syntax/helper.c	/^int	is_nl(char *line, int i)$/;"	f
+is_qute	parsing/parsing_utils.c	/^int	is_qute(char *s, int i)$/;"	f
+is_token_sep	parsing/strings_functions.c	/^int	is_token_sep(char *c, int i)$/;"	f
+is_underscore	exec/implement_builtins/export/underscore_env.c	/^int	is_underscore(char **export)$/;"	f
+is_value	exec/implement_builtins/export/export_utils.c	/^int	is_value(char *argument)$/;"	f
+join_values	exec/implement_builtins/export/main_export.c	/^char	*join_values(char *s1, char *s2)$/;"	f
+left	includes/types.h	/^	struct s_tree	*left;$/;"	m	struct:s_tree	typeref:struct:s_tree::s_tree
+length	includes/types.h	/^	int	length;$/;"	m	struct:proccess
+libft	makefile	/^libft		:= libft\/libft.a$/;"	m
+libreadline	makefile	/^libreadline	:= -lreadline -L\/Users\/${USER}\/homebrew\/opt\/readline\/lib$/;"	m
+list_append	Utils/int_utils.c	/^int	list_append(int **list, int new_pid, int size)$/;"	f
+m_safe_strjoin	Utils/Strings.c	/^char	*m_safe_strjoin(char *s1, char *s2, int free_mode)$/;"	f
+main	main/main.c	/^int	main(int ac, char **av, char **env)$/;"	f
+main	makefile	/^main = main\/main.c $/;"	m
+main	tools/progress.c	/^int	main(int ac, char **av)$/;"	f
+main_obj	makefile	/^main_obj		:= $(patsubst %.c,$(OBJ_DIR)\/%.o,$(main))$/;"	m
+manage_here_doc	parsing/syntax/syntax.c	/^void	manage_here_doc(char *line, int pos)$/;"	f
+mini_strjoin	parsing/strings_functions.c	/^char	*mini_strjoin(char const *s1, char const *s2)$/;"	f
+multiple_pipes	exec/pipes/piping.c	/^void	multiple_pipes(t_node *node, t_list *list, int num_commands)$/;"	f
+necessary_values	exec/exec.c	/^char	**necessary_values(char **env)$/;"	f
+new_t_node	parsing/t_node.c	/^t_node	*new_t_node(void)$/;"	f
+newer_file	makefile	/^newer_file	:= $(SRCS_FILES) $/;"	m
+next	libft/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
+node	includes/types.h	/^	struct node		*node;$/;"	m	struct:s_tree	typeref:struct:s_tree::node
+node	includes/types.h	/^typedef struct node$/;"	s
+numeric_required	exec/implement_builtins/exit.c	/^void	numeric_required(t_node *node, int len)$/;"	f
+obj	makefile	/^obj				:= $(patsubst %.c,$(OBJ_DIR)\/%.o,$(src))$/;"	m
+on_error	libft/get_next_line/get_next_line.c	/^void	on_error(char *cursor, char *holder)$/;"	f
+on_error_clear	parsing/copy_str.c	/^char	*on_error_clear(char **new_str_spltd, char *env_value, char *new_str,$/;"	f
+op	includes/types.h	/^	int				op;$/;"	m	struct:s_tree
+open_file	parsing/files.c	/^int	open_file(char *file_name, int open_flag, int input)$/;"	f
+open_input_file	parsing/files.c	/^int	open_input_file(char *line, int *i, int output)$/;"	f
+open_output_file	parsing/files.c	/^int	open_output_file(char *line, int *i, int input)$/;"	f
+open_tmp_file	parsing/here_doc.c	/^char	*open_tmp_file(int *fd)$/;"	f
+output_file	includes/types.h	/^	int		output_file;$/;"	m	struct:node
+parent_proccess	exec/pipes/piping.c	/^void	parent_proccess(int num_commands, int pipes[2], int in)$/;"	f
+parse	parsing/parsing.c	/^void	parse(char *line, t_list **list)$/;"	f
+parse_input	parsing/here_doc.c	/^char	*parse_input(char *line, int qute_flag)$/;"	f
+path	exec/pipes/get_path.c	/^void	path(char *paths, char **full_path, char *command)$/;"	f
+print_and_calc_num	libft/ft_printf/src/ft_printf.c	/^int	print_and_calc_num(int num)$/;"	f
+print_and_calc_str	libft/ft_printf/src/ft_printf.c	/^int	print_and_calc_str(char *str)$/;"	f
+print_by_format	libft/ft_printf/src/ft_printf.c	/^int	print_by_format(va_list ap, char c)$/;"	f
+print_export	exec/implement_builtins/export/main_export.c	/^void	print_export(char **export, char **new_args)$/;"	f
+print_hex	libft/ft_printf/src/print_hex.c	/^int	print_hex(unsigned int n, char formate)$/;"	f
+print_name	parsing/start.c	/^void	print_name(void)$/;"	f
+print_number	libft/ft_putnbr_fd.c	/^static void	print_number(int fd, unsigned long int num)$/;"	f	file:
+print_ptr_adress	libft/ft_printf/src/print_ptr_adress.c	/^int	print_ptr_adress(size_t n)$/;"	f
+print_table	parsing/print.c	/^void	print_table(t_node *node)$/;"	f
+printf_arg	parsing/print.c	/^void	printf_arg(char **str)$/;"	f
+printf_list	parsing/print.c	/^void	printf_list(t_list *list)$/;"	f
+proccess	includes/types.h	/^	int	*proccess;$/;"	m	struct:proccess
+proccess	includes/types.h	/^typedef struct proccess$/;"	s
+pwd_command	exec/implement_builtins/cd_pwd.c	/^void	pwd_command(void)$/;"	f
+random_string	Utils/random.c	/^char	*random_string(int len)$/;"	f
+remove_duplicate	exec/implement_builtins/export/reset_export.c	/^char	**remove_duplicate(char **export)$/;"	f
+remove_env	exec/implement_builtins/export/main_export.c	/^void	remove_env(char **env)$/;"	f
+remove_ptr	exec/exec.c	/^void	remove_ptr(char **env, char *ptr)$/;"	f
+replace_b_slash	Utils/full_line.c	/^void	replace_b_slash(char *ptr)$/;"	f
+reset	exec/implement_builtins/export/reset_export.c	/^char	**reset(char **env, char **argument)$/;"	f
+reset_forbidden_env	exec/implement_builtins/export/reset_export.c	/^char	**reset_forbidden_env(char **name)$/;"	f
+right	includes/types.h	/^	struct s_tree	*right;$/;"	m	struct:s_tree	typeref:struct:s_tree::s_tree
+run_commands	parsing/parsing.c	/^void	run_commands(t_list *list)$/;"	f
+s_helper	includes/types.h	/^typedef struct s_helper$/;"	s
+s_list	libft/libft.h	/^typedef struct s_list$/;"	s
+s_tree	includes/types.h	/^typedef struct s_tree$/;"	s
+set_exit_status	Utils/status.c	/^void	set_exit_status(int status_val)$/;"	f
+set_interrupted	Utils/her_doc_interrupte.c	/^void	set_interrupted(int value)$/;"	f
+shell_level	exec/exec.c	/^char	*shell_level(char **env)$/;"	f
+size	Utils/Strings.c	/^size_t	size(char **ptr)$/;"	f
+sorted_list	exec/implement_builtins/export/main_export.c	/^void	sorted_list(char **export, int len)$/;"	f
+spaces_count	parsing/parsing_utils.c	/^int	spaces_count(char *s)$/;"	f
+splite_env_val	parsing/parsing.c	/^char	*splite_env_val(char *line, char *new_str, t_node *node, int *index)$/;"	f
+src	makefile	/^src = parsing\/parsing.c\\$/;"	m
+status	Utils/status.c	/^int	status(int a)$/;"	f
+string_exists	exec/implement_builtins/export/reset_export.c	/^int	string_exists(char **export, int n, char *argument, int len)$/;"	f
+string_list_len	parsing/strings_functions.c	/^size_t	string_list_len(char **list)$/;"	f
+syntax_here_doc	parsing/syntax/syntax.c	/^int	syntax_here_doc(int flag, char *limiter)$/;"	f
+t_helper	includes/types.h	/^}	t_helper;$/;"	t	typeref:struct:s_helper
+t_list	libft/libft.h	/^}					t_list;$/;"	t	typeref:struct:s_list
+t_node	includes/types.h	/^}			t_node;$/;"	t	typeref:struct:node
+t_proccess	includes/types.h	/^}	t_proccess;$/;"	t	typeref:struct:proccess
+t_tree	includes/types.h	/^}					t_tree;$/;"	t	typeref:struct:s_tree
+the_added_string	exec/implement_builtins/export/export_equal.c	/^char	*the_added_string(char	*n_exp, char **exp, char *n_str, int start)$/;"	f
+toggle_flag	parsing/expand_functions.c	/^int	toggle_flag(char c, int *qute_flag, int *index)$/;"	f
+toggle_quteflag	parsing/expand_functions.c	/^void	toggle_quteflag(char c, int *qute_flag)$/;"	f
+tty	parsing/parsing.c	/^void	tty(void)$/;"	f
+type	parsing/syntax/helper.c	/^int	type(int flag, int *pos)$/;"	f
+underscore_export	exec/implement_builtins/export/underscore_env.c	/^void	underscore_export(char **export)$/;"	f
+underscore_value	exec/implement_builtins/builtins.c	/^char	**underscore_value(char **env, t_node *node)$/;"	f
+unset_arguments	exec/implement_builtins/unset.c	/^void	unset_arguments(char **str, char **env, int i)$/;"	f
+unset_command	exec/implement_builtins/unset.c	/^void	unset_command(t_node *node, char **env)$/;"	f
+unset_env	exec/implement_builtins/unset.c	/^char	**unset_env(char **str, char **env)$/;"	f
+unset_valid	exec/implement_builtins/unset.c	/^void	unset_valid(char **str, char **env)$/;"	f
+update	exec/implement_builtins/env.c	/^void	update(char **env)$/;"	f
+update_env	exec/implement_builtins/env.c	/^char	**update_env(char **env)$/;"	f
+update_pipe	parsing/syntax/helper.c	/^void	update_pipe(int *flag, char *line, int qute_flag, int i)$/;"	f
