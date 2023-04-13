@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:44:21 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/11 11:41:04 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 10:16:21 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	is_n_escaped(char *s, char c, int i)
 	int	b_s_count;
 
 	b_s_count = 0;
-	if (s && s[i] != c)
+	if (s && s[i] && s[i] != c)
 		return (0);
 	--i;
 	while (i >= 0 && s && s[i--] == '\\')

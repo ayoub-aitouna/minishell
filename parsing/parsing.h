@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:28:00 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/10 01:41:49 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 13:39:20 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	printf_list(t_list *list);
 char	*get_env_name(char *s, int *index);
 char	*update_command(char *command);
 int		handle_syntax(char *line);
-int		is_builtin(char *s);
+int		is_child_builtins(char *s, char *arg);
+int		is_builtin(char *s, char *arg);
 int		open_input_file(char *line, int *i, int input);
 int		open_output_file(char *line, int *i, int output);
 void	toggle_quteflag(char c, int *qute_flag);

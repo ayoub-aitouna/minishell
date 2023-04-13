@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:45:41 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 11:26:58 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 15:58:24 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,29 @@ void	cd(t_node *node)
 {			
 	char		**dir;
 	struct stat	sb;
-	int			i;
+	char		*pwd;
 
-	i = 5;
+	pwd = getcwd(NULL, 0);
 	if (node->arguments[1][0] == '~')
 	{
 		dir = cd_tilde(node);
 		while (*dir)
 		{
 			if (stat(*dir, &sb) == 0 && S_ISDIR(sb.st_mode))
-				i = chdir(*dir);
+				chdir(*dir);
 			dir++;
 		}
 	}
 	else if (stat(node->arguments[1], &sb) == 0 && S_ISDIR(sb.st_mode))
-		i = chdir(node->arguments[1]);
+		chdir(node->arguments[1]);
 	else if (S_ISREG(sb.st_mode))
 		printf("cd: %s: Not a directory\n", node->arguments[1]);
 	else
 		printf("cd: no such file or directory: %s\n", node->arguments[1]);
-	if (!getcwd(NULL, 0))
+	if (!pwd)
 		perror("chdir: error retrieving current directory:"
 			"getcwd: cannot access parent directories: ");
+	free (pwd);
 }
 
 void	cd_command(t_node *node, char **env, char **export)
@@ -76,6 +77,5 @@ void	cd_command(t_node *node, char **env, char **export)
 		chdir(getenv("HOME"));
 	else
 		cd(node);
-	update(env);
-	update(export);
+	update(get_export(NULL));
 }

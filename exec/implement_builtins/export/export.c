@@ -6,11 +6,35 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:31:49 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 11:23:48 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 15:02:36 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "export.h"
+
+void	sorted_list(char **export, int len)
+{
+	char	*temp;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < len - 1)
+	{
+		j = 0;
+		while (j < len - i - 1)
+		{
+			if (strcmp(export[j], export[j + 1]) > 0)
+			{
+				temp = export[j];
+				export[j] = export[j + 1];
+				export[j + 1] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
 
 int	is_add_plus_str(char *argument)
 {
@@ -54,12 +78,7 @@ char	**get_new_export(char **old_export, char **str)
 	char	**export;
 
 	export = NULL;
-	if (old_export != NULL && !str[1])
-	{
-		export = get_export(NULL);
-		sorted_list(export, size(old_export));
-	}
-	else if (old_export)
+	if (old_export)
 	{
 		export = malloc((size(old_export) + size(str)) * sizeof(char *));
 		if (!export)

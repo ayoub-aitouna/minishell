@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 06:11:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 11:54:06 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 13:41:00 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ char	*change_env(char **env);
 char	**the_new_env(char **env, t_node *node);
 int		ft_is_alnum(int c);
 int		is_high_shlvl(char **env);
-char	**necessary_values(char **env);
+char	**necessary_values(char **env, int is_env);
 char	**underscore_value(char **env, t_node *node);
 char	**check_arguments(char **arguments);
 int		is_add_plus_str(char *argument);
+void	child_builtins(t_node *node);
 
 #endif

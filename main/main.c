@@ -10,23 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/minishell.h"
-
-t_helper	g__helper;
 
 int	main(int ac, char **av, char **env)
 {
+	char	**export;
+	char	**new_env;
+
 	(void)ac;
 	(void)av;
 	g__helper.checker = -1;
+	g__helper.sh_lvl = is_high_shlvl(env) + 1;
 	print_name();
 	if (!size(env))
 		g__helper.checker = 0;
-	env = necessary_values(env);
-	get_export(env);
-	get_env(env);
+	export = necessary_values(env, 0);
+	new_env = necessary_values(env, 1);
+	get_env(new_env);
+	get_export(export);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	tty();
 }
+

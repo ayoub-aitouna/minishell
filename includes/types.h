@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:43:34 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/10 00:52:48 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 06:54:26 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct node
 typedef struct s_helper
 {
 	int	checker;
+	int	sh_lvl;
 }	t_helper;
 
 extern t_helper	g__helper;

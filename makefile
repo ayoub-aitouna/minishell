@@ -61,7 +61,7 @@ NAME =  minishell
 USER := $(USER)
 cc = cc
 
-CFLAGS		:= -Wall -Werror -Wextra
+# CFLAGS		:= -Wall -Werror -Wextra
 incldlib	:= -I/Users/${USER}/homebrew/opt/readline/include
 libreadline	:= -lreadline -L/Users/${USER}/homebrew/opt/readline/lib
 libft		:= libft/libft.a

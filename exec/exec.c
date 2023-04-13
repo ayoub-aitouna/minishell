@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:28 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 13:43:46 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 16:53:33 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,49 +23,43 @@ void	remove_ptr(char **env, char *ptr)
 	}
 }
 
-char	*shell_level(char **env)
+void	remove_env(char **env)
 {
-	char		*lvl_sh;
-	int			shell_lvl;
+	char	**va_unset;
 
-	shell_lvl = is_high_shlvl(env);
-	shell_lvl++;
-	lvl_sh = NULL;
-	remove_ptr(env, "SHLVL");
-	if (shell_lvl >= 1000)
-		shell_lvl = 1;
-	lvl_sh = ft_strjoin("SHLVL=", ft_itoa(shell_lvl));
-	return (lvl_sh);
+	va_unset = env + 1;
+	while (va_unset && *va_unset)
+	{
+		*(va_unset - 1) = *va_unset;
+		va_unset++;
+	}
+	printf("%p\n", (va_unset - 1));
+	*(va_unset - 1) = NULL;
+	free(*(va_unset));
 }
 
-char	**necessary_values(char **env)
+char	**necessary_values(char **env, int is_env)
 {
 	char		**export;
-	char		*pwd;
 	char		*n_pwd;
-	char		*shell;
 	int			i;
 
-	i = 0;
-	shell = shell_level(env);
 	n_pwd = getcwd(NULL, 0);
-	pwd = ft_strjoin("PWD=", n_pwd);
-	underscore_export(env);
-	export = malloc(((size(env) + 4) * sizeof(char *)));
+	remove_ptr(env, "OLDPWD");
+	remove_ptr(env, "_=");
+	remove_ptr(env, "PWD");
+	remove_ptr(env, "SHLVL");
+	export = malloc(((size(env) + 3) * sizeof(char *)));
 	if (!export)
 		exit(1);
-	while (env[i])
-	{
+	i = -1;
+	while (env[++i])
 		export[i] = ft_strdup(env[i]);
-		i++;
-	}
-	export[i++] = ft_strdup(shell);
-	export[i++] = ft_strdup(pwd);
-	export[i++] = ft_strdup("_=");
+	export[i++] = shell_level(env);
+	export[i++] = m_safe_strjoin("PWD=", n_pwd, 2);
+	if (is_env == 0)
+		export[i++] = "OLDPWD";
 	export[i] = NULL;
-	free (n_pwd);
-	free (pwd);
-	free (shell);
 	return (export);
 }
 
@@ -77,7 +71,7 @@ char	**get_export(char **p)
 	i = 0;
 	if (p != NULL)
 	{
-		export = malloc((size(p) + 3) * sizeof(char *));
+		export = malloc((size(p) + 1) * sizeof(char *));
 		if (!export)
 			exit(1);
 		while (p && p[i])
@@ -85,7 +79,6 @@ char	**get_export(char **p)
 			export[i] = ft_strdup(p[i]);
 			i++;
 		}
-		export[i++] = ft_strdup("OLDPWD");
 		export[i] = NULL;
 	}
 	return (export);

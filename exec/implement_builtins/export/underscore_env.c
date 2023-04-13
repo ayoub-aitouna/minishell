@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 08:39:40 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 11:55:44 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 15:19:06 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_underscore(char **export, char **arguments)
 	len = size(arguments);
 	path = get_paths(export, arguments[len - 1]);
 	new_under = NULL;
-	underscore_export(export);
+	remove_ptr(export, "_=");
 	if (path)
 		new_under = ft_strjoin("_=", path);
 	else
@@ -48,6 +48,7 @@ char	*change_env(char **env)
 
 	old_pwd = NULL;
 	is_exist = -1;
+	remove_ptr(env, "OLDPWD");
 	while (env && *env)
 	{
 		if (!ft_strncmp(*env, "PWD", 3))
@@ -55,14 +56,11 @@ char	*change_env(char **env)
 			pwd = *env;
 			is_exist = 0;
 		}
-		if (!ft_strncmp(*env, "OLDPWD", 6))
-			remove_env(env);
-		else
-			env++;
+		env++;
 	}
 	if (!is_exist)
 		old_pwd = ft_strjoin("OLD", pwd);
-	else
+	else if (is_exist == -1)
 		old_pwd = ft_strdup("OLDPWD=");
 	return (old_pwd);
 }

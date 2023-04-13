@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_node.c                                           :+:      :+:    :+:   */
+/*                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -23,6 +23,5 @@ t_node	*new_t_node(void)
 	new_node->command = NULL;
 	new_node->arguments = NULL;
 	new_node->output_file = NONE;
-
 	return (new_node);
 }

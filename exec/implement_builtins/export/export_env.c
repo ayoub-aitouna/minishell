@@ -6,11 +6,24 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:38:44 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 11:24:25 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 16:23:54 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "export.h"
+
+char	*shell_level(char **env)
+{
+	char		*lvl_sh;
+	char		*str;
+
+	str = ft_itoa(g__helper.sh_lvl);
+	lvl_sh = NULL;
+	if (g__helper.sh_lvl >= 1000)
+		g__helper.sh_lvl = 1;
+	lvl_sh = m_safe_strjoin("SHLVL=", str, 2);
+	return (lvl_sh);
+}
 
 int	is_equal_plus_str(char *arg)
 {

@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:21:33 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/11 14:36:34 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 13:49:30 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	here_doc_signal(int sig)
 	exit(M_SIG_INT);
 }
 
-void child_quit(int sig)
+void	child_quit(int sig)
 {
 	write(1, "Quit: ", 6);
 	ft_putnbr_fd(sig, 1);

@@ -6,48 +6,58 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 02:13:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 11:51:44 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 15:51:14 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "export.h"
 
-void	remove_env(char **env)
+int	add_or_replace(char **arguments, char **new_arg, int j , int i)
 {
-	char	**va_unset;
+	int	been_added;
 
-	va_unset = env + 1;
-	while (va_unset && *va_unset)
+	been_added = 0;
+	while (new_arg && new_arg[j])
 	{
-		*(va_unset - 1) = *va_unset;
-		va_unset++;
+		if (is_equal_plus_str(arguments[i]) == 2)
+		{	
+			if (!ft_strncmp(arguments[i], new_arg[j],
+					get_name_index(arguments[i])))
+			{
+				new_arg[j] = join_values(new_arg[j], arguments[i]);
+				been_added = 1;
+			}
+		}
+		else if (!ft_strncmp(arguments[i], new_arg[j],
+				get_name_index(arguments[i]))
+			&& is_equal_plus_str(arguments[i]) == 1)
+		{
+			new_arg[j] = ft_strdup(arguments[i]);
+			been_added = 1;
+		}
+		j++;
 	}
-	*(va_unset - 1) = NULL;
-	free(*(va_unset));
+	return (been_added);
 }
 
-void	sorted_list(char **export, int len)
+char	**get_new_arguments(char **arguments)
 {
-	char	*temp;
+	char	**new_arg;
 	int		i;
 	int		j;
+	int		been_added;
 
+	new_arg = NULL;
 	i = 0;
-	while (i < len - 1)
+	while (arguments && arguments[i])
 	{
 		j = 0;
-		while (j < len - i - 1)
-		{
-			if (strcmp(export[j], export[j + 1]) > 0)
-			{
-				temp = export[j];
-				export[j] = export[j + 1];
-				export[j + 1] = temp;
-			}
-			j++;
-		}
+		been_added = add_or_replace(arguments, new_arg, j, i);
+		if (!been_added)
+			new_arg = append(new_arg, ft_strdup(arguments[i]));
 		i++;
 	}
+	return (new_arg);
 }
 
 char	*join_values(char *s1, char *s2)
@@ -91,21 +101,18 @@ void	export_command(t_node *node, char	**old_export, char	**old_env)
 	char	**export;
 	char	**env;
 	char	**new_args;
+	(void)old_env;
 
 	export = NULL;
 	env = NULL;
 	new_args = get_new_arguments(node->arguments);
-	printf_arg(new_args);
-	if (new_args)
-	{
-		env = reset(old_env, new_args);
-		export = reset(old_export, new_args);
-	}
-	underscore_export(export);
-	export = get_new_export(export, new_args);
+	printf("export \n");
+	export = get_new_export(old_export, new_args);
 	sorted_list(export, size(export));
-	print_export(export, new_args);
 	env = get_new_env(env, new_args);
+	free_list(get_export(NULL));
 	get_export(export);
 	get_env(env);
+	free_list(new_args);
+	free_list(export);
 }

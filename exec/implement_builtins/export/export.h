@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 00:20:37 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 11:23:30 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/12 08:58:34 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int		is_equal_plus_str(char *arg);
 char	**get_new_arguments(char **arguments);
 int		get_name_index(char *s1);
 char	*join_values(char *s1, char *s2);
+char	*shell_level(char **env);
 int		is_underscore(char **export);
 #endif

@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:49:05 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/11 14:50:14 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 14:32:33 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,44 @@ void	child_proccess(t_node *node, char **env)
 {
 	char	*path;
 
-	if (node->arguments[0] == 0)
-		exit_msg("command not found \n", 127);
-	path = get_paths(env, node->arguments[0]);
-	if (path == NULL && !is_builtin(node->command))
-	{
-		printf("%s :", node->arguments[0]);
-		exit_msg("command not found \n", 127);
-	}
 	if (node->output_file != NONE && node->output_file != NO_FILE)
-		dup2(node->output_file, 1);
-	if (node->input_file != NONE && node->input_file != NO_FILE)
-		dup2(node->input_file, 0);
-	if (is_builtin(node->command))
 	{
-		builtins(node);
-		exit(0);
+		if (dup2(node->output_file, 1) < 0)
+			exit_msg("DUP", 1);
 	}
-	execve(path, node->arguments, env);
-	perror("execve");
-	exit(1);
+	if (node->input_file != NONE && node->input_file != NO_FILE)
+	{
+		if (dup2(node->input_file, 0) < 0)
+			exit_msg("DUP", 1);
+	}
+	path = get_paths(env, node->arguments[0]);
+	if (is_child_builtins(node->command, node->arguments[1]))
+	{
+		child_builtins(node);
+		exit (0);
+	}
+	else
+	{
+		if (path == NULL)
+		{
+			ft_putstr_fd(node->arguments[0], 2);
+			write(2, " :command not found \n", 22);
+			exit (127);
+		}
+		else
+		{
+			execve(path, node->arguments, env);
+			perror("execve");
+		}
+		exit(1);
+	}
 }
 
 void	parent_proccess(int num_commands, int pipes[2], int in)
 {
-	int	status = 0;
+	int	status;
 
+	status = 0;
 	while (num_commands--)
 		wait(&status);
 	close(pipes[0]);
@@ -65,20 +77,26 @@ void	multiple_pipes(t_node *node, t_list *list, int num_commands)
 	{
 		node = (t_node *) list->content;
 		pipe(pipes);
-		if (fork() == 0)
-		{
-			signal(SIGQUIT, SIG_DFL);
-			signal(SIGINT, SIG_DFL);
-			close(pipes[0]);
-			dup2(in, 0);
-			if (i < num_commands - 1)
-				dup2(pipes[1], 1);
-			child_proccess(node, get_env(NULL));
-		}
+		if (is_builtin(node->command, node->arguments[1]))
+			builtins(node);
 		else
 		{
-			signal(SIGINT, handle_sigint_n_chld);
-			signal(SIGQUIT, child_quit);
+			
+			if (fork() == 0)
+			{
+				signal(SIGQUIT, SIG_DFL);
+				signal(SIGINT, SIG_DFL);
+				close(pipes[0]);
+				dup2(in, 0);
+				if (i < num_commands - 1)
+					dup2(pipes[1], 1);
+				child_proccess(node, get_env(NULL));
+			}
+			else
+			{
+				signal(SIGINT, handle_sigint_n_chld);
+				signal(SIGQUIT, child_quit);
+			}
 		}
 		close(pipes[1]);
 		in = pipes[0];
