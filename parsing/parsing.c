@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/13 16:58:28 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 17:29:57 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	tty(void)
 		if (!is_interrupted())
 		{
 			exec(list);
-			// system("leaks minishell");
+			system("leaks minishell");
 		}
 		else
 			write(1, "\n", 1);

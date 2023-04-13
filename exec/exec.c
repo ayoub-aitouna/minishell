@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:28 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 16:53:33 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 17:32:06 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	remove_env(char **env)
 		va_unset++;
 	}
 	printf("%p\n", (va_unset - 1));
+	*(va_unset - 2) = NULL;
 	*(va_unset - 1) = NULL;
-	free(*(va_unset));
 }
 
 char	**necessary_values(char **env, int is_env)
