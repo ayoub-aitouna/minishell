@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:43:41 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 16:15:31 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 18:10:30 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	**update_env(char **env)
 		free(old_pwd);
 	}
 	free(n_pwd);
-	// free(pwd);
 	return (new_env);
 }
 
