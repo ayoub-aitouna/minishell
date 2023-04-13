@@ -65,4 +65,5 @@ void	child_builtins(t_node *node)
 		env_command(node, env);
 	if (!ft_strcmp(node->command, "pwd"))
 		pwd_command();
+	free_list(new_args);
 }

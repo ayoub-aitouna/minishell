@@ -65,5 +65,6 @@ char	*get_paths(char **env, char *command)
 
 	list = ft_split(command, ' ');
 	program_path = get_command_path(list[0], env);
+	free_list(list);
 	return (program_path);
 }

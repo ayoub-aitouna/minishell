@@ -3,41 +3,41 @@
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
-!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 AR	libft/Makefile	/^AR	:= ar crs$/;"	m
 AR	libft/ft_printf/Makefile	/^AR				= ar rcs$/;"	m
-BLACK	includes/colors.h	/^# define BLACK /;"	d
-BLUE	includes/colors.h	/^# define BLUE /;"	d
-BOLDBLACK	includes/colors.h	/^# define BOLDBLACK /;"	d
-BOLDBLUE	includes/colors.h	/^# define BOLDBLUE /;"	d
-BOLDCYAN	includes/colors.h	/^# define BOLDCYAN /;"	d
-BOLDGREEN	includes/colors.h	/^# define BOLDGREEN /;"	d
-BOLDMAGENTA	includes/colors.h	/^# define BOLDMAGENTA /;"	d
-BOLDRED	includes/colors.h	/^# define BOLDRED /;"	d
-BOLDWHITE	includes/colors.h	/^# define BOLDWHITE /;"	d
-BOLDYELLOW	includes/colors.h	/^# define BOLDYELLOW /;"	d
+BLACK	includes/colors.h	16;"	d
+BLUE	includes/colors.h	20;"	d
+BOLDBLACK	includes/colors.h	24;"	d
+BOLDBLUE	includes/colors.h	28;"	d
+BOLDCYAN	includes/colors.h	30;"	d
+BOLDGREEN	includes/colors.h	26;"	d
+BOLDMAGENTA	includes/colors.h	29;"	d
+BOLDRED	includes/colors.h	25;"	d
+BOLDWHITE	includes/colors.h	31;"	d
+BOLDYELLOW	includes/colors.h	27;"	d
 BONUS_FILES	libft/Makefile	/^BONUS_FILES	:=	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \\$/;"	m
 BONUS_OBJS_FILES	libft/Makefile	/^BONUS_OBJS_FILES	:= $(BONUS_FILES:.c=.o)$/;"	m
-BUFFER_SIZE	libft/get_next_line/get_next_line.h	/^#  define BUFFER_SIZE /;"	d
+BUFFER_SIZE	libft/get_next_line/get_next_line.h	24;"	d
 B_NAME	makefile	/^B_NAME = bonushell$/;"	m
 Bonus	makefile	/^Bonus = bonus$/;"	m
 CC	libft/Makefile	/^CC	:= cc$/;"	m
 CFLAGS	libft/Makefile	/^CFLAGS	:= $/;"	m
 CFLAGS	libft/ft_printf/Makefile	/^CFLAGS			= -Wall -Wextra -Werror$/;"	m
-CFLAGS	makefile	/^CFLAGS		:= -Wall -Werror -Wextra$/;"	m
-COLORS_H	includes/colors.h	/^# define COLORS_H$/;"	d
-CYAN	includes/colors.h	/^# define CYAN /;"	d
-DUBGGER	makefile	/^DUBGGER		:= -fsanitize=address -g3$/;"	m
+CFLAGS	makefile	/^CFLAGS          := -Wall -Werror -Wextra$/;"	m
+COLORS_H	includes/colors.h	14;"	d
+CYAN	includes/colors.h	22;"	d
+DUBGGER	makefile	/^DUBGGER         := #-fsanitize=address -g3$/;"	m
 ERROR	includes/types.h	/^	ERROR = -2,$/;"	e	enum:e_file_input
-EXEC_H	exec/exec.h	/^# define EXEC_H$/;"	d
-EXPORT_H	exec/implement_builtins/export/export.h	/^# define EXPORT_H$/;"	d
-FT_PRINTF_H	libft/ft_printf/src/ft_printf.h	/^# define FT_PRINTF_H$/;"	d
-GET_NEXT_LINE_H	libft/get_next_line/get_next_line.h	/^# define GET_NEXT_LINE_H$/;"	d
-GREEN	includes/colors.h	/^# define GREEN /;"	d
-LIBFT_H	libft/libft.h	/^# define LIBFT_H$/;"	d
+EXEC_H	exec/exec.h	14;"	d
+EXPORT_H	exec/implement_builtins/export/export.h	14;"	d
+FT_PRINTF_H	libft/ft_printf/src/ft_printf.h	14;"	d
+GET_NEXT_LINE_H	libft/get_next_line/get_next_line.h	14;"	d
+GREEN	includes/colors.h	18;"	d
+LIBFT_H	libft/libft.h	14;"	d
 LIBFT_SRC_FILES	libft/ft_printf/Makefile	/^LIBFT_SRC_FILES		= libft\/ft_putchar_fd.c libft\/ft_putnbr_fd.c libft\/ft_putstr_fd.c libft\/ft_strlen.c $/;"	m
-MAGENTA	includes/colors.h	/^# define MAGENTA /;"	d
-MINISHELL_H	includes/minishell.h	/^# define MINISHELL_H$/;"	d
+MAGENTA	includes/colors.h	21;"	d
+MINISHELL_H	includes/minishell.h	14;"	d
 M_SIG_INT	includes/types.h	/^	M_SIG_INT = 78$/;"	e	enum:e_exit_status
 NAME	libft/Makefile	/^NAME	:= libft.a$/;"	m
 NAME	libft/ft_printf/Makefile	/^NAME	= libftprintf.a$/;"	m
@@ -47,28 +47,29 @@ NO_FILE	includes/types.h	/^	NO_FILE = -1,$/;"	e	enum:e_file_input
 OBJS_FILES	libft/Makefile	/^OBJS_FILES	:= $(SRCS_FILES:.c=.o)$/;"	m
 OBJ_DIR	makefile	/^OBJ_DIR := objects$/;"	m
 OBJ_FILES	libft/ft_printf/Makefile	/^OBJ_FILES		= $(LIBFT_SRC_FILES:.c=.o)$/;"	m
-PARSING_H	parsing/parsing.h	/^# define PARSING_H$/;"	d
+PARSING_H	parsing/parsing.h	14;"	d
 PRINTF_OBJ_FILES	libft/ft_printf/Makefile	/^PRINTF_OBJ_FILES		= $(SRC_PRINTF:.c=.o)$/;"	m
-PROGRESS	makefile	/^PROGRESS	:= 1$/;"	m
-PROGRESSBINARY	makefile	/^PROGRESSBINARY 	:= $(OBJ_DIR)\/progress$/;"	m
-RED	includes/colors.h	/^# define RED /;"	d
-RESET	includes/colors.h	/^# define RESET /;"	d
+PROGRESS	makefile	/^PROGRESS        := 0$/;"	m
+PROGRESSBINARY	makefile	/^PROGRESSBINARY  := $(OBJ_DIR)\/progress$/;"	m
+RED	includes/colors.h	17;"	d
+RESET	includes/colors.h	15;"	d
 RM	libft/Makefile	/^RM	:= rm -f$/;"	m
 RM	libft/ft_printf/Makefile	/^RM				= rm -f$/;"	m
 SRCS_FILES	libft/Makefile	/^SRCS_FILES := ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \\$/;"	m
 SRC_PRINTF	libft/ft_printf/Makefile	/^SRC_PRINTF			=$/;"	m
-SYNTAX_H	parsing/syntax/syntax.h	/^# define SYNTAX_H$/;"	d
-Shell_obj	makefile	/^Shell_obj		:= ${Shell_src:.c=.o}$/;"	m
+SYNTAX_H	parsing/syntax/syntax.h	14;"	d
+Shell_obj	makefile	/^Shell_obj               := ${Shell_src:.c=.o}$/;"	m
 Shell_src	makefile	/^Shell_src = Shell\/main.c\\$/;"	m
-TOTAL	makefile	/^TOTAL		:= $(words $(newer_file))$/;"	m
-TYPES_H	includes/types.h	/^# define TYPES_H$/;"	d
+TOTAL	makefile	/^TOTAL           := $(words $(newer_file))$/;"	m
+TYPES_H	includes/types.h	14;"	d
 USER	makefile	/^USER := $(USER)$/;"	m
-UTILS_H	Utils/utils.h	/^# define UTILS_H$/;"	d
-WHITE	includes/colors.h	/^# define WHITE /;"	d
-YELLOW	includes/colors.h	/^# define YELLOW /;"	d
+UTILS_H	Utils/utils.h	14;"	d
+WHITE	includes/colors.h	23;"	d
+YELLOW	includes/colors.h	19;"	d
 add_arg_t_node	parsing/parsing_utils.c	/^void	add_arg_t_node(t_node *node, char *str)$/;"	f
 add_new_env	exec/implement_builtins/export/export_env.c	/^void	add_new_env(char **env, char **old_env, char **arguments)$/;"	f
 add_new_export	exec/implement_builtins/export/export.c	/^void	add_new_export(char **export, char **old_export, char **arguments)$/;"	f
+add_or_replace	exec/implement_builtins/export/main_export.c	/^int	add_or_replace(char **arguments, char **new_arg, int j , int i)$/;"	f
 add_plus_string	exec/implement_builtins/export/export_equal.c	/^char	*add_plus_string(char **export, char *new_str)$/;"	f
 add_quotes	exec/implement_builtins/export/export_equal.c	/^char	*add_quotes(char *str, int is_env)$/;"	f
 append	Utils/Strings.c	/^char	**append(char **Strings, char *String)$/;"	f
@@ -87,8 +88,9 @@ check_redirections_syntax	parsing/syntax/syntax.c	/^char	check_redirections_synt
 check_syntax	parsing/syntax/syntax.c	/^char	check_syntax(char *line, int *pos)$/;"	f
 checker	includes/types.h	/^	int		checker;$/;"	m	struct:node
 checker	includes/types.h	/^	int	checker;$/;"	m	struct:s_helper
+child_builtins	exec/implement_builtins/builtins.c	/^void	child_builtins(t_node *node)$/;"	f
 child_proccess	exec/pipes/piping.c	/^void	child_proccess(t_node *node, char **env)$/;"	f
-child_quit	parsing/Signals.c	/^void child_quit(int sig)$/;"	f
+child_quit	parsing/Signals.c	/^void	child_quit(int sig)$/;"	f
 clear_node	parsing/garbage.c	/^void	clear_node(void *conetent)$/;"	f
 clear_tree	parsing/garbage.c	/^void	clear_tree(t_tree *node)$/;"	f
 command	includes/types.h	/^	char	*command;$/;"	m	struct:node
@@ -105,6 +107,7 @@ e_file_input	includes/types.h	/^enum	e_file_input$/;"	g
 echo_command	exec/implement_builtins/echo.c	/^void	echo_command(t_node *node)$/;"	f
 env_command	exec/implement_builtins/env.c	/^void	env_command(t_node *node, char **env)$/;"	f
 exec	exec/exec.c	/^void	exec(t_list *list)$/;"	f
+exist_string	exec/implement_builtins/export/export_equal.c	/^char	*exist_string(char **export, char *new_str)$/;"	f
 exit_command	exec/implement_builtins/exit.c	/^void	exit_command(t_node *node)$/;"	f
 exit_if_null	parsing/parsing.c	/^int	exit_if_null(char *line)$/;"	f
 exit_msg	exec/exuc_utlis.c	/^void	exit_msg(char *msg, int i)$/;"	f
@@ -174,7 +177,6 @@ ft_tolower	libft/ft_tolower.c	/^int	ft_tolower(int c)$/;"	f
 ft_toupper	libft/ft_toupper.c	/^int	ft_toupper(int c)$/;"	f
 ft_words_count	libft/ft_split.c	/^int	ft_words_count(const char *s, char c)$/;"	f
 g__helper	exec/pipes/get_path.c	/^t_helper	g__helper;$/;"	v
-g__helper	main/main.c	/^t_helper	g__helper;$/;"	v
 get_command_path	exec/pipes/get_path.c	/^char	*get_command_path(char *command, char **env)$/;"	f
 get_cur_line	libft/get_next_line/get_next_line.c	/^char	*get_cur_line(char *holder)$/;"	f
 get_end_index	libft/ft_strtrim.c	/^static int	get_end_index(char const *s1, char const *set)$/;"	f	file:
@@ -186,7 +188,7 @@ get_full_line	Utils/full_line.c	/^char	*get_full_line(char *line)$/;"	f
 get_input_value	parsing/parsing_utils.c	/^char	*get_input_value(char *s, t_node *node, int *index, int mode)$/;"	f
 get_n_holder	libft/get_next_line/get_next_line.c	/^char	*get_n_holder(char *holder)$/;"	f
 get_name_index	exec/implement_builtins/export/export_env.c	/^int	get_name_index(char *s1)$/;"	f
-get_new_arguments	exec/implement_builtins/export/export_equal.c	/^char	**get_new_arguments(char **arguments)$/;"	f
+get_new_arguments	exec/implement_builtins/export/main_export.c	/^char	**get_new_arguments(char **arguments)$/;"	f
 get_new_env	exec/implement_builtins/export/export_env.c	/^char	**get_new_env(char **old_env, char **arguments)$/;"	f
 get_new_export	exec/implement_builtins/export/export.c	/^char	**get_new_export(char **old_export, char **str)$/;"	f
 get_next_line	libft/get_next_line/get_next_line.c	/^char	*get_next_line(int fd)$/;"	f
@@ -210,12 +212,13 @@ handle_syntax	parsing/syntax/helper.c	/^int	handle_syntax(char *line)$/;"	f
 her_doc_proccess	parsing/here_doc.c	/^void	her_doc_proccess(int fd, char *limiter, int flag)$/;"	f
 here_doc	parsing/here_doc.c	/^int	here_doc(int flag, char *limiter)$/;"	f
 here_doc_signal	parsing/Signals.c	/^void	here_doc_signal(int sig)$/;"	f
-incldlib	makefile	/^incldlib	:= -I\/Users\/${USER}\/homebrew\/opt\/readline\/include$/;"	m
+incldlib	makefile	/^incldlib        := -I\/Users\/${USER}\/homebrew\/opt\/readline\/include$/;"	m
 input_file	includes/types.h	/^	int		input_file;$/;"	m	struct:node
 interrupted	Utils/her_doc_interrupte.c	/^int	interrupted(int value)$/;"	f
 is_add_plus_str	exec/implement_builtins/export/export.c	/^int	is_add_plus_str(char *argument)$/;"	f
 is_between_qute	parsing/files.c	/^int	is_between_qute(char *line)$/;"	f
-is_builtin	parsing/paths.c	/^int	is_builtin(char *s)$/;"	f
+is_builtin	parsing/paths.c	/^int	is_builtin(char *s, char *arg)$/;"	f
+is_child_builtins	parsing/paths.c	/^int	is_child_builtins(char *s, char *arg)$/;"	f
 is_complete	parsing/syntax/helper.c	/^int	is_complete(char *line)$/;"	f
 is_equal	Utils/equals.c	/^int	is_equal(char *s, char *s2)$/;"	f
 is_equal_plus	exec/implement_builtins/export/export_utils.c	/^int	is_equal_plus(char *argument)$/;"	f
@@ -235,25 +238,25 @@ is_value	exec/implement_builtins/export/export_utils.c	/^int	is_value(char *argu
 join_values	exec/implement_builtins/export/main_export.c	/^char	*join_values(char *s1, char *s2)$/;"	f
 left	includes/types.h	/^	struct s_tree	*left;$/;"	m	struct:s_tree	typeref:struct:s_tree::s_tree
 length	includes/types.h	/^	int	length;$/;"	m	struct:proccess
-libft	makefile	/^libft		:= libft\/libft.a$/;"	m
-libreadline	makefile	/^libreadline	:= -lreadline -L\/Users\/${USER}\/homebrew\/opt\/readline\/lib$/;"	m
+libft	makefile	/^libft           := libft\/libft.a$/;"	m
+libreadline	makefile	/^libreadline     := -lreadline -L\/Users\/${USER}\/homebrew\/opt\/readline\/lib$/;"	m
 list_append	Utils/int_utils.c	/^int	list_append(int **list, int new_pid, int size)$/;"	f
 m_safe_strjoin	Utils/Strings.c	/^char	*m_safe_strjoin(char *s1, char *s2, int free_mode)$/;"	f
 main	main/main.c	/^int	main(int ac, char **av, char **env)$/;"	f
-main	makefile	/^main = main\/main.c $/;"	m
-main	tools/progress.c	/^int	main(int ac, char **av)$/;"	f
-main_obj	makefile	/^main_obj		:= $(patsubst %.c,$(OBJ_DIR)\/%.o,$(main))$/;"	m
+main	makefile	/^main = main\/main.c$/;"	m
+main	tools/progress.c	/^int     main(int ac, char **av)$/;"	f
+main_obj	makefile	/^main_obj                := $(patsubst %.c,$(OBJ_DIR)\/%.o,$(main))$/;"	m
 manage_here_doc	parsing/syntax/syntax.c	/^void	manage_here_doc(char *line, int pos)$/;"	f
 mini_strjoin	parsing/strings_functions.c	/^char	*mini_strjoin(char const *s1, char const *s2)$/;"	f
 multiple_pipes	exec/pipes/piping.c	/^void	multiple_pipes(t_node *node, t_list *list, int num_commands)$/;"	f
-necessary_values	exec/exec.c	/^char	**necessary_values(char **env)$/;"	f
+necessary_values	exec/exec.c	/^char	**necessary_values(char **env, int is_env)$/;"	f
 new_t_node	parsing/t_node.c	/^t_node	*new_t_node(void)$/;"	f
-newer_file	makefile	/^newer_file	:= $(SRCS_FILES) $/;"	m
+newer_file	makefile	/^newer_file      := $(SRCS_FILES)$/;"	m
 next	libft/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
 node	includes/types.h	/^	struct node		*node;$/;"	m	struct:s_tree	typeref:struct:s_tree::node
 node	includes/types.h	/^typedef struct node$/;"	s
 numeric_required	exec/implement_builtins/exit.c	/^void	numeric_required(t_node *node, int len)$/;"	f
-obj	makefile	/^obj				:= $(patsubst %.c,$(OBJ_DIR)\/%.o,$(src))$/;"	m
+obj	makefile	/^obj                             := $(patsubst %.c,$(OBJ_DIR)\/%.o,$(src))$/;"	m
 on_error	libft/get_next_line/get_next_line.c	/^void	on_error(char *cursor, char *holder)$/;"	f
 on_error_clear	parsing/copy_str.c	/^char	*on_error_clear(char **new_str_spltd, char *env_value, char *new_str,$/;"	f
 op	includes/types.h	/^	int				op;$/;"	m	struct:s_tree
@@ -282,7 +285,7 @@ proccess	includes/types.h	/^typedef struct proccess$/;"	s
 pwd_command	exec/implement_builtins/cd_pwd.c	/^void	pwd_command(void)$/;"	f
 random_string	Utils/random.c	/^char	*random_string(int len)$/;"	f
 remove_duplicate	exec/implement_builtins/export/reset_export.c	/^char	**remove_duplicate(char **export)$/;"	f
-remove_env	exec/implement_builtins/export/main_export.c	/^void	remove_env(char **env)$/;"	f
+remove_env	exec/exec.c	/^void	remove_env(char **env)$/;"	f
 remove_ptr	exec/exec.c	/^void	remove_ptr(char **env, char *ptr)$/;"	f
 replace_b_slash	Utils/full_line.c	/^void	replace_b_slash(char *ptr)$/;"	f
 reset	exec/implement_builtins/export/reset_export.c	/^char	**reset(char **env, char **argument)$/;"	f
@@ -294,9 +297,10 @@ s_list	libft/libft.h	/^typedef struct s_list$/;"	s
 s_tree	includes/types.h	/^typedef struct s_tree$/;"	s
 set_exit_status	Utils/status.c	/^void	set_exit_status(int status_val)$/;"	f
 set_interrupted	Utils/her_doc_interrupte.c	/^void	set_interrupted(int value)$/;"	f
-shell_level	exec/exec.c	/^char	*shell_level(char **env)$/;"	f
+sh_lvl	includes/types.h	/^	int	sh_lvl;$/;"	m	struct:s_helper
+shell_level	exec/implement_builtins/export/export_env.c	/^char	*shell_level(char **env)$/;"	f
 size	Utils/Strings.c	/^size_t	size(char **ptr)$/;"	f
-sorted_list	exec/implement_builtins/export/main_export.c	/^void	sorted_list(char **export, int len)$/;"	f
+sorted_list	exec/implement_builtins/export/export.c	/^void	sorted_list(char **export, int len)$/;"	f
 spaces_count	parsing/parsing_utils.c	/^int	spaces_count(char *s)$/;"	f
 splite_env_val	parsing/parsing.c	/^char	*splite_env_val(char *line, char *new_str, t_node *node, int *index)$/;"	f
 src	makefile	/^src = parsing\/parsing.c\\$/;"	m

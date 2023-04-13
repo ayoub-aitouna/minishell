@@ -108,10 +108,7 @@ void	tty(void)
 		add_history(line);
 		parse(line, &list);
 		if (!is_interrupted())
-		{
 			exec(list);
-			// system("leaks minishell");
-		}
 		else
 			write(1, "\n", 1);
 		ft_lstclear(&list, clear_node);

@@ -47,7 +47,7 @@ char	**necessary_values(char **env, int is_env)
 	remove_ptr(env, "OLDPWD");
 	remove_ptr(env, "_=");
 	remove_ptr(env, "SHLVL");
-	export = malloc(((size(env) + 3) * sizeof(char *)));
+	export = malloc(((size(env) + 4) * sizeof(char *)));
 	if (!export)
 		exit(1);
 	i = -1;
@@ -84,7 +84,6 @@ char	**get_export(char **p)
 
 void	exec(t_list *list)
 {
-	char	**env;
 	t_node	*node;
 	int		num_commands;
 
@@ -95,7 +94,6 @@ void	exec(t_list *list)
 		return ;
 	if (!node->command || !node->arguments[0])
 		return ;
-	env = get_env(NULL);
 	num_commands = ft_lstsize(list);
 	if (num_commands >= 709)
 	{

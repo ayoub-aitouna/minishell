@@ -25,9 +25,9 @@ int	main(int ac, char **av, char **env)
 	if (!size(env))
 		g__helper.checker = 0;
 	export = necessary_values(env, 0);
+	get_export(export);
 	new_env = necessary_values(env, 1);
 	get_env(new_env);
-	get_export(export);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	tty();

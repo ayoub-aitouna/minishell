@@ -15,12 +15,10 @@
 int	is_high_shlvl(char **env)
 {
 	char		*shell_lvl;
-	char		*shlvl_value;
 	static int	len = 1;
 	int			i;
 
 	i = 0;
-	shell_lvl = NULL;
 	while (env && env[i])
 	{
 		if (!ft_strncmp(env[i], "SHLVL", 5))
@@ -32,11 +30,8 @@ int	is_high_shlvl(char **env)
 	}
 	if (shell_lvl)
 		i = get_start(shell_lvl);
-	shlvl_value = ft_substr(shell_lvl, i, ft_strlen(shell_lvl));
-	len = ft_atoi(shlvl_value);
-	printf("len %d %s \n ", len, shell_lvl);
+	len = ft_atoi(shell_lvl + i);
 	free (shell_lvl);
-	free (shlvl_value);
 	return (len);
 }
 

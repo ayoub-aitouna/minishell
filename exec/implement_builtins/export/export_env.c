@@ -17,6 +17,7 @@ char	*shell_level(char **env)
 	char		*lvl_sh;
 	char		*str;
 
+	(void) env;
 	str = ft_itoa(g__helper.sh_lvl);
 	lvl_sh = NULL;
 	if (g__helper.sh_lvl >= 1000)

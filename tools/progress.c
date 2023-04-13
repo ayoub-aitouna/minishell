@@ -55,26 +55,32 @@ int	ft_atoi(const char *str)
 	return (count(str, sym));
 }
 
-int	main(int ac, char **av)
+int     main(int ac, char **av)
 {
-	int		value;
-	int		total;
-	double	percentage;
-	int		i;
+        int             value;
+        int             total;
+        double  percentage;
+        int             i;
 
-	if (ac < 3)
-		return (0);
-	i = 0;
-	value = ft_atoi(av[1]);
-	total = ft_atoi(av[2]);
-	percentage = (((float)value) / ((float)total));
-	printf("\033[A\33[2K\r");
-	printf("\r	"CYAN);
-	while (i++ < value)
-		printf("\u25A0");
-	while (i++ < total)
-		printf("\u25A1");
-	printf(RESET" %d%%", (int)(percentage * 100));
-	printf("\n");
-	return (0);
+        if (ac < 3)
+                return (0);
+        i = 0;
+        value = ft_atoi(av[1]);
+        total = ft_atoi(av[2]);
+        percentage = (((float)value) / ((float)total));
+        if (percentage > 1)
+                percentage = 1;
+        if(value == 1)
+                printf("Comopiling necessary .c file \n\n");
+        printf("\033[A\33[2K\r");
+        printf("\r      "CYAN);
+        while (i++ < value)
+                printf("\u25A0");
+        while (i++ < total)
+                printf("\u25A1");
+        printf(RESET" %d%%", (int)(percentage * 100));
+        if (value >= total)
+                printf("\n\tDone.\n");
+        printf("\n");
+        return (0);
 }
