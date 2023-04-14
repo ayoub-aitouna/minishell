@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/14 10:05:27 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 11:16:12 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ void	tty(void)
 		else
 			write(1, "\n", 1);
 		// system("leaks minishell");
-		printf_list(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
 	}

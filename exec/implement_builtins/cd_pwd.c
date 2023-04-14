@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:45:41 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 15:58:24 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 15:27:37 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	pwd_command(void)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	if (pwd != NULL)
+	if (!pwd)
+		printf("minishell :No such file or directory\n");
+	else
 		printf("%s\n", pwd);
 	free (pwd);
 }

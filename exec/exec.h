@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 06:11:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 13:41:00 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 13:03:17 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	**necessary_values(char **env, int is_env);
 char	**underscore_value(char **env, t_node *node);
 char	**check_arguments(char **arguments);
 int		is_add_plus_str(char *argument);
+int		is_builtins(char *s);
 void	child_builtins(t_node *node);
 
 #endif
