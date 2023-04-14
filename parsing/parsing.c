@@ -115,10 +115,7 @@ void	tty(void)
 			break ;
 		add_history(line);
 		parse(line, &list);
-		if (!is_interrupted())
-			exec(list);
-		else
-			write(1, "\n", 1);
+		run_commands(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
 	}
