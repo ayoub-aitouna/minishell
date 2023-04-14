@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:41:59 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/13 14:45:33 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 09:43:39 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*ft_getenv(char *name)
 			free(new_name);
 			return (value);
 		}
+		free(new_name);
 		i++;
 	}
 	return (NULL);

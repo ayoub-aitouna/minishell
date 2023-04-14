@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aaitouna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 18:30:45 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/09 18:30:46 by aaitouna         ###   ########.fr       */
+/*   Updated: 2023/04/14 07:38:49 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	handle_syntax(char *line)
 	char	near;
 	int		pos;
 
+	pos = 0;
 	near = check_syntax(line, &pos);
 	if (near != -1)
 	{

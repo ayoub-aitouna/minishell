@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:24 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 14:43:05 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 09:04:46 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,4 @@ void	child_builtins(t_node *node)
 		env_command(node, env);
 	if (!ft_strcmp(node->command, "pwd"))
 		pwd_command();
-	free_list(new_args);
 }

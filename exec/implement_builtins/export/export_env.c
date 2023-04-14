@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:38:44 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 16:23:54 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 08:12:55 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*shell_level(char **env)
 	char		*lvl_sh;
 	char		*str;
 
-	(void) env;
 	str = ft_itoa(g__helper.sh_lvl);
 	lvl_sh = NULL;
 	if (g__helper.sh_lvl >= 1000)
@@ -48,18 +47,19 @@ void	add_new_env(char **env, char **old_env, char **arguments)
 	int	k;
 
 	i = -1;
-	k = 1;
 	while (old_env && old_env[++i])
 		env[i] = ft_strdup(old_env[i]);
+	k = 1;
 	while (arguments && arguments[k])
 	{
 		if (arguments[k][0] == '#')
 			break ;
 		if (is_equal_plus_str(arguments[k]) == 1)
-			env[i++] = ft_strdup(arguments[k]);
+			env[i++] = ft_strdup(arguments[k++]);
 		else if (is_equal_plus_str(arguments[k]) == 2)
-			env[i++] = ft_strdup(add_plus_string(env, arguments[k]));
-		k++;
+			env[i] = ft_strdup(add_plus_string(arguments[k++], 1));
+		else
+			k++;
 	}
 	env[i] = NULL;
 }
@@ -69,9 +69,7 @@ char	**get_new_env(char **old_env, char **arguments)
 	char	**env;
 
 	env = NULL;
-	if (old_env != NULL && !arguments[1])
-		env = get_env(NULL);
-	else if (old_env != NULL)
+	if (old_env != NULL)
 	{
 		env = malloc((size(old_env) + size(arguments) + 1) * sizeof(char *));
 		if (!env)

@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:53:28 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 18:11:02 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 07:51:03 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	remove_env(char **env)
 		*(va_unset - 1) = *va_unset;
 		va_unset++;
 	}
-	*(va_unset - 2) = NULL;
 	*(va_unset - 1) = NULL;
+	free(*(va_unset));
 }
 
 char	**necessary_values(char **env, int is_env)
@@ -46,8 +46,9 @@ char	**necessary_values(char **env, int is_env)
 	n_pwd = getcwd(NULL, 0);
 	remove_ptr(env, "OLDPWD");
 	remove_ptr(env, "_=");
+	remove_ptr(env, "PWD");
 	remove_ptr(env, "SHLVL");
-	export = malloc(((size(env) + 4) * sizeof(char *)));
+	export = malloc(((size(env) + 3) * sizeof(char *)));
 	if (!export)
 		exit(1);
 	i = -1;
@@ -56,7 +57,7 @@ char	**necessary_values(char **env, int is_env)
 	export[i++] = shell_level(env);
 	export[i++] = m_safe_strjoin("PWD=", n_pwd, 2);
 	if (is_env == 0)
-		export[i++] = "OLDPWD";
+		export[i++] = ft_strdup("OLDPWD");
 	export[i] = NULL;
 	return (export);
 }
@@ -84,6 +85,7 @@ char	**get_export(char **p)
 
 void	exec(t_list *list)
 {
+	char	**env;
 	t_node	*node;
 	int		num_commands;
 
@@ -94,6 +96,7 @@ void	exec(t_list *list)
 		return ;
 	if (!node->command || !node->arguments[0])
 		return ;
+	env = get_env(NULL);
 	num_commands = ft_lstsize(list);
 	if (num_commands >= 709)
 	{

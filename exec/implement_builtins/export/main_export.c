@@ -6,11 +6,22 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 02:13:06 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 15:51:14 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 08:12:30 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "export.h"
+
+int len_comparison(char *s1, char *s2)
+
+{
+	int index1 = get_name_index(s1);
+	int index2 = get_name_index (s2);
+
+	if ((index2 - index1) == 0 && !ft_strncmp(s1, s2, index2))
+		return (1);
+	return (0);
+}
 
 int	add_or_replace(char **arguments, char **new_arg, int j , int i)
 {
@@ -21,15 +32,13 @@ int	add_or_replace(char **arguments, char **new_arg, int j , int i)
 	{
 		if (is_equal_plus_str(arguments[i]) == 2)
 		{	
-			if (!ft_strncmp(arguments[i], new_arg[j],
-					get_name_index(arguments[i])))
+			if (len_comparison(arguments[i], new_arg[j]))
 			{
 				new_arg[j] = join_values(new_arg[j], arguments[i]);
 				been_added = 1;
 			}
 		}
-		else if (!ft_strncmp(arguments[i], new_arg[j],
-				get_name_index(arguments[i]))
+		else if (len_comparison(arguments[i], new_arg[j])
 			&& is_equal_plus_str(arguments[i]) == 1)
 		{
 			new_arg[j] = ft_strdup(arguments[i]);
@@ -101,18 +110,23 @@ void	export_command(t_node *node, char	**old_export, char	**old_env)
 	char	**export;
 	char	**env;
 	char	**new_args;
-	(void)old_env;
 
 	export = NULL;
 	env = NULL;
 	new_args = get_new_arguments(node->arguments);
-	printf("export \n");
-	export = get_new_export(old_export, new_args);
+	if (new_args)
+	{
+		env = reset(old_env, new_args);
+		export = reset(old_export, new_args);
+	}
+	underscore_export(export);
+	export = get_new_export(export, new_args);
 	sorted_list(export, size(export));
-	env = get_new_env(env, new_args);
+	print_export(export, new_args);
 	free_list(get_export(NULL));
 	get_export(export);
+	env = get_new_env(env, new_args);
 	get_env(env);
-	free_list(new_args);
 	free_list(export);
+	free_list(new_args);
 }

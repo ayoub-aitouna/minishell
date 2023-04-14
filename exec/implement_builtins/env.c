@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 22:43:41 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 18:10:30 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 16:15:31 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int	is_high_shlvl(char **env)
 {
 	char		*shell_lvl;
+	char		*shlvl_value;
 	static int	len = 1;
 	int			i;
 
 	i = 0;
+	shell_lvl = NULL;
 	while (env && env[i])
 	{
 		if (!ft_strncmp(env[i], "SHLVL", 5))
@@ -30,8 +32,11 @@ int	is_high_shlvl(char **env)
 	}
 	if (shell_lvl)
 		i = get_start(shell_lvl);
-	len = ft_atoi(shell_lvl + i);
+	shlvl_value = ft_substr(shell_lvl, i, ft_strlen(shell_lvl));
+	len = ft_atoi(shlvl_value);
+	printf("len %d %s \n ", len, shell_lvl);
 	free (shell_lvl);
+	free (shlvl_value);
 	return (len);
 }
 
@@ -70,6 +75,7 @@ char	**update_env(char **env)
 		free(old_pwd);
 	}
 	free(n_pwd);
+	// free(pwd);
 	return (new_env);
 }
 

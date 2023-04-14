@@ -73,8 +73,6 @@ void	cd(t_node *node)
 
 void	cd_command(t_node *node, char **env, char **export)
 {
-	(void) export;
-	(void) env;
 	if (!node->arguments[1] || !strcmp(node->arguments[1], "~"))
 		chdir(getenv("HOME"));
 	else

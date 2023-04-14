@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/13 17:59:10 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 10:05:27 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*splite_env_val(char *line, char *new_str, t_node *node, int *index)
 			j++;
 		}
 		new_str = mini_strjoin(new_str, ft_strdup(splited_env_val[j]));
-		free(splited_env_val);
+		free_list(splited_env_val);
 	}
 	return (new_str);
 }
@@ -111,6 +111,8 @@ void	tty(void)
 			exec(list);
 		else
 			write(1, "\n", 1);
+		// system("leaks minishell");
+		printf_list(list);
 		ft_lstclear(&list, clear_node);
 		free(line);
 	}

@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 12:50:53 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/04 07:08:00 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 08:10:31 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*get_relative_path(char *HOME, char *w_directory)
 	while (w_directory && w_directory[i])
 		relative_dir = ft_str_append(relative_dir, w_directory[i++]);
 	relative_dir = m_safe_strjoin(relative_dir, RESET, 1);
+	relative_dir = ft_str_append(relative_dir, '\n');
 	relative_dir = ft_str_append(relative_dir, '$');
 	relative_dir = ft_str_append(relative_dir, ' ');
 	return (relative_dir);

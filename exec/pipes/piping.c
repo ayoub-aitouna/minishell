@@ -6,16 +6,32 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 18:49:05 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 14:32:33 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 10:07:28 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec.h"
 
+int	is_builtins(char *s)
+{
+	if (is_equal(s, "exit") || is_equal(s, "cd") || is_equal(s, "echo")
+		|| is_equal(s, "pwd") || is_equal(s, "export") || is_equal(s, "unset")
+		|| is_equal(s, "env"))
+		return (1);
+	return (0);
+}
+
+
 void	child_proccess(t_node *node, char **env)
 {
 	char	*path;
 
+	if (!node->command)
+	{
+		ft_putstr_fd(node->command, 2);
+		write(2, "minishell: :command not found \n", 32);
+		exit (127);
+	}
 	if (node->output_file != NONE && node->output_file != NO_FILE)
 	{
 		if (dup2(node->output_file, 1) < 0)
@@ -27,6 +43,7 @@ void	child_proccess(t_node *node, char **env)
 			exit_msg("DUP", 1);
 	}
 	path = get_paths(env, node->arguments[0]);
+	printf("%s\n", path);
 	if (is_child_builtins(node->command, node->arguments[1]))
 	{
 		child_builtins(node);
@@ -34,10 +51,10 @@ void	child_proccess(t_node *node, char **env)
 	}
 	else
 	{
-		if (path == NULL)
+		if (path == NULL || is_builtins(node->command))
 		{
-			ft_putstr_fd(node->arguments[0], 2);
-			write(2, " :command not found \n", 22);
+			ft_putstr_fd(node->command, 2);
+			write(2, "minishell: :command not found \n", 32);
 			exit (127);
 		}
 		else
@@ -77,11 +94,10 @@ void	multiple_pipes(t_node *node, t_list *list, int num_commands)
 	{
 		node = (t_node *) list->content;
 		pipe(pipes);
-		if (is_builtin(node->command, node->arguments[1]))
+		if (node->command && is_builtin(node->command, node->arguments[1]))
 			builtins(node);
 		else
 		{
-			
 			if (fork() == 0)
 			{
 				signal(SIGQUIT, SIG_DFL);

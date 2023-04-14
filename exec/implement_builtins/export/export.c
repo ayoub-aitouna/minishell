@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:31:49 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/13 15:02:36 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 07:09:01 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	add_new_export(char **export, char **old_export, char **arguments)
 	{
 		if (arguments[j] && arguments[j][0] == '#')
 			break ;
-		if (is_add_plus_str(arguments[j]))
-			export[i++] = ft_strdup(add_plus_string(export, arguments[j]));
+		if (is_equal_plus_str(arguments[j]) == 2)
+			export[i++] = ft_strdup(add_plus_string(arguments[j], 0));
 		else
 			export[i++] = ft_strdup(arguments[j]);
 		j++;

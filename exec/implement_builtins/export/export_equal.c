@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:25:36 by kmahdi            #+#    #+#             */
-/*   Updated: 2023/04/12 08:54:39 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 07:09:10 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,20 @@ char	*exist_string(char **export, char *new_str)
 	return (new_export);
 }
 
-char	*add_plus_string(char **export, char *new_str)
+char	*add_plus_string(char *new_str, int is_export)
 {
 	int		start;
+	char	**export;
 	char	*new_string;
 	char	*new_export;
 
 	start = 0;
 	new_str = add_quotes(new_str, 1);
 	start = get_start(new_str);
-	export = get_export(NULL);
+	if (!is_export)
+		export = get_export(NULL);
+	else
+		export = get_env (NULL);
 	new_export = exist_string(export, new_str);
 	if (new_export)
 		new_string = the_added_string(new_export, export, new_str, start);

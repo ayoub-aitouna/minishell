@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 19:10:46 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/10 00:16:26 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 09:51:14 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,7 @@ char	*copy_string_t_args(char *s, t_node *node, int *index, int mode)
 					if (size(new_str_spltd) > 1 && qute_flag == 0)
 						return (on_error_clear(new_str_spltd, env_value,
 								new_str, index));
-					new_str = mini_strjoin(new_str, env_value);
-					if (!env_value)
-						free(env_value);
+					new_str = m_safe_strjoin(new_str, env_value, 3);
 					free_list(new_str_spltd);
 				}
 				if (qute_flag == 2 && (s[*index] == '"' && qute_flag == 2))
