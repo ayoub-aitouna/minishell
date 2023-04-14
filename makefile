@@ -19,6 +19,7 @@ src = parsing/parsing.c\
         Utils/status.c\
         Utils/Strings.c\
         parsing/env.c \
+        parsing/split_by_set.c\
         Utils/promt.c\
         Utils/full_line.c\
         Utils/her_doc_interrupte.c \

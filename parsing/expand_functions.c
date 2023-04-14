@@ -19,7 +19,7 @@ char	*get_env_name(char *s, int *len)
 
 	i = 0;
 	name = NULL;
-	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+	while (s[i] && (is_alphanum(s[i]) || s[i] == '_'))
 	{
 		if (s[i] != '\n' && s[i] != '\\')
 			name = ft_str_append(name, s[i]);
@@ -64,11 +64,13 @@ char	*copy_variable_value(char *dst, char *src, int *index)
 	if (src[++*(index)] == '?')
 		value = ft_itoa(get_exit_status());
 	else if (src[*index] == '$')
-		return (dst);
+		return ft_str_append(dst, src[(*index)]);
 	else
 	{
 		name = get_env_name(&src[*index], &name_len);
 		(*index) += name_len - 1;
+		if(!name_len)
+			return (ft_strdup("$"));
 		if (name == NULL)
 			return (dst);
 		value = ft_getenv(name);

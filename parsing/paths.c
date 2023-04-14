@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:21:01 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/14 12:56:51 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/13 13:47:32 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int	is_builtin(char *s, char *arg)
 {
 	if (is_equal(s, "exit") || is_equal(s, "cd")
 		|| is_equal(s, "unset")
-		|| (is_equal(s, "export") && arg)
-		|| (is_equal(s, "EXIT") || is_equal(s, "CD")
-			|| is_equal(s, "UNSET") || (is_equal(s, "EXPORT") && arg)))
+		|| (is_equal(s, "export") && arg))
 		return (1);
 	return (0);
 }
@@ -43,8 +41,7 @@ int	is_child_builtins(char *s, char *arg)
 {
 	if (is_equal(s, "echo") || is_equal(s, "pwd")
 		|| (is_equal(s, "export") && !arg)
-		|| is_equal(s, "env") || (is_equal(s, "ECHO") || is_equal(s, "PWD")
-			|| (is_equal(s, "EXPORT") && !arg) || is_equal(s, "ENV")))
+		|| is_equal(s, "env"))
 		return (1);
 	return (0);
 }

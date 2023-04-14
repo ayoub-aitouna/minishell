@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:41:59 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/14 14:41:25 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 09:43:39 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ char	*ft_getenv(char *name)
 	if (!name)
 		return (NULL);
 	env = get_env(NULL);
+	new_name = ft_strjoin(name, "=");
 	while (env[i])
 	{
-		new_name = ft_strjoin(name, "=");
 		value = ft_strnstr(env[i], new_name, ft_strlen(new_name));
 		if (value != NULL)
 		{
@@ -54,8 +54,8 @@ char	*ft_getenv(char *name)
 			free(new_name);
 			return (value);
 		}
-		free(new_name);
 		i++;
 	}
+	free(new_name);
 	return (NULL);
 }

@@ -55,4 +55,5 @@ int		spaces_count(char *s);
 size_t	string_list_len(char **list);
 int		exit_if_null(char *line);
 char	*open_tmp_file(int *fd);
+char	**split_by_set(char const *s, char *set);
 #endif

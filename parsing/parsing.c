@@ -6,7 +6,7 @@
 /*   By: kmahdi <kmahdi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 14:32:28 by aaitouna          #+#    #+#             */
-/*   Updated: 2023/04/14 11:16:12 by kmahdi           ###   ########.fr       */
+/*   Updated: 2023/04/14 10:05:27 by kmahdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*splite_env_val(char *line, char *new_str, t_node *node, int *index)
 	env_value = copy_variable_value(env_value, line, index);
 	if (env_value != NULL)
 	{
-		splited_env_val = ft_split(env_value, ' ');
+		splited_env_val = split_by_set(env_value, " \t");
 		max = size(splited_env_val);
 		while (j < max - 1)
 		{
@@ -38,7 +38,7 @@ char	*splite_env_val(char *line, char *new_str, t_node *node, int *index)
 			j++;
 		}
 		new_str = mini_strjoin(new_str, ft_strdup(splited_env_val[j]));
-		free_list(splited_env_val);
+		free(splited_env_val);
 	}
 	return (new_str);
 }
@@ -84,6 +84,14 @@ void	run_commands(t_list *list)
 		write(1, "\n", 1);
 }
 
+void print_env()
+{
+	char **env = get_env(NULL);
+	int i = 0;
+	while(env[i])
+		printf("%s\n", env[i++]);
+}
+
 void	tty(void)
 {
 	char	*line;
@@ -111,7 +119,6 @@ void	tty(void)
 			exec(list);
 		else
 			write(1, "\n", 1);
-		// system("leaks minishell");
 		ft_lstclear(&list, clear_node);
 		free(line);
 	}

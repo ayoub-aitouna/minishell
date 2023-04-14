@@ -16,3 +16,9 @@ int	ft_isalnum(int c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c));
 }
+
+int is_alphanum(int c)
+{
+	return(ft_isalpha(c) || (c >= '0' && c <= '9'));
+ 
+}

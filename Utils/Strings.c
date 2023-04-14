@@ -52,6 +52,10 @@ char	*m_safe_strjoin(char *s1, char *s2, int free_mode)
 {
 	char	*str;
 
+	if(!s1)
+		s1 = ft_strdup("");
+	if(!s2)
+		s2 = ft_strdup("");
 	str = ft_strjoin(s1, s2);
 	if (free_mode == 1 || free_mode == 3)
 		free(s1);

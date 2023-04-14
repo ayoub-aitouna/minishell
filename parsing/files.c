@@ -44,7 +44,10 @@ int	open_file(char *file_name, int open_flag, int input)
 	{
 		fd = open(file_name, open_flag, 0664);
 		if (fd == -1)
+		{
 			perror("-bash :");
+			free(open_tmp_file(&fd));
+		}
 	}
 	return (fd);
 }
