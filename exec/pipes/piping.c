@@ -92,6 +92,7 @@ void	parent_proccess(int num_commands, int pipes[2], int in)
 	else if (WIFSIGNALED(status))
 		set_exit_status(128 + WTERMSIG(status));
 	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	multiple_pipes(t_node *node, t_list *list, int num_commands)
